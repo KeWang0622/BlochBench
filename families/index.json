@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "id": "SEQ-01",
+      "legacy_id": "v5-irt1",
+      "directory": "seq-01-inversion-recovery",
+      "instances": {
+        "SEQ-01-01": "heldout-v5-irt1",
+        "SEQ-01-02": "heldout-v5-irt1-r2",
+        "SEQ-01-03": "heldout-v5-irt1-r3",
+        "SEQ-01-04": "heldout-v5-irt1-r4"
+      }
+    },
+    {
+      "id": "SEQ-02",
+      "legacy_id": "v8-epinav",
+      "directory": "seq-02-gradient-echo-epi",
+      "instances": {
+        "SEQ-02-01": "heldout-v8-epinav",
+        "SEQ-02-02": "heldout-v8-epinav-r3",
+        "SEQ-02-03": "heldout-v8-epinav-r4"
+      }
+    },
+    {
+      "id": "SEQ-03",
+      "legacy_id": "v8-mprage",
+      "directory": "seq-03-mprage",
+      "instances": {
+        "SEQ-03-01": "heldout-v8-mprage",
+        "SEQ-03-02": "heldout-v8-mprage-r3",
+        "SEQ-03-03": "heldout-v8-mprage-r4"
+      }
+    },
+    {
+      "id": "SEQ-04",
+      "legacy_id": "v8-sedwi",
+      "directory": "seq-04-diffusion-spin-echo",
+      "instances": {
+        "SEQ-04-01": "heldout-v8-sedwi",
+        "SEQ-04-02": "heldout-v8-sedwi-r3",
+        "SEQ-04-03": "heldout-v8-sedwi-r4"
+      }
+    },
+    {
+      "id": "SEQ-05",
+      "legacy_id": "v8-spiral",
+      "directory": "seq-05-spiral",
+      "instances": {
+        "SEQ-05-01": "heldout-v8-spiral",
+        "SEQ-05-02": "heldout-v8-spiral-r3",
+        "SEQ-05-03": "heldout-v8-spiral-r4"
+      }
+    },
+    {
+      "id": "SEQ-06",
+      "legacy_id": "v8-tse",
+      "directory": "seq-06-turbo-spin-echo",
+      "instances": {
+        "SEQ-06-01": "heldout-v8-tse",
+        "SEQ-06-02": "heldout-v8-tse-r3",
+        "SEQ-06-03": "heldout-v8-tse-r4"
+      }
+    },
+    {
+      "id": "SEQ-07",
+      "legacy_id": "v8-ute",
+      "directory": "seq-07-ultrashort-echo",
+      "instances": {
+        "SEQ-07-01": "heldout-v8-ute",
+        "SEQ-07-02": "heldout-v8-ute-r3",
+        "SEQ-07-03": "heldout-v8-ute-r4"
+      }
+    },
+    {
+      "id": "MRS-01",
+      "legacy_id": "v7-mrsquant",
+      "directory": "mrs-01-metabolite-quantification",
+      "instances": {
+        "MRS-01-01": "heldout-v7-mrsquant",
+        "MRS-01-02": "heldout-v7-mrsquant-r2",
+        "MRS-01-03": "heldout-v7-mrsquant-r3",
+        "MRS-01-04": "heldout-v7-mrsquant-r4"
+      }
+    },
+    {
+      "id": "FMRI-01",
+      "legacy_id": "v7-fmriglm",
+      "directory": "fmri-01-event-related-glm",
+      "instances": {
+        "FMRI-01-01": "heldout-v7-fmriglm",
+        "FMRI-01-02": "heldout-v7-fmriglm-r2",
+        "FMRI-01-03": "heldout-v7-fmriglm-r3",
+        "FMRI-01-04": "heldout-v7-fmriglm-r4"
+      }
+    },
+    {
+      "id": "RELAX-01",
+      "legacy_id": "v4-t2epg",
+      "directory": "relax-01-t2-b1-mapping",
+      "instances": {
+        "RELAX-01-01": "heldout-v4-t2epg",
+        "RELAX-01-02": "heldout-v4-t2epg-r3",
+        "RELAX-01-03": "heldout-v4-t2epg-r4"
+      }
+    },
+    {
+      "id": "RELAX-02",
+      "legacy_id": "v4-qsm",
+      "directory": "relax-02-susceptibility-mapping",
+      "instances": {
+        "RELAX-02-01": "heldout-v4-qsm",
+        "RELAX-02-02": "heldout-v4-qsm-r3",
+        "RELAX-02-03": "heldout-v4-qsm-r4"
+      }
+    },
+    {
+      "id": "PERF-01",
+      "legacy_id": "v7-pcasl",
+      "directory": "perf-01-pcasl",
+      "instances": {
+        "PERF-01-01": "heldout-v7-pcasl",
+        "PERF-01-02": "heldout-v7-pcasl-r2",
+        "PERF-01-03": "heldout-v7-pcasl-r3",
+        "PERF-01-04": "heldout-v7-pcasl-r4"
+      }
+    },
+    {
+      "id": "PERF-02",
+      "legacy_id": "v7-cestapt",
+      "directory": "perf-02-cest-apt",
+      "instances": {
+        "PERF-02-01": "heldout-v7-cestapt",
+        "PERF-02-02": "heldout-v7-cestapt-r2",
+        "PERF-02-03": "heldout-v7-cestapt-r3",
+        "PERF-02-04": "heldout-v7-cestapt-r4"
+      }
+    },
+    {
+      "id": "DIFF-01",
+      "legacy_id": "v5-dwigroup",
+      "directory": "diff-01-group-comparison",
+      "instances": {
+        "DIFF-01-01": "heldout-v5-dwigroup",
+        "DIFF-01-02": "heldout-v5-dwigroup-r2",
+        "DIFF-01-03": "heldout-v5-dwigroup-r3",
+        "DIFF-01-04": "heldout-v5-dwigroup-r4"
+      }
+    },
+    {
+      "id": "DIFF-02",
+      "legacy_id": "v7-epidti",
+      "directory": "diff-02-epi-tensor-mapping",
+      "instances": {
+        "DIFF-02-01": "heldout-v7-epidti",
+        "DIFF-02-02": "heldout-v7-epidti-r2",
+        "DIFF-02-03": "heldout-v7-epidti-r3",
+        "DIFF-02-04": "heldout-v7-epidti-r4"
+      }
+    },
+    {
+      "id": "RECON-01",
+      "legacy_id": "v7-dixonraw",
+      "directory": "recon-01-fat-fraction",
+      "instances": {
+        "RECON-01-01": "heldout-v7-dixonraw",
+        "RECON-01-02": "heldout-v7-dixonraw-r2",
+        "RECON-01-03": "heldout-v7-dixonraw-r3",
+        "RECON-01-04": "heldout-v7-dixonraw-r4"
+      }
+    },
+    {
+      "id": "RECON-02",
+      "legacy_id": "v5-learnrecon",
+      "directory": "recon-02-learned-reconstruction",
+      "instances": {
+        "RECON-02-01": "heldout-v5-learnrecon",
+        "RECON-02-02": "heldout-v5-learnrecon-r2",
+        "RECON-02-03": "heldout-v5-learnrecon-r3",
+        "RECON-02-04": "heldout-v5-learnrecon-r4"
+      }
+    },
+    {
+      "id": "HW-01",
+      "legacy_id": "v5-safecpmg",
+      "directory": "hw-01-cpmg-limits",
+      "instances": {
+        "HW-01-01": "heldout-v5-safecpmg",
+        "HW-01-02": "heldout-v5-safecpmg-r2",
+        "HW-01-03": "heldout-v5-safecpmg-r3",
+        "HW-01-04": "heldout-v5-safecpmg-r4"
+      }
+    },
+    {
+      "id": "HW-02",
+      "legacy_id": "v5-spiralb0",
+      "directory": "hw-02-spiral-off-resonance",
+      "instances": {
+        "HW-02-01": "heldout-v5-spiralb0",
+        "HW-02-02": "heldout-v5-spiralb0-r2",
+        "HW-02-03": "heldout-v5-spiralb0-r3",
+        "HW-02-04": "heldout-v5-spiralb0-r4"
+      }
+    },
+    {
+      "id": "STATS-01",
+      "legacy_id": "v5-t2study",
+      "directory": "stats-01-scan-rescan-t2",
+      "instances": {
+        "STATS-01-01": "heldout-v5-t2study",
+        "STATS-01-02": "heldout-v5-t2study-r2",
+        "STATS-01-03": "heldout-v5-t2study-r3",
+        "STATS-01-04": "heldout-v5-t2study-r4"
+      }
+    },
+    {
+      "id": "STATS-02",
+      "legacy_id": "v6-pilotdesign",
+      "directory": "stats-02-pilot-study-design",
+      "instances": {
+        "STATS-02-01": "heldout-v6-pilotdesign",
+        "STATS-02-02": "heldout-v6-pilotdesign-r2",
+        "STATS-02-03": "heldout-v6-pilotdesign-r3",
+        "STATS-02-04": "heldout-v6-pilotdesign-r4"
+      }
+    },
+    {
+      "id": "WRITE-01",
+      "legacy_id": "v6-gapproposal",
+      "directory": "write-01-research-proposal",
+      "instances": {
+        "WRITE-01-01": "heldout-v6-gapproposal",
+        "WRITE-01-02": "heldout-v6-gapproposal-r2",
+        "WRITE-01-03": "heldout-v6-gapproposal-r3",
+        "WRITE-01-04": "heldout-v6-gapproposal-r4"
+      }
+    },
+    {
+      "id": "WRITE-02",
+      "legacy_id": "v6-honestresults",
+      "directory": "write-02-trial-reporting",
+      "instances": {
+        "WRITE-02-01": "heldout-v6-honestresults",
+        "WRITE-02-02": "heldout-v6-honestresults-r2",
+        "WRITE-02-03": "heldout-v6-honestresults-r3",
+        "WRITE-02-04": "heldout-v6-honestresults-r4"
+      }
+    },
+    {
+      "id": "WRITE-03",
+      "legacy_id": "v6-methodreview",
+      "directory": "write-03-manuscript-review",
+      "instances": {
+        "WRITE-03-01": "heldout-v6-methodreview",
+        "WRITE-03-02": "heldout-v6-methodreview-r2",
+        "WRITE-03-03": "heldout-v6-methodreview-r3",
+        "WRITE-03-04": "heldout-v6-methodreview-r4"
+      }
+    }
+  ]
+}

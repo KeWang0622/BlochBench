@@ -59,6 +59,8 @@ instance for that reason. The mrab tool uses the Python standard library only ([
 - Generated files are regenerated, not edited: family.json (`make families`), site/data and the README tables
   (`make build-site`), croissant.json (tools/make_croissant.py). Package hashes in instances.json are written only by
   the maintainers when they rebuild the instance packages from the original sources; do not rebuild packages.
+- `families/index.json` assigns permanent public task/variant IDs to frozen legacy identities. Never reuse or
+  renumber an assigned ID; append new IDs. Folder moves do not authorize edits to frozen task bytes.
 - Keep the canary string ([CANARY.txt](CANARY.txt)) with benchmark content.
 - Statements about other work, tools, licences or dates need a primary source; external ones are listed in
   [docs/SOURCES.md](docs/SOURCES.md).

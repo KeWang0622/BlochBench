@@ -51,6 +51,12 @@ class CatalogAndDataTest(unittest.TestCase):
     def test_list_real_catalog(self) -> None:
         code, out, _ = run_cli(["list"])
         self.assertEqual(code, 0)
+        self.assertIn("PERF-01", out)
+        self.assertIn("pcasl", out)
+        self.assertIn("PERF-01-01, PERF-01-02, PERF-01-03, PERF-01-04", out)
+        self.assertNotIn("heldout-", out)
+        code, out, _ = run_cli(["list", "--legacy"])
+        self.assertEqual(code, 0)
         self.assertIn(
             "v7-pcasl             perf   cap  60 min  instances: heldout-v7-pcasl, heldout-v7-pcasl-r2, "
             "heldout-v7-pcasl-r3, heldout-v7-pcasl-r4\n",

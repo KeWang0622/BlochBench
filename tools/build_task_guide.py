@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build docs/TASKS.md from the curated catalogue and frozen public task metadata.
+"""Build the task guide, numbering guide and family index from public metadata.
 
 Run ``python tools/build_task_guide.py --check`` to detect stale output without writing.
 This script only reads public family specifications; it does not execute tasks or graders.
@@ -32,8 +32,12 @@ def read_json(path: Path):
 def load_catalogue(repo: Path = REPO) -> list[dict]:
     """Validate every summary and join it to domain and variant counts from its sources."""
     catalogue = read_json(repo / "docs" / "task-catalog.json")
+    index = read_json(repo / "families" / "index.json")["tasks"]
     sources = sorted((repo / "families").glob("*/instances.json"))
-    ids = {path.parent.name for path in sources}
+    registered = {task["directory"]: task for task in index}
+    if set(registered) != {path.parent.name for path in sources}:
+        raise CatalogueError("Task index must cover every public family directory.")
+    ids = {task["legacy_id"] for task in index}
     if not isinstance(catalogue, dict) or set(catalogue) != ids or len(ids) != 24:
         raise CatalogueError("Catalogue must cover exactly the 24 public task types in families/.")
 
@@ -41,7 +45,8 @@ def load_catalogue(repo: Path = REPO) -> list[dict]:
     titles = set()
     for source in sources:
         family = source.parent
-        entry = catalogue[family.name]
+        identity = registered[family.name]
+        entry = catalogue[identity["legacy_id"]]
         if not isinstance(entry, dict) or set(entry) != FIELDS:
             raise CatalogueError(f"{family.name}: expected exactly {sorted(FIELDS)}.")
         for key, value in entry.items():
@@ -75,10 +80,15 @@ def load_catalogue(repo: Path = REPO) -> list[dict]:
             raise CatalogueError(f"{family.name}: missing or inconsistent domain.")
         if not all(instance_ids) or len(set(instance_ids)) != len(instance_ids):
             raise CatalogueError(f"{family.name}: missing or duplicate instance identifiers.")
+        if set(identity["instances"].values()) != set(instance_ids):
+            raise CatalogueError(f"{family.name}: public instance aliases do not match frozen instances.")
         tasks.append(
             dict(
                 entry,
-                id=family.name,
+                id=identity["legacy_id"],
+                public_id=identity["id"],
+                directory=family.name,
+                instance_aliases=identity["instances"],
                 domain=domains.pop(),
                 domain_name=domain_name.group(1).strip(),
                 variants=len(instances),
@@ -119,6 +129,10 @@ def render(tasks: list[dict]) -> str:
         f"The {variants} registered Core variants are not {variants} independent task types or a reported trial count. "
         "The current Core comparison uses one instance per type for each model.",
         "",
+        "Task codes name a domain and task: **PERF-01** is pCASL blood-flow mapping. "
+        "**PERF-01-04** selects its fourth registered dataset variant. "
+        "Use these codes in the CLI; see the [numbering guide](TASK-IDS.md) for the full mapping.",
+        "",
         "## Core task catalogue",
         "",
         "Each task title opens its full public example specification. The table highlights the main outputs; "
@@ -126,7 +140,7 @@ def render(tasks: list[dict]) -> str:
         "Sequence-design tasks are simulation exercises.",
     ]
     for domain in DOMAIN_ORDER:
-        group = sorted((task for task in tasks if task["domain"] == domain), key=lambda task: task["id"])
+        group = sorted((task for task in tasks if task["domain"] == domain), key=lambda task: task["public_id"])
         if not group:
             raise CatalogueError(f"No public tasks for domain {domain}.")
         lines.extend(
@@ -137,13 +151,14 @@ def render(tasks: list[dict]) -> str:
                 f"{len(group)} task {'type' if len(group) == 1 else 'types'} · "
                 f"{sum(task['variants'] for task in group)} variants",
                 "",
-                "| Task | Given | Deliver | Checked |",
-                "|---|---|---|---|",
+                "| ID | Task | Given | Deliver | Checked |",
+                "|---|---|---|---|---|",
             ]
         )
         for task in group:
             lines.append(
-                f"| [{task['title']}]({task['url']}) | {task['input']} | {task['output']} | {task['verification']} |"
+                f"| {task['public_id']} | [{task['title']}]({task['url']}) | "
+                f"{task['input']} | {task['output']} | {task['verification']} |"
             )
     lines.extend(
         [
@@ -152,33 +167,34 @@ def render(tasks: list[dict]) -> str:
             "",
             "These describe the work required by public examples, without supplying reference outputs.",
             "",
-            "**[T2 and transmit-field mapping](../families/v4-t2epg/task.example.json).** "
+            "**[T2 and transmit-field mapping](../families/relax-01-t2-b1-mapping/task.example.json).** "
             "Start with an echo-image series and its acquisition metadata. Return T2 and relative B1 maps on the same "
             "grid, plus regional T2 values. The grader checks map accuracy, including low-B1 regions, then runs the "
             "submitted fitting program on a scan with changed echo timing, geometry, and transmit field.",
             "",
-            "**[Gradient-echo EPI](../families/v8-epinav/task.example.json).** "
+            "**[Gradient-echo EPI](../families/seq-02-gradient-echo-epi/task.example.json).** "
             "Start with a numerical object and timing, hardware, and sampling requirements. Export a sequence, "
             "simulate that exported sequence, and reconstruct its measurements. The grader reads back the waveforms, "
             "replays them independently, and tests reconstruction on a different object with unknown gradient delays.",
             "",
-            "**[Manuscript review](../families/v6-methodreview/task.example.json).** "
+            "**[Manuscript review](../families/write-03-manuscript-review/task.example.json).** "
             "Start with a synthetic MRI manuscript and labelled passages. Return a structured issue list and referee "
             "report, with a quotation and proposed fix for each issue. The grader checks substantive issue detection, "
             "quotation accuracy, and whether sound passages were incorrectly criticised.",
             "",
             "## Technical identifiers and maintenance",
             "",
-            "The command-line tool uses immutable family identifiers such as `v4-t2epg` and instance identifiers with "
-            "suffixes such as `-r4`. The historical `v*` and `-r*` components are technical identifiers, "
-            "not difficulty tiers or repeated attempts. "
-            "Use the human-readable task titles to describe benchmark coverage.",
+            "The CLI accepts public instance codes such as `RELAX-01-03`. Frozen packages and historical results "
+            "retain their original IDs for reproducibility. The old `v4`–`v8` prefixes identify authoring batches; "
+            "`r*` suffixes identify sibling datasets, not repeated attempts or difficulty. "
+            "The [numbering guide](TASK-IDS.md) maps every public code to its frozen ID.",
             "",
             "Each full specification is stored as `task.example.json`; an evaluation package supplies its own "
             "authoritative `task.json`. For execution and isolation requirements, see the [quick start](../README.md) "
             "and [evaluation protocol](PROTOCOL.md).",
             "",
-            "Maintainers edit `docs/task-catalog.json`, then run `python tools/build_task_guide.py` and "
+            "Maintainers edit summaries in `docs/task-catalog.json` and identities in `families/index.json`, then run "
+            "`python tools/build_task_guide.py` and "
             "`python tools/build_site.py`. Check the saved guide with `python tools/build_task_guide.py --check`.",
             "",
         ]
@@ -190,9 +206,102 @@ def build(repo: Path = REPO) -> str:
     result = render(load_catalogue(repo))
     for target in re.findall(r"\]\(([^)]+)\)", result):
         path = (repo / "docs" / target).resolve()
-        if not path.is_file() or repo.resolve() not in path.parents:
+        generated = (repo / "docs" / "TASK-IDS.md").resolve()
+        if (not path.is_file() and path != generated) or repo.resolve() not in path.parents:
             raise CatalogueError(f"Task guide link does not resolve to a repository file: {target}")
     return result
+
+
+def render_identifiers(tasks: list[dict]) -> str:
+    """Explain public codes and preserve a complete, explicit compatibility map."""
+    ordered = sorted(tasks, key=lambda task: (DOMAIN_ORDER.index(task["domain"]), task["public_id"]))
+    lines = [
+        "<!-- Generated by tools/build_task_guide.py from families/index.json. -->",
+        "# Task numbering",
+        "",
+        "**PERF-01** identifies a task type: pCASL blood-flow mapping. **PERF-01-04** identifies its fourth "
+        "registered data variant. Codes stay stable after publication.",
+        "",
+        "| Part | Meaning | Example |",
+        "|---|---|---|",
+        "| Domain | Area of MRI research | `PERF` = perfusion and CEST |",
+        "| Task number | Task within that domain | `01` = pCASL blood-flow mapping |",
+        "| Variant number | Frozen dataset for that task | `04` = fourth registered variant |",
+        "",
+        "Use an instance code with `mrab fetch`, `verify`, `prepare`, `run`, `grade`, or `pair`. "
+        "A trial number is separate: `--run 2` means the second agent attempt on that same dataset.",
+        "",
+        "```bash",
+        "mrab fetch PERF-01-04",
+        "mrab verify PERF-01-04",
+        "mrab run PERF-01-04 --agent codex --model YOUR_MODEL_ID --run 1",
+        "```",
+        "",
+        "## What did V4, V5, V6, V7 and V8 mean?",
+        "",
+        "They were internal authoring batches, not benchmark versions, domains or difficulty levels. "
+        "The old `r2`, `r3` and `r4` suffixes identify sibling datasets and parameter settings, not repeated "
+        "agent attempts. Public codes replace these labels when browsing and running tasks.",
+        "",
+        "The mapping is explicit, not a suffix substitution. For example, `RELAX-01-03` maps to "
+        "`heldout-v4-t2epg-r4`: that task has three registered variants, not four. "
+        "[families/index.json](../families/index.json) is the authoritative machine-readable index.",
+        "",
+        "## Core task types",
+        "",
+        "| Code | Task | Domain | Variants | Frozen family ID |",
+        "|---|---|---|---:|---|",
+    ]
+    for task in ordered:
+        lines.append(
+            f"| {task['public_id']} | [{task['title']}](../families/{task['directory']}/) | "
+            f"{task['domain_name']} | {task['variants']} | `{task['id']}` |"
+        )
+    lines += [
+        "",
+        "## Compatibility and records",
+        "",
+        "Existing commands using frozen IDs still work. Downloads, archive filenames, extracted directories, "
+        "run records and the frozen study snapshot retain those IDs. The CLI resolves public codes to them; "
+        "no task data, grades, hashes or study outcomes change. Submit the records produced by the runner "
+        "without renaming their identifiers.",
+        "",
+        "<details>",
+        "<summary>All 88 instance mappings</summary>",
+        "",
+        "| Public instance code | Frozen instance ID |",
+        "|---|---|",
+    ]
+    for task in ordered:
+        lines.extend(f"| `{alias}` | `{legacy}` |" for alias, legacy in task["instance_aliases"].items())
+    lines += ["", "</details>", "", "[Task descriptions](TASKS.md) · [Run a task](GETTING-STARTED.md)", ""]
+    return "\n".join(lines)
+
+
+def render_family_index(tasks: list[dict]) -> str:
+    lines = [
+        "<!-- Generated by tools/build_task_guide.py from families/index.json and docs/task-catalog.json. -->",
+        "# Core tasks",
+        "",
+        "24 task types · 88 frozen data variants · 10 MRI research domains.",
+        "",
+        "Browse by domain and task code. Each folder contains its specification, generator, grader, "
+        "reference solution and validation controls. The [task guide](../docs/TASKS.md) explains inputs, "
+        "deliverables and checks; the [numbering guide](../docs/TASK-IDS.md) lists all public and legacy IDs.",
+        "",
+        "| Code | Task | Variants |",
+        "|---|---|---:|",
+    ]
+    for task in sorted(tasks, key=lambda item: (DOMAIN_ORDER.index(item["domain"]), item["public_id"])):
+        lines.append(f"| {task['public_id']} | [{task['title']}]({task['directory']}/) | {task['variants']} |")
+    lines += [
+        "",
+        "A task code such as `PERF-01` selects a research problem; `PERF-01-04` selects its fourth data variant. "
+        "[index.json](index.json) defines the stable mapping. Package contents and historical records keep their "
+        "frozen IDs for reproducibility.",
+        "",
+    ]
+    return "\n".join(lines)
 
 
 def main(argv: list[str] | None = None, repo: Path = REPO) -> int:
@@ -201,16 +310,22 @@ def main(argv: list[str] | None = None, repo: Path = REPO) -> int:
     args = parser.parse_args(argv)
     try:
         result = build(repo)
+        tasks = load_catalogue(repo)
+        outputs = {
+            repo / "docs" / "TASKS.md": result,
+            repo / "docs" / "TASK-IDS.md": render_identifiers(tasks),
+            repo / "families" / "README.md": render_family_index(tasks),
+        }
     except CatalogueError as exc:
         print(exc, file=sys.stderr)
         return 1
-    output = repo / "docs" / "TASKS.md"
-    if args.check:
-        if not output.is_file() or output.read_text(encoding="utf-8") != result:
-            print("Task guide is out of date: run python tools/build_task_guide.py", file=sys.stderr)
-            return 1
-    else:
-        output.write_text(result, encoding="utf-8")
+    for output, content in outputs.items():
+        if args.check:
+            if not output.is_file() or output.read_text(encoding="utf-8") != content:
+                print(f"{output.name} is out of date: run python tools/build_task_guide.py", file=sys.stderr)
+                return 1
+        else:
+            output.write_text(content, encoding="utf-8")
     return 0
 
 

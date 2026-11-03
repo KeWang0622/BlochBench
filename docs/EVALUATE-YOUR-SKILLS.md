@@ -169,10 +169,10 @@ API-key authentication for long evaluations.
 
 ~~~bash
 mrab list                                         # families and instances
-mrab fetch heldout-v7-pcasl-r4                    # MRAB_DATA_URL or --from-dir, see docs/DATA.md
-mrab verify heldout-v7-pcasl-r4
+mrab fetch PERF-01-04                    # MRAB_DATA_URL or --from-dir, see docs/DATA.md
+mrab verify PERF-01-04
 for k in 1 2 3; do
-  mrab pair heldout-v7-pcasl-r4 --agent codex --model <model> --addon my-addon --run "$k"
+  mrab pair PERF-01-04 --agent codex --model <model> --addon my-addon --run "$k"
 done
 ~~~
 

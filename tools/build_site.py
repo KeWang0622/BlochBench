@@ -70,9 +70,11 @@ def readme_field(readme: str, name: str) -> str:
 def families() -> list[dict]:
     catalog = read_json(REPO / "docs" / "task-catalog.json")
     out = []
-    for inst_file in sorted((REPO / "families").glob("*/instances.json")):
-        fam = inst_file.parent
-        fid = fam.name
+    index = read_json(REPO / "families" / "index.json")["tasks"]
+    for identity in index:
+        fam = REPO / "families" / identity["directory"]
+        inst_file = fam / "instances.json"
+        fid = identity["legacy_id"]
         instances = read_json(inst_file)
         readme = (fam / "README.md").read_text(encoding="utf-8")
         checks_m = re.search(r"^- Automated checks \((\d+)\):\s*(.+)$", readme, re.M)
@@ -90,6 +92,9 @@ def families() -> list[dict]:
         out.append(
             dict(
                 id=fid,
+                public_id=identity["id"],
+                directory=identity["directory"],
+                instance_aliases=identity["instances"],
                 title=catalog[fid]["title"],
                 input=catalog[fid]["input"],
                 output=catalog[fid]["output"],
@@ -104,7 +109,7 @@ def families() -> list[dict]:
                 instances=[x["instance"] for x in instances],
                 negative_controls=kinds.count("negative"),
                 summary=first_sentences(task_m.group(1)) if task_m else "",
-                url=f"{GITHUB}/tree/{BRANCH}/families/{fid}",
+                url=f"{GITHUB}/tree/{BRANCH}/families/{identity['directory']}",
             )
         )
     return out

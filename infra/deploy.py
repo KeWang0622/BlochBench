@@ -68,8 +68,9 @@ class Aws:
 def catalog() -> dict:
     out = {}
     for f in sorted((REPO / "families").glob("*/instances.json")):
+        family = json.loads((f.parent / "family.json").read_text())["id"]
         for x in json.loads(f.read_text()):
-            out[x["instance"]] = dict(x, family=f.parent.name)
+            out[x["instance"]] = dict(x, family=family)
     return out
 
 

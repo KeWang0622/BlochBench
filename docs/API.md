@@ -66,6 +66,9 @@ A gzip tar with submission.json at the top (format "mragentbench-bundle/1", the 
 directory per run: runs/<instance>/run<k>/work/ holding the agent's workspace, optionally runs/<instance>/run<k>/run.json.
 mrab bundle RUNS_DIR -o bundle.tar.gz builds it from the layout that mrab run writes.
 
+The hosted wire format uses frozen instance IDs, as shown above. Public CLI codes such as `PERF-01-04`
+resolve to those IDs before run records are written. See [task numbering](TASK-IDS.md).
+
 ## Status values
 
 awaiting_upload, queued, running, done, error. A done submission has a summary: runs, verified, rate (verified runs

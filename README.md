@@ -28,9 +28,9 @@ The current study evaluated one Core instance per type, not all 88 variants.
 
 | Example task | Given | Deliver | Checked by |
 |---|---|---|---|
-| [Cerebral blood flow mapping](families/v7-pcasl/) | Label/control MRI, calibration data and acquisition settings | Blood-flow map and reproducible processing code | Numerical ground truth and unseen input data |
-| [Diffusion tensor imaging](families/v7-epidti/) | Raw EPI diffusion readouts and acquisition metadata | Corrected images, tensor maps and analysis code | Reconstruction and tensor estimates |
-| [Report trial results](families/v6-honestresults/) | Precomputed trial results and reporting rules | Structured results, uncertainty and supported conclusions | Source-value, unit and claim consistency |
+| [PERF-01 · Cerebral blood flow mapping](families/perf-01-pcasl/) | Label/control MRI, calibration data and acquisition settings | Blood-flow map and reproducible processing code | Numerical ground truth and unseen input data |
+| [DIFF-02 · Diffusion tensor imaging](families/diff-02-epi-tensor-mapping/) | Raw EPI diffusion readouts and acquisition metadata | Corrected images, tensor maps and analysis code | Reconstruction and tensor estimates |
+| [WRITE-02 · Report trial results](families/write-02-trial-reporting/) | Precomputed trial results and reporting rules | Structured results, uncertainty and supported conclusions | Source-value, unit and claim consistency |
 
 See the [full task guide](docs/TASKS.md) for all 24 types, expected files and grading criteria.
 
@@ -43,10 +43,10 @@ See the [full task guide](docs/TASKS.md) for all 24 types, expected files and gr
 | Sequence design and Bloch simulation | 7 | 22 | Inversion-recovery T1 mapping with radial readouts; Gradient-echo EPI with delay-robust reconstruction |
 | Spectroscopy | 1 | 4 | Single-voxel metabolite quantification |
 | Functional MRI | 1 | 4 | Event-related fMRI effect estimation |
-| Relaxometry and QSM | 2 | 6 | Quantitative susceptibility mapping; T2 and transmit-field mapping from imperfect echoes |
-| Perfusion and CEST | 2 | 8 | APT-weighted CEST mapping; Cerebral blood flow from pCASL |
+| Relaxometry and QSM | 2 | 6 | T2 and transmit-field mapping from imperfect echoes; Quantitative susceptibility mapping |
+| Perfusion and CEST | 2 | 8 | Cerebral blood flow from pCASL; APT-weighted CEST mapping |
 | Diffusion | 2 | 8 | Diffusion processing and a two-group comparison; Diffusion tensor mapping from raw EPI |
-| Reconstruction | 2 | 8 | Learned versus classical quantitative reconstruction; Fat fraction and R2* from multi-coil k-space |
+| Reconstruction | 2 | 8 | Fat fraction and R2* from multi-coil k-space; Learned versus classical quantitative reconstruction |
 | Hardware, field and safety | 2 | 8 | CPMG design under RF and gradient limits; Spiral imaging with off-resonance correction |
 | Study design and statistics | 2 | 8 | Scan-rescan T2 study from k-space to statistics; Study design from pilot cartilage T2 measurements |
 | Writing and review | 3 | 12 | Evidence audit and research proposal; Trial reporting with traceable quantitative claims |
@@ -65,13 +65,14 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e .
 mrab list
-mrab fetch heldout-v7-pcasl-r4
-mrab verify heldout-v7-pcasl-r4
+mrab fetch PERF-01-04
+mrab verify PERF-01-04
 ```
 
 Next: [install the grader and run an agent](docs/GETTING-STARTED.md). Data and run directories default to
 `~/mragentbench/`, outside the clone. The evaluated agent must see only its workspace, not graders or reference answers.
-Technical instance IDs are stable filenames; their version and variant suffixes are not difficulty levels.
+Task codes use **domain–task–variant**: `PERF-01-04` is pCASL task 01, data variant 04.
+[Task numbering](docs/TASK-IDS.md) explains the codes and maps the legacy IDs retained in frozen files.
 
 ## Submit results
 

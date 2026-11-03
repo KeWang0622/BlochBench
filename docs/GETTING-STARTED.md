@@ -26,11 +26,14 @@ docker build --platform linux/amd64 -f harness/Dockerfile.grader -t blochbench-g
 ## 2. Fetch and inspect one task
 
 ```bash
-mrab fetch heldout-v7-pcasl-r4
-mrab verify heldout-v7-pcasl-r4
-mrab prepare heldout-v7-pcasl-r4 ~/mragentbench/work/first-task
+mrab fetch PERF-01-04
+mrab verify PERF-01-04
+mrab prepare PERF-01-04 ~/mragentbench/work/first-task
 cat ~/mragentbench/work/first-task/TASK.txt
 ```
+
+`PERF-01` is pCASL blood-flow mapping; `-04` selects its fourth data variant. `mrab list` shows public codes.
+The runner resolves them to frozen IDs in downloaded directories and run records. [Numbering guide](TASK-IDS.md).
 
 Downloads use the [Core data release](https://github.com/KeWang0622/BlochBench/releases/tag/core-v0.1.0).
 The manifest and every packaged file are checked by `mrab verify`. See [DATA.md](DATA.md) for overrides and formats.
@@ -41,13 +44,13 @@ The manifest and every packaged file are checked by `mrab verify`. See [DATA.md]
 Install and authenticate your agent CLI first, then substitute its model ID:
 
 ```bash
-mrab run heldout-v7-pcasl-r4 --agent codex --model YOUR_MODEL_ID --run 1
+mrab run PERF-01-04 --agent codex --model YOUR_MODEL_ID --run 1
 ```
 
 Use `--agent claude` for Claude Code. Other agent CLIs use an argv template:
 
 ```bash
-mrab run heldout-v7-pcasl-r4 --agent cmd --model YOUR_MODEL_ID \
+mrab run PERF-01-04 --agent cmd --model YOUR_MODEL_ID \
   --cmd '["my-agent", "--prompt-file", "{prompt}", "--cwd", "{workdir}"]'
 ```
 
@@ -56,7 +59,7 @@ mrab run heldout-v7-pcasl-r4 --agent cmd --model YOUR_MODEL_ID \
 A pass requires **all** automated checks. To grade a workspace produced separately:
 
 ```bash
-mrab grade heldout-v7-pcasl-r4 ~/mragentbench/work/first-task
+mrab grade PERF-01-04 ~/mragentbench/work/first-task
 ```
 
 ### Keep the evaluation isolated
@@ -83,7 +86,7 @@ instances × three attempts form a full-Core submission. Public results are self
 ```bash
 mrab addon validate path/to/addon
 export MRAB_RUNS=~/mragentbench/paired-runs
-mrab pair heldout-v7-pcasl-r4 --agent codex --model YOUR_MODEL_ID --addon path/to/addon --run 1
+mrab pair PERF-01-04 --agent codex --model YOUR_MODEL_ID --addon path/to/addon --run 1
 mrab compare --base BASE_CONFIG --addon ADDON_CONFIG --json compare.json
 ```
 
