@@ -4,6 +4,14 @@ All notable changes to BlochBench. Task changes follow this versioning rule: a c
 alter any score is a patch, a change that needs stored artifacts to be regraded is a minor version, and a change that
 needs agents to be rerun is a major version.
 
+## Unreleased
+
+- Give every Core task a stable domain code (for example `PERF-01`) and an explicit variant ID (`PERF-01-04`).
+  Rename family folders to descriptive paths; show the codes in the task guide, website and CLI.
+- Accept public variant IDs in fetch, verify, prepare, run, grade and pair. Keep legacy IDs working and preserve
+  downloaded package names, frozen task content, run records and scientific results. `mrab list --legacy` shows
+  the original identifiers; `docs/TASK-IDS.md` lists the complete mapping.
+
 ## 0.1.0 — 2026-11-03 (research preview)
 
 - Publish a clean Core snapshot and default download source. Repair 18 archives by removing unmanifested environment

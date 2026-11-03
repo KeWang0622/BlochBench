@@ -49,11 +49,11 @@ pip install -r harness/grader-env/requirements.txt</code></pre></div>
       </li>
       <li><h3>Select and fetch an instance</h3><p><a href="tasks.html">Browse task descriptions</a>, then use the exact instance ID shown by <code>mrab list</code>. The example below runs pCASL blood-flow quantification. Package provenance is documented in <a href="https://github.com/KeWang0622/BlochBench/blob/main/docs/DATA.md">DATA.md</a>.</p>
         <div class="code" data-copy><div class="bar"><span>shell</span><button class="copy" type="button">Copy</button></div><pre><code>mrab list
-mrab fetch heldout-v7-pcasl-r4
-mrab verify heldout-v7-pcasl-r4</code></pre></div>
+mrab fetch PERF-01-04
+mrab verify PERF-01-04</code></pre></div>
       </li>
       <li><h3>Run your agent</h3><p>The agent receives only the task and its public inputs. The grader runs after the agent stops.</p>
-        <div class="code" data-copy><div class="bar"><span>shell</span><button class="copy" type="button">Copy</button></div><pre><code>mrab run heldout-v7-pcasl-r4 --agent codex \
+        <div class="code" data-copy><div class="bar"><span>shell</span><button class="copy" type="button">Copy</button></div><pre><code>mrab run PERF-01-04 --agent codex \
   --model &lt;model&gt; --config my-agent --run 1</code></pre></div>
         <p class="small">Other hosts: <code>--agent claude</code> or <code>--agent cmd --cmd '…'</code>. <a href="https://github.com/KeWang0622/BlochBench/blob/main/mragentbench/cli.py">CLI commands →</a></p>
       </li>
@@ -74,7 +74,7 @@ python tools/validate_submission.py ../my-submission \
     </ol>
     <aside class="aside">
       <div class="card" id="addon"><h3>Compare an add-on</h3><p>Use the same model, instance and run number in both arms. Add the skill directory to the second run:</p>
-        <div class="code" data-copy><div class="bar"><span>shell</span><button class="copy" type="button">Copy</button></div><pre><code>mrab run heldout-v7-pcasl-r4 --agent codex \
+        <div class="code" data-copy><div class="bar"><span>shell</span><button class="copy" type="button">Copy</button></div><pre><code>mrab run PERF-01-04 --agent codex \
   --model &lt;model&gt; --run 1 \
   --addon /path/to/skills --config my-agent-mrf</code></pre></div>
         <p class="small"><a href="https://github.com/KeWang0622/BlochBench/blob/main/docs/GETTING-STARTED.md">Paired evaluation instructions →</a></p>

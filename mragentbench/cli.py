@@ -41,7 +41,7 @@ from .runner import AGENTS, run_instance, run_summary, run_tokens, runs_dir
 
 def cmd_list(args: argparse.Namespace) -> None:
     for family, entries in families().items():
-        print(family_line(family, entries))
+        print(family_line(family, entries, legacy=args.legacy))
 
 
 def cmd_fetch(args: argparse.Namespace) -> None:
@@ -236,7 +236,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sp = ap.add_subparsers(dest="cmd", required=True)
 
-    sp.add_parser("list", help="families, domains, time caps and instances").set_defaults(f=cmd_list)
+    p = sp.add_parser("list", help="task IDs, names, time caps and instances")
+    p.add_argument("--legacy", action="store_true", help="show the frozen identifiers used in saved run records")
+    p.set_defaults(f=cmd_list)
 
     p = sp.add_parser("fetch", help="get an instance package into the data directory")
     p.add_argument("instance")

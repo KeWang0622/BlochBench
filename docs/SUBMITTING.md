@@ -19,9 +19,12 @@ timeouts, crashes and interruptions. Follow the [quick start](GETTING-STARTED.md
 the repository.
 
 ```bash
-mrab run heldout-v7-pcasl-r4 --agent codex --model MODEL --config my-agent --run 1
+mrab run PERF-01-04 --agent codex --model MODEL --config my-agent --run 1
 python tools/prepare_submission.py ~/mragentbench/runs --config my-agent --output ../my-submission
 ```
+
+Public codes are accepted by the runner. Exported records and `metadata.json` retain the resolved frozen instance IDs;
+keep those IDs unchanged so hashes and existing results remain comparable. See [task numbering](TASK-IDS.md).
 
 The exporter copies run records, start records, grades and compressed traces. It excludes the agent workspace and
 does not execute code. It also includes folders that have `started.json` but no final `run.json`, counting those

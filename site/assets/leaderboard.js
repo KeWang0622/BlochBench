@@ -101,7 +101,8 @@
         D.families.forEach(function (f) { if (f.domain === d.code && instOf[f.id]) fams.push(f); });
       });
       cols = fams.map(function (f) {
-        return { label: f.display_title || f.title, title: f.display_title || f.title, fam: true,
+        return { label: f.public_id + " · " + (f.display_title || f.title),
+          title: f.public_id + ": " + (f.display_title || f.title), fam: true,
           cell: function (e) { return e.per_instance[instOf[f.id]]; } };
       });
     }

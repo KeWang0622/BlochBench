@@ -17,6 +17,10 @@ _spec = importlib.util.spec_from_file_location("build_task_guide", REPO / "tools
 assert _spec and _spec.loader
 guide = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(guide)
+_site_spec = importlib.util.spec_from_file_location("build_site", REPO / "tools" / "build_site.py")
+assert _site_spec and _site_spec.loader
+site_builder = importlib.util.module_from_spec(_site_spec)
+_site_spec.loader.exec_module(site_builder)
 
 
 class TaskGuideTest(unittest.TestCase):
@@ -25,7 +29,7 @@ class TaskGuideTest(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         repo = Path(temporary.name)
         (repo / "docs").mkdir()
-        for name in ("task-catalog.json", "PROTOCOL.md", "OFFLINE-RESULTS.md"):
+        for name in ("task-catalog.json", "PROTOCOL.md", "OFFLINE-RESULTS.md", "TASK-IDS.md"):
             shutil.copyfile(REPO / "docs" / name, repo / "docs" / name)
         shutil.copyfile(REPO / "README.md", repo / "README.md")
         for source in (REPO / "families").glob("*/instances.json"):
@@ -33,11 +37,13 @@ class TaskGuideTest(unittest.TestCase):
             target.mkdir(parents=True)
             for name in ("instances.json", "README.md", "task.example.json"):
                 shutil.copyfile(source.parent / name, target / name)
+        shutil.copyfile(REPO / "families" / "index.json", repo / "families" / "index.json")
         return repo
 
     def test_all_24_task_types_and_88_variants_have_full_specs(self):
         tasks = guide.load_catalogue()
-        expected = {path.parent.name for path in (REPO / "families").glob("*/instances.json")}
+        index = json.loads((REPO / "families" / "index.json").read_text())["tasks"]
+        expected = {task["legacy_id"] for task in index}
         self.assertEqual({task["id"] for task in tasks}, expected)
         self.assertEqual(len(tasks), 24)
         self.assertEqual(sum(task["variants"] for task in tasks), 88)
@@ -50,9 +56,11 @@ class TaskGuideTest(unittest.TestCase):
 
     def test_guide_has_exactly_one_catalogue_row_for_every_task(self):
         rendered = guide.build()
-        rows = re.findall(r"^\| \[([^\]]+)\]\(\.\./families/([^/]+)/task\.example\.json\)", rendered, re.M)
+        rows = re.findall(
+            r"^\| [A-Z]+-\d{2} \| \[([^\]]+)\]\(\.\./families/([^/]+)/task\.example\.json\)", rendered, re.M
+        )
         self.assertEqual(len(rows), 24)
-        self.assertEqual(dict(rows), {task["title"]: task["id"] for task in guide.load_catalogue()})
+        self.assertEqual(dict(rows), {task["title"]: task["directory"] for task in guide.load_catalogue()})
         for target in re.findall(r"\]\(([^)]+)\)", rendered):
             self.assertTrue((REPO / "docs" / target).is_file(), target)
 
@@ -84,12 +92,64 @@ class TaskGuideTest(unittest.TestCase):
                     guide.load_catalogue(repo)
 
     def test_missing_public_source_or_documentation_link_is_rejected(self):
-        for target in ("families/v4-qsm/task.example.json", "docs/PROTOCOL.md"):
+        for target in ("families/relax-02-susceptibility-mapping/task.example.json", "docs/PROTOCOL.md"):
             with self.subTest(target=target):
                 repo = self.copy_sources()
                 (repo / target).unlink()
                 with self.assertRaises(guide.CatalogueError):
                     guide.build(repo)
+
+    def test_public_codes_preserve_every_frozen_instance(self):
+        tasks = guide.load_catalogue()
+        identifiers = guide.render_identifiers(tasks)
+        browse = guide.render_family_index(tasks)
+        self.assertEqual(identifiers, guide.render_identifiers(list(reversed(tasks))))
+        self.assertEqual(browse, guide.render_family_index(list(reversed(tasks))))
+        self.assertEqual((REPO / "docs" / "TASK-IDS.md").read_text(), identifiers)
+        self.assertEqual((REPO / "families" / "README.md").read_text(), browse)
+        aliases = {alias: legacy for task in tasks for alias, legacy in task["instance_aliases"].items()}
+        self.assertEqual(len(aliases), 88)
+        self.assertEqual(aliases["RELAX-01-03"], "heldout-v4-t2epg-r4")
+        self.assertEqual(aliases["PERF-01-04"], "heldout-v7-pcasl-r4")
+        for alias, legacy in aliases.items():
+            self.assertIn(f"| `{alias}` | `{legacy}` |", identifiers)
+
+    def test_rejects_instance_alias_missing_from_frozen_collection(self):
+        repo = self.copy_sources()
+        path = repo / "families" / "index.json"
+        index = json.loads(path.read_text())
+        index["tasks"][0]["instances"]["SEQ-01-01"] = "unknown-instance"
+        path.write_text(json.dumps(index))
+        with self.assertRaises(guide.CatalogueError):
+            guide.load_catalogue(repo)
+
+    def test_site_public_codes_keep_frozen_results_joinable(self):
+        site_families = site_builder.families()
+        guide_tasks = {task["id"]: task for task in guide.load_catalogue()}
+        board = json.loads((REPO / "leaderboard" / "leaderboard.json").read_text())
+        family_for_instance = {}
+        for family in site_families:
+            task = guide_tasks[family["id"]]
+            self.assertEqual(family["public_id"], task["public_id"])
+            self.assertEqual(family["instance_aliases"], task["instance_aliases"])
+            self.assertTrue(family["url"].endswith("/families/" + task["directory"]))
+            self.assertEqual(set(family["instances"]), set(family["instance_aliases"].values()))
+            for instance in family["instances"]:
+                self.assertNotIn(instance, family_for_instance)
+                family_for_instance[instance] = family["id"]
+        self.assertEqual(len(family_for_instance), 88)
+        for instance in board["split"]["instances"]:
+            self.assertIn(instance, family_for_instance)
+        for entry in board["entries"]:
+            self.assertLessEqual(set(entry["per_instance"]), set(family_for_instance))
+
+    def test_regenerates_missing_generated_crosslinks(self):
+        repo = self.copy_sources()
+        (repo / "docs" / "TASK-IDS.md").unlink()
+        self.assertEqual(guide.main([], repo), 0)
+        self.assertTrue((repo / "docs" / "TASK-IDS.md").is_file())
+        self.assertTrue((repo / "families" / "README.md").is_file())
+        self.assertEqual(guide.main(["--check"], repo), 0)
 
     def test_check_detects_stale_output_without_writing(self):
         repo = self.copy_sources()

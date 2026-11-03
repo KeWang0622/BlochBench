@@ -4,9 +4,12 @@ The [Core v0.1.0 release](https://github.com/KeWang0622/BlochBench/releases/tag/
 packages (5.74 GB total). Download one task at a time with `mrab fetch`; a GitHub account is not needed.
 
 ```bash
-mrab fetch heldout-v7-pcasl-r4
-mrab verify heldout-v7-pcasl-r4
+mrab fetch PERF-01-04
+mrab verify PERF-01-04
 ```
+
+Public codes such as `PERF-01-04` resolve through [the task index](../families/index.json). The downloaded archive
+and extracted folder retain their frozen name, here `heldout-v7-pcasl-r4`. See [task numbering](TASK-IDS.md).
 
 Default package base URL:
 `https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0`.

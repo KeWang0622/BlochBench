@@ -4,7 +4,7 @@ labels: [task]
 body:
   - type: input
     id: instance
-    attributes: {label: Instance, placeholder: heldout-v7-pcasl-r4}
+    attributes: {label: Instance, placeholder: PERF-01-04}
     validations: {required: true}
   - type: dropdown
     id: kind

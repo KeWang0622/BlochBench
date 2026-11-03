@@ -16,6 +16,11 @@ import io
 import json
 from pathlib import Path
 
+try:
+    from .make_family_metadata import build, family_dirs
+except ImportError:  # Direct execution: python tools/make_croissant.py.
+    from make_family_metadata import build, family_dirs
+
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_BASE = "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/"
 CONTEXT = {
@@ -58,8 +63,8 @@ CONTEXT = {
     "samplingRate": "cr:samplingRate",
 }
 COLUMNS = [
-    ("instance", "sc:Text", "Instance name"),
-    ("family", "sc:Text", "Task family"),
+    ("instance", "sc:Text", "Frozen legacy instance name; public aliases are in families/index.json"),
+    ("family", "sc:Text", "Frozen legacy family ID; public task IDs are in families/index.json"),
     ("domain", "sc:Text", "MRI research domain code"),
     ("cap_s", "sc:Integer", "Time cap for an agent run, seconds"),
     ("checks_grader", "sc:Text", "Grader script inside the package (private/)"),
@@ -68,7 +73,8 @@ COLUMNS = [
     ("package_bytes", "sc:Integer", "Package size in bytes"),
 ]
 RAI = {
-    "rai:dataCollection": "Every instance is produced by its family's generator script (families/<id>/code) "
+    "rai:dataCollection": "Every instance is produced by its family's generator script (families/<directory>/code; "
+    "see families/index.json for public and legacy identifiers) "
     "from simulations, "
     "digital phantoms and synthetic study data with fixed seeds, then frozen with a SHA-256 manifest. "
     "No generator reads external data.",
@@ -100,15 +106,18 @@ RAI = {
 
 
 def catalog_rows() -> list[dict]:
+    """Keep the published catalog's names and row order stable after source directory renames."""
     rows = []
-    for f in sorted((REPO / "families").glob("*/instances.json")):
+    families = sorted(((build(folder), folder) for folder in family_dirs(REPO / "families")), key=lambda p: p[0]["id"])
+    for family, folder in families:
+        f = folder / "instances.json"
         for x in json.loads(f.read_text()):
             if not x.get("package_sha256"):
                 raise SystemExit(f"{x['instance']}: no package_sha256; run tools/make_packages.py first")
             rows.append(
                 dict(
                     instance=x["instance"],
-                    family=f.parent.name,
+                    family=family["id"],
                     domain=x["domain"],
                     cap_s=x["cap_s"],
                     checks_grader=x["grader"],
@@ -118,6 +127,20 @@ def catalog_rows() -> list[dict]:
                 )
             )
     return rows
+
+
+def public_instances() -> dict[str, dict]:
+    """Public IDs and source links are descriptive metadata, not changes to frozen packages."""
+    lookup = {}
+    for folder in family_dirs(REPO / "families"):
+        family = build(folder)
+        for alias, legacy in family["instance_aliases"].items():
+            lookup[legacy] = {
+                "alias": alias,
+                "task_id": family["public_id"],
+                "url": f"https://github.com/KeWang0622/BlochBench/tree/main/families/{folder.name}",
+            }
+    return lookup
 
 
 def main() -> None:
@@ -133,6 +156,7 @@ def main() -> None:
     ap.add_argument("--date-published", help="ISO date of the release; set when the data are published")
     a = ap.parse_args()
     rows = catalog_rows()
+    identities = public_instances()
     a.catalog_out.parent.mkdir(parents=True, exist_ok=True)
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=[c for c, _, _ in COLUMNS], lineterminator="\n")
@@ -145,20 +169,24 @@ def main() -> None:
             "@type": "cr:FileObject",
             "@id": "catalog.csv",
             "name": "catalog.csv",
-            "description": "One row per public instance: family, domain, time cap, grader, package and its SHA-256.",
+            "description": "Frozen release catalog: legacy instance and family IDs, domain, time cap, grader, "
+            "package and its SHA-256. Public task and instance aliases are mapped in families/index.json.",
             "contentUrl": base + "catalog.csv",
             "encodingFormat": "text/csv",
             "sha256": hashlib.sha256(buf.getvalue().encode()).hexdigest(),
         }
     ]
     for r in rows:
+        identity = identities[r["instance"]]
         dist.append(
             {
                 "@type": "cr:FileObject",
                 "@id": r["package"],
                 "name": r["package"],
-                "description": f"Instance {r['instance']} ({r['family']}): prompt, public inputs, private grader, "
+                "description": f"Instance {identity['alias']} of task {identity['task_id']} "
+                f"(legacy instance {r['instance']}, family {r['family']}): prompt, public inputs, private grader, "
                 "reference, controls, hidden data and FROZEN-SHA256.txt.",
+                "url": identity["url"],
                 "contentUrl": base + r["package"],
                 "encodingFormat": "application/x-tar",
                 "contentSize": f"{r['package_bytes']} B",

@@ -145,7 +145,7 @@ def validate_partition(parts: list[dict], total: dict, name: str) -> None:
 
 def public_instances() -> dict[str, tuple[str, str]]:
     return {
-        row["instance"]: (path.parent.name, row["domain"])
+        row["instance"]: (read_json(path.parent / "family.json")["id"], row["domain"])
         for path in sorted((REPO / "families").glob("*/instances.json"))
         for row in read_json(path)
     }

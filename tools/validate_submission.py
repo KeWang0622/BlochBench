@@ -30,9 +30,10 @@ def read_json(path: Path) -> dict:
 def catalog(root: Path = REPO / "families") -> dict:
     result = {}
     for path in sorted(root.glob("*/instances.json")):
-        checks = read_json(path.parent / "family.json")["checks"]
+        metadata = read_json(path.parent / "family.json")
+        checks = metadata["checks"]
         for entry in json.loads(path.read_text()):
-            result[entry["instance"]] = dict(entry, family=path.parent.name, checks=checks)
+            result[entry["instance"]] = dict(entry, family=metadata["id"], checks=checks)
     return result
 
 

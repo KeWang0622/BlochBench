@@ -3,6 +3,7 @@
 | I want to… | Start here |
 |---|---|
 | Understand the questions and Core/Hard | [Task guide](TASKS.md) |
+| Understand task and variant codes | [Task numbering](TASK-IDS.md) |
 | Run one task | [Getting started](GETTING-STARTED.md) |
 | Download and verify data | [Core data](DATA.md) |
 | Submit my agent's results | [Submission guide](SUBMITTING.md) |

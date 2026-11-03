@@ -20,13 +20,15 @@
   function matches(f) {
     if (state.domain !== 'all' && f.domain !== state.domain) return false;
     if (!state.q) return true;
-    var hay = [f.id, f.title, f.input, f.output, f.verification, f.summary, f.domain_name, f.check_names.join(' ')].join(' ').toLowerCase();
+    var hay = [f.public_id, f.id, Object.keys(f.instance_aliases).join(" "), f.instances.join(" "), f.title, f.input, f.output, f.verification, f.summary, f.domain_name, f.check_names.join(' ')].join(' ').toLowerCase();
     return state.q.split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
   }
 
   function card(f) {
-    return h('article', { class: 'task', id: f.id, 'aria-labelledby': 't-' + f.id },
-      h('h3', { id: 't-' + f.id, text: f.display_title || f.title }),
+    return h('article', { class: 'task', id: f.public_id, 'aria-labelledby': 't-' + f.public_id },
+      h('span', { id: f.id, 'aria-hidden': 'true' }),
+      h('p', { class: 'technical-id', text: f.public_id }),
+      h('h3', { id: 't-' + f.public_id, text: f.display_title || f.title }),
       h('dl', { class: 'task-contract' },
         h('dt', { text: 'Given' }), h('dd', { text: f.input || f.summary }),
         h('dt', { text: 'Deliver' }), h('dd', { text: f.output || 'Files specified by the task.' }),
@@ -35,8 +37,12 @@
         h('span', { title: 'Time cap per run' }, icon('clock'), f.cap_min + ' min'),
         h('span', { title: 'Public instances' }, icon('layers'), f.instances.length + ' instances')),
       h('details', null,
-        h('summary', { text: 'Checks and technical identifiers' }),
-        h('p', { class: 'technical-id' }, 'Family ID: ', h('code', { text: f.id })),
+        h('summary', { text: 'Variants and checks' }),
+        h('p', null, 'Run any variant: ', h('code', { text: 'mrab fetch ' + Object.keys(f.instance_aliases)[0] })),
+        h('ul', null, Object.keys(f.instance_aliases).map(function (alias) {
+          return h('li', null, h('code', { text: alias }), ' · ', h('code', { text: f.instance_aliases[alias] }));
+        })),
+        h('p', { class: 'technical-id' }, 'Frozen family ID: ', h('code', { text: f.id })),
         h('p', null, f.checks + ' checks · ' + f.negative_controls + ' negative controls · ' +
           (f.review === 'pending' ? 'expert review pending' : 'review ' + f.review)),
         h('ul', null, f.check_names.map(function (c) { return h('li', null, h('code', { text: c })); }))),
