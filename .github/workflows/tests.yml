@@ -1,0 +1,54 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Lint
+        run: |
+          pip install -r requirements-dev.txt
+          ruff check mragentbench tools tests infra
+          ruff format --check mragentbench tools tests infra
+  unit:
+    name: unit (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install mrab and the test dependencies
+        run: pip install -e . -r requirements-dev.txt
+      - name: Allow unprivileged user namespaces (the per-arm sandbox of mrab pair)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Sandbox available
+        run: |
+          python -c "import sys; sys.path.insert(0, 'tests'); from toy import sandbox_available; print('sandbox available:', sandbox_available())"
+      - name: Unit tests (command line, add-ons, pairs, comparison, bundle, grading job, family metadata)
+        run: python -m unittest discover -s tests -v
+      - name: Unit tests without the sandbox (the fallback path)
+        run: MRAB_SANDBOX=0 python -m unittest discover -s tests
+      - name: Frozen offline results and generated site
+        run: |
+          python tools/build_offline_leaderboard.py --check
+          python tools/build_site.py --check
+          python tools/build_task_guide.py --check
+      - name: mrab command line
+        run: |
+          mrab list | head -5
+          mrab submit --help >/dev/null

@@ -1,0 +1,56 @@
+name: build-grader-image
+on:
+  push:
+    branches: [main]
+    paths: ['harness/**', 'mragentbench/**', 'families/*/instances.json', 'pyproject.toml', '.dockerignore', '.github/workflows/build-grader.yml']
+  pull_request:
+    paths: ['harness/**', 'mragentbench/**', '.github/workflows/build-grader.yml']
+  workflow_dispatch:
+    inputs:
+      publish_ecr:
+        description: Publish to the maintainer-configured ECR repository
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  id-token: write
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-west-2' }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build grader image
+        run: docker build -f harness/Dockerfile.grader -t mragentbench-grader:ci .
+      - name: Grader environment imports (root)
+        run: |
+          docker run --rm mragentbench-grader:ci python -c "import numpy, scipy, nibabel, h5py, pypulseq, sigpy, dipy, pywt; from juliacall import Main as jl; jl.seval('using KomaMRI'); print('grader environment OK')"
+      - name: Grader environment imports (unprivileged user, as in hosted grading)
+        run: |
+          docker run --rm --user 65534:65534 -e HOME=/tmp/h -e JULIA_DEPOT_PATH=/tmp/h/julia:/opt/julia-depot mragentbench-grader:ci \
+            sh -c 'mkdir -p /tmp/h && python -c "from juliacall import Main as jl; jl.seval(\"using KomaMRI\"); print(\"unprivileged OK\")"'
+      - name: mrab and grading job
+        run: |
+          docker run --rm mragentbench-grader:ci sh -c 'mrab list | head -3 && python -m mragentbench.service.job --help >/dev/null && echo job OK'
+      - name: Configure AWS credentials (OIDC)
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_ecr && github.ref == 'refs/heads/main' && vars.AWS_ROLE_ARN != '' && vars.ECR_REGISTRY != '' && vars.ECR_REPOSITORY != ''
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Push to Amazon ECR
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_ecr && github.ref == 'refs/heads/main' && vars.AWS_ROLE_ARN != '' && vars.ECR_REGISTRY != '' && vars.ECR_REPOSITORY != ''
+        id: push
+        env:
+          REGISTRY: ${{ vars.ECR_REGISTRY }}
+        run: |
+          aws ecr get-login-password | docker login --username AWS --password-stdin "${REGISTRY}"
+          for TAG in "sha-${GITHUB_SHA::12}" main; do
+            docker tag mragentbench-grader:ci "${REGISTRY}/${ECR_REPOSITORY}:${TAG}"
+            docker push "${REGISTRY}/${ECR_REPOSITORY}:${TAG}"
+          done
+          DIGEST=$(aws ecr describe-images --repository-name "${ECR_REPOSITORY}" --image-ids imageTag=main --query 'imageDetails[0].imageDigest' --output text)
+          echo "Pushed ${REGISTRY}/${ECR_REPOSITORY}@${DIGEST}" | tee -a "${GITHUB_STEP_SUMMARY}"

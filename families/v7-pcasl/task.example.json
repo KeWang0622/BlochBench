@@ -1,0 +1,59 @@
+{
+ "id": "heldout-v7-pcasl-r4-01",
+ "split": "heldout_evaluation",
+ "family": "perfusion (arterial spin labelling)",
+ "scope": "quantitative cerebral blood flow from a 2D multislice pCASL dataset with background suppression and a separate M0 scan",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "asl.npz": "key 'asl': float32 [n_volumes, n_slices, ny, nx] magnitude images of the pCASL series in acquisition order; volumes alternate between control and label (see acq.json 'first_volume'). Array index order is [volume, slice, row, column].",
+  "m0.npz": "key 'm0': float32 [n_slices, ny, nx] proton-density (M0) images acquired with the same 2D multislice readout and receiver gain as the ASL series, without labelling and without background suppression, with repetition time acq.json 'm0_tr_s'; each slice was excited only once per TR (no preparation pulses).",
+  "t1.npz": "key 't1_s': float32 [n_slices, ny, nx] tissue longitudinal relaxation time T1 in seconds from a separate T1 map co-registered to the ASL grid (0 outside the head).",
+  "acq.json": "acquisition parameters for this dataset (keys listed under acquisition_parameters)."
+ },
+ "acquisition_parameters": {
+  "label_duration_s": "pCASL labelling duration (bolus duration) in seconds",
+  "pld_s": "post-labelling delay in seconds, defined as the time from the end of labelling to the excitation of the FIRST ACQUIRED slice",
+  "slice_order": "list of slice indices (0-based, index into the slice axis of the arrays) in the order in which they were acquired after each labelling/control period",
+  "slice_interval_s": "time between the excitations of consecutively acquired slices",
+  "labeling_efficiency": "pCASL labelling (inversion) efficiency at the labelling plane, not including any effect of background suppression",
+  "n_bs_pulses": "number of background-suppression inversion pulses played between the end of labelling and the excitation of the first slice",
+  "bs_inversion_efficiency": "inversion efficiency of each background-suppression pulse for arterial blood magnetization",
+  "m0_tr_s": "repetition time of the M0 acquisition in seconds",
+  "first_volume": "'control' or 'label': type of volume 0 of asl.npz; types then alternate",
+  "t1_blood_s": "arterial blood T1 in seconds",
+  "partition_coefficient_mL_per_g": "whole-brain blood/tissue water partition coefficient lambda in mL/g"
+ },
+ "physiology_conventions": "Single-compartment kinetics: the labelled water decays with blood T1 after the label is created (consensus white-paper assumption); all arterial transit times are shorter than the PLD of the first acquired slice; the labelled bolus has a rectangular shape of length label_duration_s. Images are noise-corrupted; noise is additive Gaussian before the magnitude operation and the SNR is high. There is no subject motion and no partial-volume mixing between voxels.",
+ "endpoint": "voxel-wise cerebral blood flow in mL/100 g/min on the input grid [n_slices, ny, nx]",
+ "accuracy_targets": "On hidden datasets with different acquisition parameters, slice orders and noise realizations: for every slice, the mean CBF over grey-matter voxels must be within 6% of the true grey-matter mean, and the mean over white-matter voxels within 10% of the true white-matter mean. The same targets apply to the public dataset. Voxels outside the brain are not scored.",
+ "entrypoint": {
+  "file": "asl_cbf.py",
+  "cli": "python asl_cbf.py --input-dir <directory containing asl.npz, m0.npz, t1.npz, acq.json> --output <path ending in .npz>",
+  "standalone": "all custom code must be inside this one file; installed third-party packages may be imported. It must run in a clean directory containing only this file and the input directory, reading every acquisition parameter from acq.json (hidden datasets have different values, matrix sizes and slice orders).",
+  "output_schema": {
+   "cbf": "float [n_slices, ny, nx] CBF in mL/100 g/min on the input grid; any value outside the brain"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "asl_cbf.py",
+  "cbf.npz (the entrypoint run on the public inputs)",
+  "cbf_slices.png (figure of the CBF map)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python version and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "model": "string describing the quantification model and every correction applied",
+  "effective_labeling_efficiency": "float used for the public dataset",
+  "pld_by_slice_s": "list of the post-labelling delay used for each slice index of the public dataset",
+  "gm_cbf_by_slice": "list of your mean grey-matter CBF per slice (use your own segmentation or thresholds)",
+  "software": "object",
+  "validation_summary": "string or object describing how you checked the result",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads cbf.npz, reruns asl_cbf.py with the workspace .venv interpreter on the public inputs and on hidden datasets, and compares slice-wise grey- and white-matter means with ground truth."
+}

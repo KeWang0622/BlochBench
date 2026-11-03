@@ -1,0 +1,12 @@
+[
+ {
+  "path": "public/inputs/manuscript.md",
+  "bytes": 7230,
+  "sha256": "aadc2ef737739090139be9c4060d32a47b5538789d214fdb5e6a060733a6aadb"
+ },
+ {
+  "path": "public/inputs/manuscript_paragraphs.json",
+  "bytes": 9227,
+  "sha256": "9b961ebbaafd5744c0241e693c08a05a8cfe594011308fa83676c055e802f1d4"
+ }
+]

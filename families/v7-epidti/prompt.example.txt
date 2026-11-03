@@ -1,0 +1,8 @@
+Produce diffusion tensor maps from the raw echo-planar diffusion dataset described in task.json. You are given unprocessed single-shot EPI readouts for every diffusion volume and slice, including navigator readouts, together with a B0 field map, a per-voxel gradient-nonlinearity field and the nominal diffusion gradient table. The raw-data and diffusion conventions, the endpoint definitions, the accuracy targets and the file interfaces are in task.json.
+
+Write a standalone entrypoint, epi_dti.py, that reads one input directory, reconstructs the images and writes fractional anisotropy, mean diffusivity, the principal diffusion direction and a corrected mean b=0 image, all on the undistorted image grid. Keep all custom code in that single file and read every parameter from the inputs, because it will be rerun on other acquisitions with different timing errors, field maps, phase-encoding polarity, echo spacing, gradient fields and diffusion schemes. Run it on the public inputs and return the result.
+
+Use established tools or libraries where they help, and keep your own code minimal and readable. Decide which reconstruction steps and corrections are needed between the raw readouts and the tensor fit, and justify them.
+
+Return the runnable code, the output files listed in task.json, a figure comparing uncorrected and corrected b=0 images together with FA, MD and colour-coded direction maps, an environment record with Python and package versions, and a README.md describing your validation evidence and the limitations of the result. No claims about in vivo data are requested. Expect to spend about an hour.
+

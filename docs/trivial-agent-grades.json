@@ -1,0 +1,146 @@
+{
+ "heldout-v7-pcasl-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 0.1
+ },
+ "heldout-v7-mrsquant-r4": {
+  "all_pass": false,
+  "failed": 8,
+  "n": 8,
+  "seconds": 0.1
+ },
+ "heldout-v7-cestapt-r4": {
+  "all_pass": false,
+  "failed": 14,
+  "n": 14,
+  "seconds": 0.5
+ },
+ "heldout-v7-dixonraw-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 0.1
+ },
+ "heldout-v7-epidti-r4": {
+  "all_pass": false,
+  "failed": 20,
+  "n": 20,
+  "seconds": 0.3
+ },
+ "heldout-v7-fmriglm-r4": {
+  "all_pass": false,
+  "failed": 14,
+  "n": 14,
+  "seconds": 0.1
+ },
+ "heldout-v8-mprage-r4": {
+  "all_pass": false,
+  "failed": 14,
+  "n": 14,
+  "seconds": 1.4
+ },
+ "heldout-v8-sedwi-r4": {
+  "all_pass": false,
+  "failed": 14,
+  "n": 14,
+  "seconds": 1.1
+ },
+ "heldout-v8-ute-r4": {
+  "all_pass": false,
+  "failed": 12,
+  "n": 12,
+  "seconds": 1.1
+ },
+ "heldout-v8-spiral-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 1.0
+ },
+ "heldout-v8-tse-r4": {
+  "all_pass": false,
+  "failed": 15,
+  "n": 15,
+  "seconds": 1.0
+ },
+ "heldout-v8-epinav-r4": {
+  "all_pass": false,
+  "failed": 12,
+  "n": 12,
+  "seconds": 1.0
+ },
+ "heldout-v5-irt1-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 0.9
+ },
+ "heldout-v5-spiralb0-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 0.8
+ },
+ "heldout-v5-safecpmg-r4": {
+  "all_pass": false,
+  "failed": 15,
+  "n": 15,
+  "seconds": 0.8
+ },
+ "heldout-v5-t2study-r4": {
+  "all_pass": false,
+  "failed": 9,
+  "n": 9,
+  "seconds": 0.5
+ },
+ "heldout-v5-dwigroup-r4": {
+  "all_pass": false,
+  "failed": 13,
+  "n": 13,
+  "seconds": 0.7
+ },
+ "heldout-v5-learnrecon-r4": {
+  "all_pass": false,
+  "failed": 13,
+  "n": 13,
+  "seconds": 0.3
+ },
+ "heldout-v6-gapproposal-r4": {
+  "all_pass": false,
+  "failed": 17,
+  "n": 17,
+  "seconds": 0.7
+ },
+ "heldout-v6-honestresults-r4": {
+  "all_pass": false,
+  "failed": 16,
+  "n": 16,
+  "seconds": 0.0
+ },
+ "heldout-v6-methodreview-r4": {
+  "all_pass": false,
+  "failed": 8,
+  "n": 8,
+  "seconds": 0.0
+ },
+ "heldout-v6-pilotdesign-r4": {
+  "all_pass": false,
+  "failed": 14,
+  "n": 14,
+  "seconds": 0.6
+ },
+ "heldout-v4-t2epg-r4": {
+  "all_pass": false,
+  "failed": 18,
+  "n": 18,
+  "seconds": 0.1
+ },
+ "heldout-v4-qsm-r4": {
+  "all_pass": false,
+  "failed": 11,
+  "n": 11,
+  "seconds": 0.3
+ }
+}

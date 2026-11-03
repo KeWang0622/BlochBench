@@ -1,0 +1,49 @@
+{
+ "id": "heldout-v7-fmriglm-r4-01",
+ "split": "heldout_evaluation",
+ "family": "functional MRI (task GLM)",
+ "scope": "voxel-wise response amplitude and calibrated activation statistics from a rapid event-related 2D multislice BOLD run",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "bold.npz": "key 'data': float32 [n_stored_volumes, n_slices, ny, nx] magnitude BOLD series as stored by the scanner, already realigned. Index order [volume, slice, row, column].",
+  "acq.json": "tr_s (volume repetition time), n_dummy_volumes (the first n_dummy_volumes stored volumes were acquired before the longitudinal magnetization reached steady state), slice_times_s (list, acquisition time of each slice index relative to the start of its volume; slices are 2D and each is sampled instantaneously at that time).",
+  "events.json": "onsets_s: list of event onset times in seconds measured from the start of stored volume 0 (the first stored volume, which is a dummy volume); duration_s: duration of every event.",
+  "motion.txt": "realignment parameters, one row per stored volume (including dummies): three translations in mm and three rotations in rad. Realignment has been applied, but motion-related signal fluctuations (spin history, interpolation) remain in the data and are approximately linear in these parameters; some of the motion is time-locked to the events."
+ },
+ "signal_conventions": "Responses add linearly. The response to one event is the event's boxcar convolved with SPM's canonical double-gamma HRF (gamma density with shape 6 and scale 1 s minus 1/6 of a gamma density with shape 16 and scale 1 s, i.e. response delay 6 s, undershoot delay 16 s, dispersion 1). Each voxel's signal is baseline * (1 + slow drift + motion-related term + (A/100) * sum of event responses + noise), where each event response is scaled so that a single isolated event has a peak value of 1. The noise is temporally autocorrelated; the drift is slow (periods longer than 120 s).",
+ "endpoint": {
+  "psc": "A per voxel: peak percent signal change of the response to a single isolated event, in percent of the voxel's steady-state baseline",
+  "z": "per-voxel z statistic for the one-sided test A > 0, which must be valid under the null hypothesis for this dataset's noise (standard normal for voxels without a response)"
+ },
+ "accuracy_targets": "On hidden runs with different TR, slice orders, number of dummy volumes, event timing, autocorrelation and drift, and on the public run: (1) in responsive voxels, the median signed relative error of psc must be within +/-8% separately for slices acquired in the first half and in the second half of the TR; (2) the median absolute relative psc error over all responsive voxels must be <= 20%; (3) over brain voxels without a response, the fraction with z > 1.645 must lie in [0.02, 0.085] and the fraction with z > 2.326 in [0.002, 0.02].",
+ "entrypoint": {
+  "file": "fmri_glm.py",
+  "cli": "python fmri_glm.py --input-dir <directory containing bold.npz, acq.json, events.json, motion.txt> --output <path ending in .npz>",
+  "standalone": "all custom code inside this one file; installed third-party packages may be imported; must run in a clean directory containing only this file and the input directory, reading every parameter from the inputs.",
+  "output_schema": {
+   "psc": "float [n_slices, ny, nx] percent",
+   "z": "float [n_slices, ny, nx]"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "fmri_glm.py",
+  "stats.npz (entrypoint run on the public inputs)",
+  "activation.png (psc and z maps)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "design": "string describing the design matrix",
+  "noise_model": "string",
+  "n_volumes_analysed": "integer",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads stats.npz, reruns fmri_glm.py with the workspace .venv interpreter on the public inputs and on hidden runs, and compares psc in responsive voxels and the null z distribution with ground truth."
+}

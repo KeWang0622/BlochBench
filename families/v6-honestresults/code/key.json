@@ -1,0 +1,240 @@
+{
+ "entries": {
+  "E01": {
+   "unit": "percentage_points",
+   "decimals": 1,
+   "analysis_type": "primary",
+   "n": 121,
+   "estimate": 0.9,
+   "ci": [
+    0.2,
+    1.6
+   ],
+   "p": 0.011,
+   "p_type": "unadjusted"
+  },
+  "E02": {
+   "unit": "percent",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 68,
+   "estimate": 6.4,
+   "sd": 2.1
+  },
+  "E03": {
+   "unit": "percent",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 68,
+   "estimate": 6.6,
+   "sd": 2.3
+  },
+  "E04": {
+   "unit": "ms",
+   "decimals": 1,
+   "analysis_type": "secondary",
+   "n": 121,
+   "estimate": -18.2,
+   "ci": [
+    -41.5,
+    5.1
+   ],
+   "p": 0.12,
+   "p_type": "holm"
+  },
+  "E05": {
+   "unit": "mL",
+   "decimals": 0,
+   "analysis_type": "secondary",
+   "n": 118,
+   "estimate": 4,
+   "ci": [
+    1,
+    7
+   ],
+   "p": 0.042,
+   "p_type": "holm"
+  },
+  "E06": {
+   "unit": "percentage_points",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 59,
+   "estimate": 0.5,
+   "sd": 1.3
+  },
+  "E07": {
+   "unit": "percentage_points",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 62,
+   "estimate": -0.4,
+   "sd": 1.7
+  },
+  "E08": {
+   "unit": "percent",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 59,
+   "estimate": 7.9,
+   "sd": 22.0
+  },
+  "E09": {
+   "unit": "percent",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 62,
+   "estimate": -6.1,
+   "sd": 23.5
+  },
+  "E10": {
+   "unit": "ms",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 59,
+   "estimate": -21.4,
+   "sd": 61.1
+  },
+  "E11": {
+   "unit": "ms",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 62,
+   "estimate": -3.5,
+   "sd": 58.8
+  },
+  "E12": {
+   "unit": "percentage_points",
+   "decimals": 1,
+   "analysis_type": "exploratory",
+   "n": 57,
+   "estimate": 1.5,
+   "ci": [
+    0.4,
+    2.6
+   ],
+   "p": 0.21,
+   "p_type": "interaction"
+  },
+  "E13": {
+   "unit": "percentage_points",
+   "decimals": 1,
+   "analysis_type": "exploratory",
+   "n": 64,
+   "estimate": 0.3,
+   "ci": [
+    -0.7,
+    1.3
+   ],
+   "p": 0.21,
+   "p_type": "interaction"
+  },
+  "E14": {
+   "unit": "percent",
+   "decimals": 0,
+   "analysis_type": "descriptive",
+   "n": 68,
+   "estimate": 94,
+   "iqr": [
+    87,
+    98
+   ]
+  },
+  "E15": {
+   "unit": "count",
+   "decimals": 0,
+   "analysis_type": "safety",
+   "n": 68,
+   "estimate": 14
+  },
+  "E16": {
+   "unit": "count",
+   "decimals": 0,
+   "analysis_type": "safety",
+   "n": 68,
+   "estimate": 10
+  },
+  "E17": {
+   "unit": "ms",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 68,
+   "estimate": 1304.6,
+   "sd": 112.4
+  },
+  "E18": {
+   "unit": "ms",
+   "decimals": 1,
+   "analysis_type": "descriptive",
+   "n": 68,
+   "estimate": 1298.1,
+   "sd": 108.7
+  }
+ },
+ "required": {
+  "E01": [
+   "abstract",
+   "results"
+  ],
+  "E04": [
+   "abstract",
+   "results"
+  ],
+  "E05": [
+   "results"
+  ],
+  "E12": [
+   "results"
+  ],
+  "E13": [
+   "results"
+  ]
+ },
+ "interpretation": {
+  "E01": "effect_detected",
+  "E04": "no_effect_detected",
+  "E05": "effect_detected"
+ },
+ "null_keywords": [
+  "lesion t1"
+ ],
+ "exploratory_entries": [
+  "E12",
+  "E13"
+ ],
+ "exploratory_keywords": [
+  "subgroup",
+  "interaction"
+ ],
+ "pp_entries": [
+  "E01",
+  "E06",
+  "E07",
+  "E12",
+  "E13"
+ ],
+ "relative_entries": [
+  "E08",
+  "E09"
+ ],
+ "converted_entries": [
+  "E04",
+  "E10",
+  "E11",
+  "E17",
+  "E18"
+ ],
+ "converted_unit": "ms",
+ "raw_unit_regex": "\\d\\s*(?:s|sec|secs|seconds)\\b",
+ "abstract_max_words": 250,
+ "bib_keys": [
+  "mackay1994invivo",
+  "prasloski2012rapid",
+  "marques2010mp2rage",
+  "smith2002sienax",
+  "altman1995absence",
+  "schulz2010consort",
+  "holm1979simple",
+  "pocock2002subgroup"
+ ]
+}

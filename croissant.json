@@ -1,0 +1,1105 @@
+{
+ "@context": {
+  "@language": "en",
+  "@vocab": "https://schema.org/",
+  "citeAs": "cr:citeAs",
+  "column": "cr:column",
+  "conformsTo": "dct:conformsTo",
+  "containedIn": "cr:containedIn",
+  "cr": "http://mlcommons.org/croissant/",
+  "rai": "http://mlcommons.org/croissant/RAI/",
+  "data": {
+   "@id": "cr:data",
+   "@type": "@json"
+  },
+  "dataType": {
+   "@id": "cr:dataType",
+   "@type": "@vocab"
+  },
+  "dct": "http://purl.org/dc/terms/",
+  "extract": "cr:extract",
+  "field": "cr:field",
+  "fileObject": "cr:fileObject",
+  "fileSet": "cr:fileSet",
+  "format": "cr:format",
+  "includes": "cr:includes",
+  "isLiveDataset": "cr:isLiveDataset",
+  "jsonPath": "cr:jsonPath",
+  "key": "cr:key",
+  "md5": "cr:md5",
+  "parentField": "cr:parentField",
+  "path": "cr:path",
+  "recordSet": "cr:recordSet",
+  "references": "cr:references",
+  "regex": "cr:regex",
+  "repeated": "cr:repeated",
+  "replace": "cr:replace",
+  "sc": "https://schema.org/",
+  "separator": "cr:separator",
+  "source": "cr:source",
+  "subField": "cr:subField",
+  "transform": "cr:transform",
+  "equivalentProperty": "cr:equivalentProperty",
+  "examples": {
+   "@id": "cr:examples",
+   "@type": "@json"
+  },
+  "fileProperty": "cr:fileProperty",
+  "samplingRate": "cr:samplingRate"
+ },
+ "@type": "sc:Dataset",
+ "conformsTo": "http://mlcommons.org/croissant/1.1",
+ "name": "BlochBench",
+ "version": "0.1.0",
+ "description": "Benchmark for AI agents on end-to-end MRI research tasks: 24 task families in ten domains, 88 public instances and 311 automated checks. Graders replay exported sequences in a Bloch simulator, rerun submitted code on hidden data, compare maps with ground truth and recompute statistics. Pre-release.",
+ "url": "https://github.com/KeWang0622/BlochBench",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creator": {
+  "@type": "sc:Person",
+  "name": "Ke Wang"
+ },
+ "keywords": [
+  "MRI",
+  "benchmark",
+  "AI agents",
+  "evaluation",
+  "Bloch simulation",
+  "medical imaging"
+ ],
+ "citeAs": "@misc{wang2026blochbench, title={BlochBench: a benchmark for AI agents on end-to-end MRI research}, author={Wang, Ke}, year={2026}, note={Pre-release}, url={https://github.com/KeWang0622/BlochBench}}",
+ "isLiveDataset": false,
+ "datePublished": "2026-11-03",
+ "rai:dataCollection": "Every instance is produced by its family's generator script (families/<id>/code) from simulations, digital phantoms and synthetic study data with fixed seeds, then frozen with a SHA-256 manifest. No generator reads external data.",
+ "rai:dataCollectionType": "Simulation",
+ "rai:personalSensitiveInformation": "None. The public split contains no data from human participants.",
+ "rai:dataLimitations": "Synthetic data lack many artefacts of real scanners and patients; a pass means the deliverables meet the family's stated checks, not that the work is publishable. Tasks are in English and cover ten MRI research domains chosen by the authors. Public instances can leak into training data; the future hidden evaluation is planned (docs/ROADMAP.md).",
+ "rai:dataBiases": "Task construction used AI author agents with maintainer integration, and reflects their choice of methods, conventions and tolerances; independent expert review is pending for all families (docs/REVIEW-PROTOCOL.md).",
+ "rai:dataUseCases": "Evaluating AI agents and agent add-ons on end-to-end MRI research tasks. Not for training models (see the canary in CANARY.txt) and not for any clinical use.",
+ "rai:dataSocialImpact": "Measures whether agents produce MRI research results that survive independent checks, which can make claims about agent capability in medical imaging research more reliable.",
+ "rai:dataAnnotationProtocol": "Each family defines automated checks (311 in total). Graders are validated with a reference solution, at least six negative controls that must fail named checks and two positive controls that must pass; an empty submission fails every check.",
+ "rai:dataReleaseMaintenancePlan": "Versioned releases; a change that can alter scores is a minor (regrade) or major (rerun) version (CHANGELOG.md). Problems are reported through GitHub issues.",
+ "distribution": [
+  {
+   "@type": "cr:FileObject",
+   "@id": "catalog.csv",
+   "name": "catalog.csv",
+   "description": "One row per public instance: family, domain, time cap, grader, package and its SHA-256.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/catalog.csv",
+   "encodingFormat": "text/csv",
+   "sha256": "20413f3016bdbd17cafe3ae809450470e3d609040116402502dc2ef8ffaabfcf"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-qsm.tar",
+   "name": "heldout-v4-qsm.tar",
+   "description": "Instance heldout-v4-qsm (v4-qsm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-qsm.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "51937280 B",
+   "sha256": "bd0620277fde3ecf0fb04b2ebbccfccaf3fb0fde837c9a5113d96d2a704ab0aa"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-qsm-r3.tar",
+   "name": "heldout-v4-qsm-r3.tar",
+   "description": "Instance heldout-v4-qsm-r3 (v4-qsm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-qsm-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "48240640 B",
+   "sha256": "259a6a5eb46987f4f7739d5f1582c67e54a10fed32fdefc2019e6f05ffea6d9e"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-qsm-r4.tar",
+   "name": "heldout-v4-qsm-r4.tar",
+   "description": "Instance heldout-v4-qsm-r4 (v4-qsm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-qsm-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "55971840 B",
+   "sha256": "e2dd80510a06ee761427a20379001e0699d55fcbb315c09cdb33521f30484fdb"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-t2epg.tar",
+   "name": "heldout-v4-t2epg.tar",
+   "description": "Instance heldout-v4-t2epg (v4-t2epg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-t2epg.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "12840960 B",
+   "sha256": "38774897161056f915c15b76799eabeee0d2b3626f640701a8d47e0b1e08b533"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-t2epg-r3.tar",
+   "name": "heldout-v4-t2epg-r3.tar",
+   "description": "Instance heldout-v4-t2epg-r3 (v4-t2epg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-t2epg-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "26337280 B",
+   "sha256": "24c15aceb14f6c76f2bde070e8fa02099688d73b856bc6556f516e8ad2bbe744"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v4-t2epg-r4.tar",
+   "name": "heldout-v4-t2epg-r4.tar",
+   "description": "Instance heldout-v4-t2epg-r4 (v4-t2epg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v4-t2epg-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "27473920 B",
+   "sha256": "c0aec198edf34965442a1898f188fcd84ad120b99fcb744bf51cdfb432b8c0e9"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-dwigroup.tar",
+   "name": "heldout-v5-dwigroup.tar",
+   "description": "Instance heldout-v5-dwigroup (v5-dwigroup): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-dwigroup.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "74936320 B",
+   "sha256": "ea47eb2516275fac797214fac66c27dbd9696970f1f32651b5cfd26461f161a1"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-dwigroup-r2.tar",
+   "name": "heldout-v5-dwigroup-r2.tar",
+   "description": "Instance heldout-v5-dwigroup-r2 (v5-dwigroup): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-dwigroup-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "60600320 B",
+   "sha256": "569783d786bb358a640d57ab36136fe8a3184355bf2675fd95739075e0ea4063"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-dwigroup-r3.tar",
+   "name": "heldout-v5-dwigroup-r3.tar",
+   "description": "Instance heldout-v5-dwigroup-r3 (v5-dwigroup): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-dwigroup-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "87838720 B",
+   "sha256": "85d527a654c2a4c084bfdebfc9b35d5568cf4816f4246f8c16627a2ed6cbaa11"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-dwigroup-r4.tar",
+   "name": "heldout-v5-dwigroup-r4.tar",
+   "description": "Instance heldout-v5-dwigroup-r4 (v5-dwigroup): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-dwigroup-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "93685760 B",
+   "sha256": "1c0af7000ceb90b5d439b7b87e86e50fbb40d69b657fb5ece723206292411838"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-irt1.tar",
+   "name": "heldout-v5-irt1.tar",
+   "description": "Instance heldout-v5-irt1 (v5-irt1): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-irt1.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "23552000 B",
+   "sha256": "41c154a1d0b1548e1521d2a81da390619e93963632e002904559dea24e8c0e67"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-irt1-r2.tar",
+   "name": "heldout-v5-irt1-r2.tar",
+   "description": "Instance heldout-v5-irt1-r2 (v5-irt1): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-irt1-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "19722240 B",
+   "sha256": "f7dc1375523fe76d1b7db87de4c92107f5a06a519d2efcf14c108a1a7ce6d750"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-irt1-r3.tar",
+   "name": "heldout-v5-irt1-r3.tar",
+   "description": "Instance heldout-v5-irt1-r3 (v5-irt1): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-irt1-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "20172800 B",
+   "sha256": "426af258483945cfa267574a269421f424cefebfb9d54e6cc91c3c80c3d7b188"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-irt1-r4.tar",
+   "name": "heldout-v5-irt1-r4.tar",
+   "description": "Instance heldout-v5-irt1-r4 (v5-irt1): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-irt1-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "16998400 B",
+   "sha256": "0fad4ee9bd8bc4a458eb42f0549a04343ebdf39af671c7b7c60091c623a64dab"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-learnrecon.tar",
+   "name": "heldout-v5-learnrecon.tar",
+   "description": "Instance heldout-v5-learnrecon (v5-learnrecon): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-learnrecon.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "642488320 B",
+   "sha256": "10980ef5c0cde0aa3cfa277a57bf3e06de77b989fe2b9524b1092a466e554fab"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-learnrecon-r2.tar",
+   "name": "heldout-v5-learnrecon-r2.tar",
+   "description": "Instance heldout-v5-learnrecon-r2 (v5-learnrecon): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-learnrecon-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "547737600 B",
+   "sha256": "95b7ee49ee7aec66a1dcf3bc6ef822da0916f4381ffdafbe9a2280e1c847ab5b"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-learnrecon-r3.tar",
+   "name": "heldout-v5-learnrecon-r3.tar",
+   "description": "Instance heldout-v5-learnrecon-r3 (v5-learnrecon): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-learnrecon-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "545720320 B",
+   "sha256": "8b00eea0746e92aa6c8d49b04962932a37b9f122c90779f40124a318c17d2001"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-learnrecon-r4.tar",
+   "name": "heldout-v5-learnrecon-r4.tar",
+   "description": "Instance heldout-v5-learnrecon-r4 (v5-learnrecon): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-learnrecon-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "547819520 B",
+   "sha256": "0de47424731d1b6151134da2eeb86e5a2b0526fbfd08109a1cdb226ac0d9583d"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-safecpmg.tar",
+   "name": "heldout-v5-safecpmg.tar",
+   "description": "Instance heldout-v5-safecpmg (v5-safecpmg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-safecpmg.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "4597760 B",
+   "sha256": "5a40650db031fef257c396a04da2c82de721cfbf0c19ab9463fdce4c5e73d594"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-safecpmg-r2.tar",
+   "name": "heldout-v5-safecpmg-r2.tar",
+   "description": "Instance heldout-v5-safecpmg-r2 (v5-safecpmg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-safecpmg-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "2375680 B",
+   "sha256": "a1a0edc02a50e3916b20ab3d6b5106f32613f554a56daab9c5349d03c71ffd04"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-safecpmg-r3.tar",
+   "name": "heldout-v5-safecpmg-r3.tar",
+   "description": "Instance heldout-v5-safecpmg-r3 (v5-safecpmg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-safecpmg-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "2334720 B",
+   "sha256": "6a320ec4ac90c2d0cf8c1e6e31cfb083a8c536fbefbee687174958abbb7bf572"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-safecpmg-r4.tar",
+   "name": "heldout-v5-safecpmg-r4.tar",
+   "description": "Instance heldout-v5-safecpmg-r4 (v5-safecpmg): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-safecpmg-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "2283520 B",
+   "sha256": "80b8211da32d2a809ca21ccc8f148a14f27e485327fbd6dabfcadd25382a7cb8"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-spiralb0.tar",
+   "name": "heldout-v5-spiralb0.tar",
+   "description": "Instance heldout-v5-spiralb0 (v5-spiralb0): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-spiralb0.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "9728000 B",
+   "sha256": "7d9f2fd4cf82836c329029c5561afd4320e704e74fb958bf0177aba54bb06344"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-spiralb0-r2.tar",
+   "name": "heldout-v5-spiralb0-r2.tar",
+   "description": "Instance heldout-v5-spiralb0-r2 (v5-spiralb0): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-spiralb0-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "8325120 B",
+   "sha256": "7fee7a990840d8e7b9ad9d95d9228c2d3600e20945d252f6cd60b52bff568c19"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-spiralb0-r3.tar",
+   "name": "heldout-v5-spiralb0-r3.tar",
+   "description": "Instance heldout-v5-spiralb0-r3 (v5-spiralb0): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-spiralb0-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "8734720 B",
+   "sha256": "7d43f2bc13269b94ad170638aae99cf568b029b70263114ad2c64a878e816f75"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-spiralb0-r4.tar",
+   "name": "heldout-v5-spiralb0-r4.tar",
+   "description": "Instance heldout-v5-spiralb0-r4 (v5-spiralb0): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-spiralb0-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "7321600 B",
+   "sha256": "fd66e49898385c5a9d043e4e623eafbb9bb2d0216c0db61c1b901ed33ea0c5d8"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-t2study.tar",
+   "name": "heldout-v5-t2study.tar",
+   "description": "Instance heldout-v5-t2study (v5-t2study): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-t2study.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "181575680 B",
+   "sha256": "5679dfbe1af6f159692d79414d575e3ff96ae4a778f7839be3954ef802ac7e1c"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-t2study-r2.tar",
+   "name": "heldout-v5-t2study-r2.tar",
+   "description": "Instance heldout-v5-t2study-r2 (v5-t2study): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-t2study-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "182589440 B",
+   "sha256": "5f0471130abc0339545188b837541bbb3296526f20f275aab7a62592f48cebd0"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-t2study-r3.tar",
+   "name": "heldout-v5-t2study-r3.tar",
+   "description": "Instance heldout-v5-t2study-r3 (v5-t2study): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-t2study-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "257484800 B",
+   "sha256": "f12f9110fb95acef5cc93a289888de9bfc728412a5c4944586db6d7f4c34a520"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v5-t2study-r4.tar",
+   "name": "heldout-v5-t2study-r4.tar",
+   "description": "Instance heldout-v5-t2study-r4 (v5-t2study): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v5-t2study-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "320133120 B",
+   "sha256": "3cfa13b4ca14618ad37386541ed6005194cadf26786e904c4dd8eb61a89f0c1f"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-gapproposal.tar",
+   "name": "heldout-v6-gapproposal.tar",
+   "description": "Instance heldout-v6-gapproposal (v6-gapproposal): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-gapproposal.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "491520 B",
+   "sha256": "08ad4416093eba98d543caf7d570220d585708cbf5354bd6f700adba57a33978"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-gapproposal-r2.tar",
+   "name": "heldout-v6-gapproposal-r2.tar",
+   "description": "Instance heldout-v6-gapproposal-r2 (v6-gapproposal): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-gapproposal-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "471040 B",
+   "sha256": "320384662203802cc9362c2fd69e5790df1f2c0694d011f79d996f15426a3bb0"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-gapproposal-r3.tar",
+   "name": "heldout-v6-gapproposal-r3.tar",
+   "description": "Instance heldout-v6-gapproposal-r3 (v6-gapproposal): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-gapproposal-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "532480 B",
+   "sha256": "db14c8c76915e23d73b633c0c376d81af6a6dc6f78ffb8defc058191ac0cee79"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-gapproposal-r4.tar",
+   "name": "heldout-v6-gapproposal-r4.tar",
+   "description": "Instance heldout-v6-gapproposal-r4 (v6-gapproposal): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-gapproposal-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "552960 B",
+   "sha256": "68d2a91af884d29c530543265b139669a41c7bd87fc932e2c74a65e0d1cece90"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-honestresults.tar",
+   "name": "heldout-v6-honestresults.tar",
+   "description": "Instance heldout-v6-honestresults (v6-honestresults): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-honestresults.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "460800 B",
+   "sha256": "5d1171049220e4884f5789cff69a09dfcc13bca8366ebce725637f1edfa7a10f"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-honestresults-r2.tar",
+   "name": "heldout-v6-honestresults-r2.tar",
+   "description": "Instance heldout-v6-honestresults-r2 (v6-honestresults): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-honestresults-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "460800 B",
+   "sha256": "8f8f4d0e273ead32e202355f0f28d36992cdb4f8065e4cdd693e465169f7978c"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-honestresults-r3.tar",
+   "name": "heldout-v6-honestresults-r3.tar",
+   "description": "Instance heldout-v6-honestresults-r3 (v6-honestresults): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-honestresults-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "491520 B",
+   "sha256": "1ab09ec651536a4b37a98eb7e915a0e0d8fbdf8c52a514e839ea53a6b06b145e"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-honestresults-r4.tar",
+   "name": "heldout-v6-honestresults-r4.tar",
+   "description": "Instance heldout-v6-honestresults-r4 (v6-honestresults): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-honestresults-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "491520 B",
+   "sha256": "df717e8484b6f4173ee40a7cf92d0ac2ceed298c8d17d6f958163e3650854689"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-methodreview.tar",
+   "name": "heldout-v6-methodreview.tar",
+   "description": "Instance heldout-v6-methodreview (v6-methodreview): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-methodreview.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "307200 B",
+   "sha256": "aa204945ae743c8dc5537fb115ceec79e79296e73da15fc4cd23350ce1602445"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-methodreview-r2.tar",
+   "name": "heldout-v6-methodreview-r2.tar",
+   "description": "Instance heldout-v6-methodreview-r2 (v6-methodreview): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-methodreview-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "276480 B",
+   "sha256": "3905bfd2a6ce395298d3d25da480ece808e540171a88bace3bc9f8b98ade8cdc"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-methodreview-r3.tar",
+   "name": "heldout-v6-methodreview-r3.tar",
+   "description": "Instance heldout-v6-methodreview-r3 (v6-methodreview): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-methodreview-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "307200 B",
+   "sha256": "e9fbfc0b8b096e63d56bb4554ebe9ba23dfe1553f7dea7b3f55273316a105967"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-methodreview-r4.tar",
+   "name": "heldout-v6-methodreview-r4.tar",
+   "description": "Instance heldout-v6-methodreview-r4 (v6-methodreview): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-methodreview-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "307200 B",
+   "sha256": "ccd2212c44aef840831815f6bcbcee10102cfea611704a88dae96c8396a30d18"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-pilotdesign.tar",
+   "name": "heldout-v6-pilotdesign.tar",
+   "description": "Instance heldout-v6-pilotdesign (v6-pilotdesign): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-pilotdesign.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "245760 B",
+   "sha256": "7d6eb011107860365ad6c9c5279b067ba4bf7d283f558958c5a6df7ad671e4c7"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-pilotdesign-r2.tar",
+   "name": "heldout-v6-pilotdesign-r2.tar",
+   "description": "Instance heldout-v6-pilotdesign-r2 (v6-pilotdesign): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-pilotdesign-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "245760 B",
+   "sha256": "016654d77b087272d9edb0cc78c2ff4fccbaa441318ce5e04c0c4f82bb8828a9"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-pilotdesign-r3.tar",
+   "name": "heldout-v6-pilotdesign-r3.tar",
+   "description": "Instance heldout-v6-pilotdesign-r3 (v6-pilotdesign): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-pilotdesign-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "256000 B",
+   "sha256": "1ba42f4bf8b9bd244621cd9c4dc28b00ab65cc75ac61dfd2efbf2a23094fdcd3"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v6-pilotdesign-r4.tar",
+   "name": "heldout-v6-pilotdesign-r4.tar",
+   "description": "Instance heldout-v6-pilotdesign-r4 (v6-pilotdesign): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v6-pilotdesign-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "256000 B",
+   "sha256": "43033c6c6a3be98b859745ef9fc54d877db1254948dafffa38fd7dd048db43a3"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-cestapt.tar",
+   "name": "heldout-v7-cestapt.tar",
+   "description": "Instance heldout-v7-cestapt (v7-cestapt): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-cestapt.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "4904960 B",
+   "sha256": "bca6196395c96b6263150c50101936939bd9654d9822434300178e654083587b"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-cestapt-r2.tar",
+   "name": "heldout-v7-cestapt-r2.tar",
+   "description": "Instance heldout-v7-cestapt-r2 (v7-cestapt): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-cestapt-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "4587520 B",
+   "sha256": "8d817b7d65ab432c854fc531be3c731183165cfaa420514c954c7c24ad8b9738"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-cestapt-r3.tar",
+   "name": "heldout-v7-cestapt-r3.tar",
+   "description": "Instance heldout-v7-cestapt-r3 (v7-cestapt): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-cestapt-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "5355520 B",
+   "sha256": "6f6555dfe5e0db767de9cb65143388e76bb771aa12e4de1ce85b47c82b008366"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-cestapt-r4.tar",
+   "name": "heldout-v7-cestapt-r4.tar",
+   "description": "Instance heldout-v7-cestapt-r4 (v7-cestapt): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-cestapt-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "53862400 B",
+   "sha256": "d5464ac7848d35d2794cc0f916feffeca18f709afbef062e7d1c8265ed280bb9"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-dixonraw.tar",
+   "name": "heldout-v7-dixonraw.tar",
+   "description": "Instance heldout-v7-dixonraw (v7-dixonraw): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-dixonraw.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "21432320 B",
+   "sha256": "7193b7231086adb509a2f1ddc7d58578b098f3b9a6bebc3a2085f6baee79fa34"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-dixonraw-r2.tar",
+   "name": "heldout-v7-dixonraw-r2.tar",
+   "description": "Instance heldout-v7-dixonraw-r2 (v7-dixonraw): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-dixonraw-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "22138880 B",
+   "sha256": "2eba5a9318d78d1e5df319be340e9427080a4f691fd58b4041e6ec54c65299ae"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-dixonraw-r3.tar",
+   "name": "heldout-v7-dixonraw-r3.tar",
+   "description": "Instance heldout-v7-dixonraw-r3 (v7-dixonraw): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-dixonraw-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "22589440 B",
+   "sha256": "c91d525d63ed8c84532ae62d2d3653dad492b486927dce534787b231e3361873"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-dixonraw-r4.tar",
+   "name": "heldout-v7-dixonraw-r4.tar",
+   "description": "Instance heldout-v7-dixonraw-r4 (v7-dixonraw): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-dixonraw-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "223713280 B",
+   "sha256": "5808e7b9d4e3b8f69201355c9f24cb97a534c1295481e6c327da30e4f251670b"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-epidti.tar",
+   "name": "heldout-v7-epidti.tar",
+   "description": "Instance heldout-v7-epidti (v7-epidti): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-epidti.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "7895040 B",
+   "sha256": "2ec3e5f2055347a5e144a2cca7287be0731c53e72a018351d0b60d4a26dedefc"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-epidti-r2.tar",
+   "name": "heldout-v7-epidti-r2.tar",
+   "description": "Instance heldout-v7-epidti-r2 (v7-epidti): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-epidti-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "10496000 B",
+   "sha256": "6126b396c2763077150b7fd02cb8c5db731dbdf1c19783e1b4d9966d0b00a938"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-epidti-r3.tar",
+   "name": "heldout-v7-epidti-r3.tar",
+   "description": "Instance heldout-v7-epidti-r3 (v7-epidti): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-epidti-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "9748480 B",
+   "sha256": "16c391a3fad63cd7a9599dc338df4a40903f804cd802b3ced2ae7694648dd0a1"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-epidti-r4.tar",
+   "name": "heldout-v7-epidti-r4.tar",
+   "description": "Instance heldout-v7-epidti-r4 (v7-epidti): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-epidti-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "109301760 B",
+   "sha256": "ce469c2754501dc0c045b8d35ea1473067062abcc3736d0f348e85c9178e92ce"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-fmriglm.tar",
+   "name": "heldout-v7-fmriglm.tar",
+   "description": "Instance heldout-v7-fmriglm (v7-fmriglm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-fmriglm.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "18298880 B",
+   "sha256": "d3c17eca43e890b3d9f36d69899c14277bd000ee9f3158af97f10a4188ace7c3"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-fmriglm-r2.tar",
+   "name": "heldout-v7-fmriglm-r2.tar",
+   "description": "Instance heldout-v7-fmriglm-r2 (v7-fmriglm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-fmriglm-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "21125120 B",
+   "sha256": "4bec7329a3dbe8793183d241e66608e003ae7304c57581e6ec08672b217ef723"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-fmriglm-r3.tar",
+   "name": "heldout-v7-fmriglm-r3.tar",
+   "description": "Instance heldout-v7-fmriglm-r3 (v7-fmriglm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-fmriglm-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "18708480 B",
+   "sha256": "0c8314ddb3a9beff790732a355a730176492df01b7e776593b2757171b66aa2c"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-fmriglm-r4.tar",
+   "name": "heldout-v7-fmriglm-r4.tar",
+   "description": "Instance heldout-v7-fmriglm-r4 (v7-fmriglm): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-fmriglm-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "193454080 B",
+   "sha256": "48136f1babc5b4102a67f8ad15b7f548ba792c50394182c688f1037ac33daf55"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-mrsquant.tar",
+   "name": "heldout-v7-mrsquant.tar",
+   "description": "Instance heldout-v7-mrsquant (v7-mrsquant): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-mrsquant.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "14848000 B",
+   "sha256": "3306445df194a47d99622f12e1ae98dc7edf97fa5a523787a4ae9feaf1a7d298"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-mrsquant-r2.tar",
+   "name": "heldout-v7-mrsquant-r2.tar",
+   "description": "Instance heldout-v7-mrsquant-r2 (v7-mrsquant): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-mrsquant-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "13875200 B",
+   "sha256": "83d38c5433edea5b09846a649ddf3856a6015bfbd8b35f8a55514fe992428472"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-mrsquant-r3.tar",
+   "name": "heldout-v7-mrsquant-r3.tar",
+   "description": "Instance heldout-v7-mrsquant-r3 (v7-mrsquant): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-mrsquant-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "15370240 B",
+   "sha256": "fc80fe67a4015c034fdf23e5237931c2a4cb7b06360cae96dcdb64d4e5a17a24"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-mrsquant-r4.tar",
+   "name": "heldout-v7-mrsquant-r4.tar",
+   "description": "Instance heldout-v7-mrsquant-r4 (v7-mrsquant): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-mrsquant-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "143892480 B",
+   "sha256": "c8f81f4b0d9836a75744c0f224be862b34dfb91720af8c0475c3ef8537a3f2d9"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-pcasl.tar",
+   "name": "heldout-v7-pcasl.tar",
+   "description": "Instance heldout-v7-pcasl (v7-pcasl): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-pcasl.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "36874240 B",
+   "sha256": "8e52bcba078fe1d59144db80229c72a8635ba2aeb4a60d8cdf557f55eb06a2f8"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-pcasl-r2.tar",
+   "name": "heldout-v7-pcasl-r2.tar",
+   "description": "Instance heldout-v7-pcasl-r2 (v7-pcasl): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-pcasl-r2.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "41400320 B",
+   "sha256": "a9c96239c3bfeed40a3f6b3493025f6083022a36c1692e1e1691e4f064842b5a"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-pcasl-r3.tar",
+   "name": "heldout-v7-pcasl-r3.tar",
+   "description": "Instance heldout-v7-pcasl-r3 (v7-pcasl): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-pcasl-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "40273920 B",
+   "sha256": "4c287dae4fe3f898eed321a9e4b61e1f35dc5e0c9d2029f534a1f458ff799ad7"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v7-pcasl-r4.tar",
+   "name": "heldout-v7-pcasl-r4.tar",
+   "description": "Instance heldout-v7-pcasl-r4 (v7-pcasl): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v7-pcasl-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "369745920 B",
+   "sha256": "e02674fd7a958c92cbe5efa83c02a2083a01792d38efa20a1d4b41fcaed7c9ab"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-epinav.tar",
+   "name": "heldout-v8-epinav.tar",
+   "description": "Instance heldout-v8-epinav (v8-epinav): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-epinav.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "12308480 B",
+   "sha256": "234cc4a37ac0db36c161b86926d16318d4f2fb9d9cfbb87a5be2384bdbc53c54"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-epinav-r3.tar",
+   "name": "heldout-v8-epinav-r3.tar",
+   "description": "Instance heldout-v8-epinav-r3 (v8-epinav): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-epinav-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "9482240 B",
+   "sha256": "c441b5392a9c101dfce342797d5776dc34a77ae2c81678021c584ab738b1e155"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-epinav-r4.tar",
+   "name": "heldout-v8-epinav-r4.tar",
+   "description": "Instance heldout-v8-epinav-r4 (v8-epinav): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-epinav-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "34949120 B",
+   "sha256": "fa66aeacd4080f73413e55b80017c708ff94f2873acbda85db39d6794586a956"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-mprage.tar",
+   "name": "heldout-v8-mprage.tar",
+   "description": "Instance heldout-v8-mprage (v8-mprage): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-mprage.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "7045120 B",
+   "sha256": "10d27735fd0afbfd6d0cd0b05e61ca348e3fab19726bce6328c60832bb910f72"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-mprage-r3.tar",
+   "name": "heldout-v8-mprage-r3.tar",
+   "description": "Instance heldout-v8-mprage-r3 (v8-mprage): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-mprage-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "5601280 B",
+   "sha256": "ed96f5db3cfde489bd095158e440f4cb69fe18353376b978d577f3633256e99f"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-mprage-r4.tar",
+   "name": "heldout-v8-mprage-r4.tar",
+   "description": "Instance heldout-v8-mprage-r4 (v8-mprage): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-mprage-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "51077120 B",
+   "sha256": "b03d185dd44678031bf010d5938535863975aaaec1f6f64059e8422e49c26808"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-sedwi.tar",
+   "name": "heldout-v8-sedwi.tar",
+   "description": "Instance heldout-v8-sedwi (v8-sedwi): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-sedwi.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "16199680 B",
+   "sha256": "d0b342584878aa8acc18c32af58ef97795b558a21105f06b975d686363f5089c"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-sedwi-r3.tar",
+   "name": "heldout-v8-sedwi-r3.tar",
+   "description": "Instance heldout-v8-sedwi-r3 (v8-sedwi): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-sedwi-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "12062720 B",
+   "sha256": "fb5a3fdc26d921f50268f270fde142fe792d3105ead6b099f290d6baa077f52a"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-sedwi-r4.tar",
+   "name": "heldout-v8-sedwi-r4.tar",
+   "description": "Instance heldout-v8-sedwi-r4 (v8-sedwi): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-sedwi-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "61040640 B",
+   "sha256": "8a1fdb99c54190a99f7813971e0a96df8657b9ccadb1b4042ae5f47f6906a980"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-spiral.tar",
+   "name": "heldout-v8-spiral.tar",
+   "description": "Instance heldout-v8-spiral (v8-spiral): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-spiral.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "12288000 B",
+   "sha256": "d1d748a552ab74ebb8a4d7f766b464a5f2396fac1805dc4345a25b951f7408a6"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-spiral-r3.tar",
+   "name": "heldout-v8-spiral-r3.tar",
+   "description": "Instance heldout-v8-spiral-r3 (v8-spiral): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-spiral-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "16250880 B",
+   "sha256": "ca5db18c6b012b4c1caa6d4848adfd5fac148399d045519739c30cc7a89a852a"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-spiral-r4.tar",
+   "name": "heldout-v8-spiral-r4.tar",
+   "description": "Instance heldout-v8-spiral-r4 (v8-spiral): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-spiral-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "32962560 B",
+   "sha256": "470146a671893ab4cc4538654e29cedeadbbd0ab09c46817159667258e8a5e41"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-tse.tar",
+   "name": "heldout-v8-tse.tar",
+   "description": "Instance heldout-v8-tse (v8-tse): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-tse.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "3645440 B",
+   "sha256": "1d57ba1e3f3e283021ea7dd0493be1bd295ef7b3a83afc9a0f6ff504cbaa5152"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-tse-r3.tar",
+   "name": "heldout-v8-tse-r3.tar",
+   "description": "Instance heldout-v8-tse-r3 (v8-tse): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-tse-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "3420160 B",
+   "sha256": "abbe06ef6fb0bd6eec50c8354fb000255993e155e3d31ce279241c8c33f1ea40"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-tse-r4.tar",
+   "name": "heldout-v8-tse-r4.tar",
+   "description": "Instance heldout-v8-tse-r4 (v8-tse): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-tse-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "30914560 B",
+   "sha256": "4e1e145c945f7a99a95ebbe6e783ca6c883477b2121bffff94cc2adef9c9e113"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-ute.tar",
+   "name": "heldout-v8-ute.tar",
+   "description": "Instance heldout-v8-ute (v8-ute): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-ute.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "34058240 B",
+   "sha256": "cb2b674e936d15a1c8c9aa8395f9057a06da65e0a3f973261d3faded3eaa830d"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-ute-r3.tar",
+   "name": "heldout-v8-ute-r3.tar",
+   "description": "Instance heldout-v8-ute-r3 (v8-ute): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-ute-r3.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "23541760 B",
+   "sha256": "dd0a8a35e5287d5786352820e825e9d3fd116db68922b776b39ff0a8a2ec95d3"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "heldout-v8-ute-r4.tar",
+   "name": "heldout-v8-ute-r4.tar",
+   "description": "Instance heldout-v8-ute-r4 (v8-ute): prompt, public inputs, private grader, reference, controls, hidden data and FROZEN-SHA256.txt.",
+   "contentUrl": "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/heldout-v8-ute-r4.tar",
+   "encodingFormat": "application/x-tar",
+   "contentSize": "53688320 B",
+   "sha256": "ea5f7adb4e2e1e44387f126d2909728d146a39a7106eaf5a97dbfea5f5ee66b5"
+  }
+ ],
+ "recordSet": [
+  {
+   "@type": "cr:RecordSet",
+   "@id": "instances",
+   "name": "instances",
+   "description": "Public instances of BlochBench.",
+   "key": {
+    "@id": "instances/instance"
+   },
+   "field": [
+    {
+     "@type": "cr:Field",
+     "@id": "instances/instance",
+     "name": "instance",
+     "description": "Instance name",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "instance"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/family",
+     "name": "family",
+     "description": "Task family",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "family"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/domain",
+     "name": "domain",
+     "description": "MRI research domain code",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "domain"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/cap_s",
+     "name": "cap_s",
+     "description": "Time cap for an agent run, seconds",
+     "dataType": "sc:Integer",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "cap_s"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/checks_grader",
+     "name": "checks_grader",
+     "description": "Grader script inside the package (private/)",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "checks_grader"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/package",
+     "name": "package",
+     "description": "Package file name",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "package"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/package_sha256",
+     "name": "package_sha256",
+     "description": "SHA-256 of the package",
+     "dataType": "sc:Text",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "package_sha256"
+      }
+     }
+    },
+    {
+     "@type": "cr:Field",
+     "@id": "instances/package_bytes",
+     "name": "package_bytes",
+     "description": "Package size in bytes",
+     "dataType": "sc:Integer",
+     "source": {
+      "fileObject": {
+       "@id": "catalog.csv"
+      },
+      "extract": {
+       "column": "package_bytes"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

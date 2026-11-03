@@ -1,0 +1,3721 @@
+{
+  "benchmark": "BlochBench",
+  "board": "preview",
+  "protocol": "offline",
+  "version": "0.1.0.dev0",
+  "generated": "2026-11-03T00:00:00+00:00",
+  "split": {
+    "name": "offline-core",
+    "instances": [
+      "heldout-v4-qsm-r4",
+      "heldout-v4-t2epg-r4",
+      "heldout-v5-dwigroup-r4",
+      "heldout-v5-irt1-r4",
+      "heldout-v5-learnrecon-r4",
+      "heldout-v5-safecpmg-r4",
+      "heldout-v5-spiralb0-r4",
+      "heldout-v5-t2study-r4",
+      "heldout-v6-gapproposal-r4",
+      "heldout-v6-honestresults-r4",
+      "heldout-v6-methodreview-r4",
+      "heldout-v6-pilotdesign-r4",
+      "heldout-v7-cestapt-r4",
+      "heldout-v7-dixonraw-r4",
+      "heldout-v7-epidti-r4",
+      "heldout-v7-fmriglm-r4",
+      "heldout-v7-mrsquant-r4",
+      "heldout-v7-pcasl-r4",
+      "heldout-v8-epinav-r4",
+      "heldout-v8-mprage-r4",
+      "heldout-v8-sedwi-r4",
+      "heldout-v8-spiral-r4",
+      "heldout-v8-tse-r4",
+      "heldout-v8-ute-r4"
+    ],
+    "description": "Core: 24 families × 10 models, one sealed instance per family and one paired trial per model."
+  },
+  "domains": [
+    "diff",
+    "fmri",
+    "hw",
+    "mrs",
+    "perf",
+    "recon",
+    "relax",
+    "seq",
+    "stats",
+    "write"
+  ],
+  "metric": "verified completion: share of runs in which every automated check passes",
+  "excluded_not_started": {
+    "core": 94,
+    "hard": 49
+  },
+  "entries": [
+    {
+      "id": "gemini-4-argon+mrfoundry",
+      "model": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "provider": "Google",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 24,
+      "rate": 1.0,
+      "ci95": [
+        0.862,
+        1.0
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 4775541,
+      "median_wall_s": 1455.0,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 7,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 1,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-sonnet-5-5+mrfoundry",
+      "model": "claude-sonnet-5-5",
+      "model_name": "Claude Sonnet 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 23,
+      "rate": 0.9583,
+      "ci95": [
+        0.7976,
+        0.9926
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 900378,
+      "median_wall_s": 402.6,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 6,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-opus-5-5",
+      "model": "claude-opus-5-5",
+      "model_name": "Claude Opus 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1586298,
+      "median_wall_s": 965.5,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 6,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-opus-5-5+mrfoundry",
+      "model": "claude-opus-5-5",
+      "model_name": "Claude Opus 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 2013441,
+      "median_wall_s": 702.3,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 5,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gemini-3.8-flash+mrfoundry",
+      "model": "gemini-3.8-flash",
+      "model_name": "Gemini 3.8 Flash",
+      "provider": "Google",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 6897486,
+      "median_wall_s": 819.7,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 5,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-6.1-sol+mrfoundry",
+      "model": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1859134,
+      "median_wall_s": 544.7,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 5,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra",
+      "model": "gpt-6.1-terra",
+      "model_name": "GPT-6.1 Terra",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1031932,
+      "median_wall_s": 363.0,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 6,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 1,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra+mrfoundry",
+      "model": "gpt-6.1-terra",
+      "model_name": "GPT-6.1 Terra",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 22,
+      "rate": 0.9167,
+      "ci95": [
+        0.7415,
+        0.9768
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1898889,
+      "median_wall_s": 387.6,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 6,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 1,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gemini-4-argon",
+      "model": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "provider": "Google",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 21,
+      "rate": 0.875,
+      "ci95": [
+        0.69,
+        0.9566
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 4942683,
+      "median_wall_s": 1585.7,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 1,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 7,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 2,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 1,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5+mrfoundry",
+      "model": "claude-haiku-5-5",
+      "model_name": "Claude Haiku 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 19,
+      "rate": 0.7917,
+      "ci95": [
+        0.5953,
+        0.9076
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 6326556,
+      "median_wall_s": 1088.6,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 5,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "model": "gemini-3.8-flash",
+      "model_name": "Gemini 3.8 Flash",
+      "provider": "Google",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 19,
+      "rate": 0.7917,
+      "ci95": [
+        0.5953,
+        0.9076
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 5589163,
+      "median_wall_s": 925.4,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 0,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 4,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-6.1-sol",
+      "model": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 19,
+      "rate": 0.7917,
+      "ci95": [
+        0.5953,
+        0.9076
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1018873,
+      "median_wall_s": 515.1,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 4,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 2,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "model": "claude-sonnet-5-5",
+      "model_name": "Claude Sonnet 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 17,
+      "rate": 0.7083,
+      "ci95": [
+        0.5083,
+        0.8509
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 692557,
+      "median_wall_s": 617.3,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 1,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 2,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 2,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 2,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "kimi-k3+mrfoundry",
+      "model": "kimi-k3",
+      "model_name": "Kimi K3",
+      "provider": "Moonshot AI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 16,
+      "rate": 0.6667,
+      "ci95": [
+        0.4671,
+        0.8203
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1392862,
+      "median_wall_s": 1294.5,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 0,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 4,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "model": "claude-haiku-5-5",
+      "model_name": "Claude Haiku 5.5",
+      "provider": "Anthropic",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 15,
+      "rate": 0.625,
+      "ci95": [
+        0.4271,
+        0.7884
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 5807863,
+      "median_wall_s": 1198.2,
+      "by_domain": {
+        "diff": {
+          "verified": 2,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 1,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 2,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-5.3-codex+mrfoundry",
+      "model": "gpt-5.3-codex",
+      "model_name": "GPT-5.3 Codex",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 13,
+      "rate": 0.5417,
+      "ci95": [
+        0.3507,
+        0.7211
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1081337,
+      "median_wall_s": 370.5,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 0,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 0,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 2,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 2,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 2,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "kimi-k3",
+      "model": "kimi-k3",
+      "model_name": "Kimi K3",
+      "provider": "Moonshot AI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 13,
+      "rate": 0.5417,
+      "ci95": [
+        0.3507,
+        0.7211
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1471580,
+      "median_wall_s": 1158.4,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 1,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 2,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 1,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 2,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 2,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "gpt-5.3-codex",
+      "model": "gpt-5.3-codex",
+      "model_name": "GPT-5.3 Codex",
+      "provider": "OpenAI",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 9,
+      "rate": 0.375,
+      "ci95": [
+        0.2116,
+        0.5729
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 483104,
+      "median_wall_s": 272.3,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 0,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 0,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 1,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 0,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 1,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 3,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "mai-code-1.1-flash",
+      "model": "mai-code-1.1-flash",
+      "model_name": "MAI Code 1.1 Flash",
+      "provider": "Microsoft",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": null,
+      "runs": 24,
+      "verified": 5,
+      "rate": 0.2083,
+      "ci95": [
+        0.0924,
+        0.4047
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1722515,
+      "median_wall_s": 645.9,
+      "by_domain": {
+        "diff": {
+          "verified": 1,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 0,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 0,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 0,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 1,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 0,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 0,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 0,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 2,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    },
+    {
+      "id": "mai-code-1.1-flash+mrfoundry",
+      "model": "mai-code-1.1-flash",
+      "model_name": "MAI Code 1.1 Flash",
+      "provider": "Microsoft",
+      "agent": "Codex CLI (app-server), offline evaluation",
+      "addon": {
+        "name": "MRFoundry",
+        "version": "0.14.0",
+        "commit": "bd49b95",
+        "url": "https://github.com/KeWang0622/MRFoundry"
+      },
+      "runs": 24,
+      "verified": 5,
+      "rate": 0.2083,
+      "ci95": [
+        0.0924,
+        0.4047
+      ],
+      "ci95_method": "Wilson 95% interval for a single-arm proportion",
+      "instances_covered": 24,
+      "complete": true,
+      "median_tokens": 1615932,
+      "median_wall_s": 632.7,
+      "by_domain": {
+        "diff": {
+          "verified": 0,
+          "runs": 2
+        },
+        "fmri": {
+          "verified": 0,
+          "runs": 1
+        },
+        "hw": {
+          "verified": 0,
+          "runs": 2
+        },
+        "mrs": {
+          "verified": 0,
+          "runs": 1
+        },
+        "perf": {
+          "verified": 2,
+          "runs": 2
+        },
+        "recon": {
+          "verified": 0,
+          "runs": 2
+        },
+        "relax": {
+          "verified": 1,
+          "runs": 2
+        },
+        "seq": {
+          "verified": 0,
+          "runs": 7
+        },
+        "stats": {
+          "verified": 1,
+          "runs": 2
+        },
+        "write": {
+          "verified": 1,
+          "runs": 3
+        }
+      },
+      "per_instance": {
+        "heldout-v4-qsm-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v4-t2epg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-dwigroup-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-irt1-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-learnrecon-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-safecpmg-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-spiralb0-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v5-t2study-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-gapproposal-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-honestresults-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v6-methodreview-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v6-pilotdesign-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-cestapt-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v7-dixonraw-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-epidti-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-fmriglm-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-mrsquant-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v7-pcasl-r4": {
+          "verified": 1,
+          "runs": 1
+        },
+        "heldout-v8-epinav-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-mprage-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-sedwi-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-spiral-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-tse-r4": {
+          "verified": 0,
+          "runs": 1
+        },
+        "heldout-v8-ute-r4": {
+          "verified": 0,
+          "runs": 1
+        }
+      },
+      "sources": [
+        "offline-core"
+      ]
+    }
+  ],
+  "sources": {
+    "offline-core": "Completed offline Core evaluation; approved handoff dated 3 November 2026."
+  },
+  "notes": [
+    "The ranked board uses only the 240 Core pairs (480 arms); all 20 model–arm entries cover 24 instances.",
+    "All add-on results use MRFoundry 0.14.0 at commit bd49b95.",
+    "Hard results are shown separately as descriptive aggregates for unequal cohorts, without task-level data.",
+    "Entry confidence intervals are Wilson intervals; paired difference intervals use the source cluster bootstrap.",
+    "The generated date records the frozen handoff date, not the time this file was rebuilt."
+  ],
+  "offline_evaluation": {
+    "core": {
+      "all": {
+        "n": 240,
+        "A": 162,
+        "S": 188,
+        "S_only": 39,
+        "A_only": 13,
+        "p": 0.00040954145378258033,
+        "diff": 0.10833333333333334,
+        "ci": [
+          0.008333333333333333,
+          0.2125
+        ],
+        "tok_ratio": 1.0479838294814012,
+        "tok_per_success_ratio": 0.903049895616952
+      },
+      "n_families": 24,
+      "n_models": 10,
+      "by_domain": {
+        "diff": {
+          "n": 20,
+          "A": 17,
+          "S": 15,
+          "S_only": 0,
+          "A_only": 2,
+          "p": 0.5
+        },
+        "fmri": {
+          "n": 10,
+          "A": 8,
+          "S": 9,
+          "S_only": 1,
+          "A_only": 0,
+          "p": 1.0
+        },
+        "hw": {
+          "n": 20,
+          "A": 13,
+          "S": 14,
+          "S_only": 3,
+          "A_only": 2,
+          "p": 1.0
+        },
+        "mrs": {
+          "n": 10,
+          "A": 8,
+          "S": 8,
+          "S_only": 1,
+          "A_only": 1,
+          "p": 1.0
+        },
+        "perf": {
+          "n": 20,
+          "A": 14,
+          "S": 18,
+          "S_only": 4,
+          "A_only": 0,
+          "p": 0.125
+        },
+        "recon": {
+          "n": 20,
+          "A": 13,
+          "S": 15,
+          "S_only": 4,
+          "A_only": 2,
+          "p": 0.6875
+        },
+        "relax": {
+          "n": 20,
+          "A": 13,
+          "S": 19,
+          "S_only": 6,
+          "A_only": 0,
+          "p": 0.03125
+        },
+        "seq": {
+          "n": 70,
+          "A": 34,
+          "S": 45,
+          "S_only": 14,
+          "A_only": 3,
+          "p": 0.012725830078125
+        },
+        "stats": {
+          "n": 20,
+          "A": 17,
+          "S": 17,
+          "S_only": 2,
+          "A_only": 2,
+          "p": 1.0
+        },
+        "write": {
+          "n": 30,
+          "A": 25,
+          "S": 28,
+          "S_only": 4,
+          "A_only": 1,
+          "p": 0.375
+        }
+      },
+      "by_model": {
+        "claude-haiku-5-5": {
+          "n": 24,
+          "A": 15,
+          "S": 19,
+          "S_only": 7,
+          "A_only": 3,
+          "p": 0.34375
+        },
+        "claude-opus-5-5": {
+          "n": 24,
+          "A": 22,
+          "S": 22,
+          "S_only": 1,
+          "A_only": 1,
+          "p": 1.0
+        },
+        "claude-sonnet-5-5": {
+          "n": 24,
+          "A": 17,
+          "S": 23,
+          "S_only": 6,
+          "A_only": 0,
+          "p": 0.03125
+        },
+        "gemini-3.8-flash": {
+          "n": 24,
+          "A": 19,
+          "S": 22,
+          "S_only": 4,
+          "A_only": 1,
+          "p": 0.375
+        },
+        "gemini-4-argon": {
+          "n": 24,
+          "A": 21,
+          "S": 24,
+          "S_only": 3,
+          "A_only": 0,
+          "p": 0.25
+        },
+        "gpt-5.3-codex": {
+          "n": 24,
+          "A": 9,
+          "S": 13,
+          "S_only": 5,
+          "A_only": 1,
+          "p": 0.21875
+        },
+        "gpt-6.1-sol": {
+          "n": 24,
+          "A": 19,
+          "S": 22,
+          "S_only": 3,
+          "A_only": 0,
+          "p": 0.25
+        },
+        "gpt-6.1-terra": {
+          "n": 24,
+          "A": 22,
+          "S": 22,
+          "S_only": 2,
+          "A_only": 2,
+          "p": 1.0
+        },
+        "kimi-k3": {
+          "n": 24,
+          "A": 13,
+          "S": 16,
+          "S_only": 6,
+          "A_only": 3,
+          "p": 0.5078125
+        },
+        "mai-code-1.1-flash": {
+          "n": 24,
+          "A": 5,
+          "S": 5,
+          "S_only": 2,
+          "A_only": 2,
+          "p": 1.0
+        }
+      }
+    },
+    "hard": {
+      "all": {
+        "n": 134,
+        "A": 49,
+        "S": 60,
+        "S_only": 20,
+        "A_only": 9,
+        "p": 0.06142834573984146,
+        "diff": 0.08208955223880597,
+        "ci": [
+          -0.0392156862745098,
+          0.19718309859154928
+        ],
+        "tok_ratio": 1.0622505145361736,
+        "tok_per_success_ratio": 0.8675045868712086
+      },
+      "n_families": 15,
+      "n_models": 7,
+      "by_model": {
+        "claude-haiku-5-5": {
+          "n": 11,
+          "A": 2,
+          "S": 3,
+          "S_only": 2,
+          "A_only": 1,
+          "p": 1.0
+        },
+        "claude-opus-5-5": {
+          "n": 30,
+          "A": 16,
+          "S": 20,
+          "S_only": 5,
+          "A_only": 1,
+          "p": 0.21875
+        },
+        "gemini-3.8-flash": {
+          "n": 11,
+          "A": 2,
+          "S": 4,
+          "S_only": 2,
+          "A_only": 0,
+          "p": 0.5
+        },
+        "gemini-4-argon": {
+          "n": 30,
+          "A": 13,
+          "S": 14,
+          "S_only": 5,
+          "A_only": 4,
+          "p": 1.0
+        },
+        "gpt-5.3-codex": {
+          "n": 11,
+          "A": 1,
+          "S": 1,
+          "S_only": 0,
+          "A_only": 0,
+          "p": 1.0
+        },
+        "gpt-6.1-sol": {
+          "n": 30,
+          "A": 15,
+          "S": 18,
+          "S_only": 6,
+          "A_only": 3,
+          "p": 0.5078125
+        },
+        "mai-code-1.1-flash": {
+          "n": 11,
+          "A": 0,
+          "S": 0,
+          "S_only": 0,
+          "A_only": 0,
+          "p": 1.0
+        }
+      },
+      "multistage": {
+        "n": 110,
+        "A": 48,
+        "S": 57,
+        "S_only": 18,
+        "A_only": 9,
+        "p": 0.12207812070846558
+      },
+      "system": {
+        "n": 24,
+        "A": 1,
+        "S": 3,
+        "S_only": 2,
+        "A_only": 0,
+        "p": 0.5
+      },
+      "strong": {
+        "n": 90,
+        "A": 44,
+        "S": 52,
+        "S_only": 16,
+        "A_only": 8,
+        "p": 0.15158963203430176
+      },
+      "other": {
+        "n": 44,
+        "A": 5,
+        "S": 8,
+        "S_only": 4,
+        "A_only": 1,
+        "p": 0.375
+      }
+    },
+    "combined": {
+      "n": 374,
+      "A": 211,
+      "S": 248,
+      "S_only": 59,
+      "A_only": 22,
+      "p": 4.769842118193511e-05
+    },
+    "provenance": {
+      "repository": "https://github.com/kewang_adobe/mri-agent-study",
+      "commit": "8cede909b1808bc09dea00cc1dd3cd0789c74ac6",
+      "files": {
+        "summary": {
+          "path": "docs/research/results/offline-summary.json",
+          "sha256": "dfadc34f3fa62642e59ec4c0f418e1af3b083c79b1aa38c3983e19ddae029437"
+        },
+        "pairs": {
+          "path": "manuscript/work-v41/eval-v41/offline-pairs.json",
+          "sha256": "86d2320eef791d4a3bd9fa310f886edba435f8f51bde69bafbed808a59b67760"
+        },
+        "handoff": {
+          "path": "docs/HANDOFF-2026-11-03.md",
+          "sha256": "5c07c27a0a1e97c5894ccf9d23cfdde78c1241a7e82c1a037718f6822b7c8fa9"
+        }
+      }
+    },
+    "methodology": {
+      "arms": {
+        "A": "Without skills",
+        "S": "With MRFoundry 0.14.0 (bd49b95)"
+      },
+      "paired_trials": "One baseline and one MRFoundry arm for each model–instance pair; offline evaluation.",
+      "difference_ci": "95% two-way cluster bootstrap over task families and models; 4,000 resamples, seed 0.",
+      "paired_test": "Two-sided exact sign/McNemar test on discordant pairs.",
+      "entry_ci": "95% Wilson interval for a single Core model–arm completion proportion.",
+      "hard_cohorts": {
+        "strong": "Three frontier models; 15 families × two instances = 30 pairs per model.",
+        "other": "Four further models; 11 multi-stage families × one instance = 11 pairs per model; no system tasks."
+      },
+      "tokens": "Token ratios are total with/without tokens and tokens per verified success with/without."
+    },
+    "caveats": [
+      "The Hard-tier difference alone is not statistically significant (exact paired P = 0.0614).",
+      "Hard results are descriptive aggregates: three frontier models have 30 pairs each; four further models have 11 each and no system-design tasks. These unequal cohorts do not form a common ranking.",
+      "Grok 4.7 was excluded because its API rejected the host's file-editing tool; nine started pairs are not analysed.",
+      "143 attempts (94 Core and 49 Hard) failed during setup before the first model turn due to a runner error and were restarted unchanged.",
+      "An 8 GiB per-process memory limit took effect partway through the runs; both arms of each pair had the same limit.",
+      "A known permissive image check accepts a zero-filled reconstruction on one hidden Hard instance.",
+      "Core diffusion completion decreased from 17/20 without skills to 15/20 with MRFoundry.",
+      "Timeout flags, reasoning-effort settings and repeated-run reliability are unavailable in the sanitized source and are not inferred from wall times or instance counts."
+    ]
+  }
+}

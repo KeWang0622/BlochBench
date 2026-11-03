@@ -1,0 +1,22 @@
+[
+ {
+  "path": "public/inputs/b1.npz",
+  "bytes": 2440,
+  "sha256": "e1cb5371e91ddafce692d65aa6fbfc8ef4b0b497667bb127e3c276798bb12841"
+ },
+ {
+  "path": "public/inputs/kspace.npz",
+  "bytes": 4419853,
+  "sha256": "7c23561774c38a2413f3277bdc629a0acd1eee83e0f1608e605db9f8ef134046"
+ },
+ {
+  "path": "public/inputs/noise.npz",
+  "bytes": 212849,
+  "sha256": "e14b00c6a2fb60cadb6a7fad948fe94d48ad8ac2b8cccae6997b602d37376fc1"
+ },
+ {
+  "path": "public/inputs/params.json",
+  "bytes": 461,
+  "sha256": "a72b2a1714648cb6a6f70332bdd3c70eed5506028d33c80ea6e45ed6316ace61"
+ }
+]

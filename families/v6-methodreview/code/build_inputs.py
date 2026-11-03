@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Build the synthetic manuscript (public) and planted-issue key (private) for the MS central-vein-sign methodological-review task."""
+import json
+from pathlib import Path
+HERE = Path(__file__).resolve().parent
+PUB = HERE.parent / 'public' / 'inputs'
+
+TITLE = 'Deep-learning reconstruction of threefold undersampled FLAIR* for central vein sign assessment in suspected multiple sclerosis'
+NOTE = 'SYNTHETIC MANUSCRIPT written for this evaluation. The study, data and numbers are fictional. Abstract and reference list are omitted for review.'
+
+P = [
+ ('P01', 'Introduction', 'The central vein sign (CVS), a small vein running through the centre of a white-matter lesion on T2*-weighted MRI, is far more frequent in multiple sclerosis (MS) lesions than in most of its mimics. The combined FLAIR* contrast, the product of FLAIR and T2*-weighted magnitude images, shows lesions and veins in one image but needs long sub-millimetre 3D acquisitions.'),
+ ('P02', 'Introduction', 'We developed a deep-learning reconstruction for threefold undersampled FLAIR and T2*-weighted acquisitions (DL-FLAIR*). We aimed to compare vein visibility with conventionally reconstructed, fully sampled FLAIR* and to evaluate the CVS for distinguishing MS from its mimics.'),
+ ('P03', 'Methods: participants', 'This prospective two-centre study was approved by the ethics committees, and all participants gave written informed consent. Between March 2022 and September 2024 we enrolled 118 consecutive adults referred for suspected MS with at least one white-matter lesion. The reference diagnosis was made by two MS neurologists according to the 2017 McDonald criteria after at least 12 months of clinical follow-up, without access to the research FLAIR* images.'),
+ ('P04', 'Methods: acquisition', 'All participants were scanned at 3 T with a 0.65 mm isotropic 3D FLAIR and a 0.65 mm isotropic 3D segmented echo-planar T2*-weighted sequence, each acquired once fully sampled and once with threefold Poisson-disc undersampling, in random order within the same session.'),
+ ('P05', 'Methods: network training', 'The reconstruction network was trained on fully sampled data from 140 people scanned at a third hospital between 2019 and 2021 and retrospectively undersampled with the same sampling pattern; none of them took part in the present study.'),
+ ('P06', 'Methods: network training', 'The final network checkpoint and the denoising weight were then selected as those that gave the highest agreement with the expert CVS consensus reads of the 118 study patients.'),
+ ('P07', 'Methods: image analysis', 'Two neuroradiologists, blinded to the clinical diagnosis and to the reconstruction method, rated every lesion as CVS positive or negative according to the NAIMS criteria. DL-FLAIR* and conventional FLAIR* images were presented in random order in separate sessions at least four weeks apart, and disagreements were resolved by consensus.'),
+ ('P08', 'Methods: comparison of reconstructions', 'For the lesion-level comparison of vein visibility between the reconstructions, we analysed only lesions in which the senior neuroradiologist had marked a central vein on DL-FLAIR*.'),
+ ('P09', 'Methods: comparison of reconstructions', 'Agreement between the numbers of lesions counted on DL-FLAIR* and on conventional FLAIR* in each patient was assessed with the Pearson correlation coefficient, and a coefficient above 0.9 was taken to show that the two reconstructions are interchangeable.'),
+ ('P10', 'Methods: diagnostic performance', 'Diagnostic performance was assessed per participant with a threshold of 40% CVS-positive lesions, which had been prespecified in the study protocol on the basis of earlier multicentre studies; sensitivity and specificity are given with Wilson 95% confidence intervals.'),
+ ('P11', 'Methods: group comparison', 'The proportion of CVS-positive lesions in MS and in mimics was compared with a chi-square test on the lesion counts pooled across participants, each lesion counted as an independent observation.'),
+ ('P12', 'Methods: secondary analyses', 'In participants with MS, the associations of the participant-level CVS proportion with disease duration and with the Expanded Disability Status Scale (EDSS) were assessed with Spearman correlation, with Holm correction for the two tests.'),
+ ('P13', 'Methods: missing data', 'Scans were to be excluded if a reader blinded to the diagnosis gave a predefined image-quality score of 3 or worse on either reconstruction; this rule was fixed in the protocol before the first participant was enrolled.'),
+ ('P14', 'Results: participants', 'Of the 118 participants, 71 received a final diagnosis of MS and 47 had a mimic (29 small vessel disease, 11 migraine, 7 neuromyelitis optica spectrum disorder); their characteristics are summarised in Table 1.'),
+ ('T1', 'Table 1', 'Table 1. Participant characteristics.\n\n| Characteristic | MS | Mimics |\n|---|---|---|\n| Participants | 68 | 50 |\n| Small vessel disease / migraine / NMOSD | - | 32 / 11 / 7 |\n| Age, years, median (IQR) | 36 (29-44) | 51 (42-60) |\n| Women / men | 47 / 21 | 28 / 22 |\n| Lesions per participant, median (IQR) | 19 (12-31) | 8 (5-14) |'),
+ ('P15', 'Results: acquisition', 'Undersampling shortened the combined FLAIR and T2*-weighted acquisition from 14 min 40 s to 4 min 55 s, and no scan met the predefined image-quality exclusion criterion.'),
+ ('P16', 'Results: diagnostic performance', 'After the CVS results had been compared with the reference diagnosis, 9 participants whose CVS proportion lay between 30% and 45% were classified as indeterminate and removed from the accuracy analysis, leaving 109 participants.'),
+ ('P17', 'Results: comparison of reconstructions', 'Lesion counts on the two reconstructions were highly correlated (Pearson r = 0.96, p < 0.001), demonstrating that DL-FLAIR* and conventional FLAIR* can be used interchangeably.'),
+ ('P18', 'Results: comparison of reconstructions', 'Among the selected lesions, a central vein was also seen on conventional FLAIR* in 64%, so DL-FLAIR* depicted 36% more central veins than the conventional reconstruction.'),
+ ('P19', 'Results: group comparison', 'CVS-positive lesions were more frequent in MS than in mimics (1,084 of 1,562 lesions, 69%, vs 81 of 497, 16%; p < 0.001, chi-square test).'),
+ ('P20', 'Results: diagnostic performance', 'With the prespecified 40% rule, DL-FLAIR* identified MS with a sensitivity of 91% (95% CI 82-96%) and a specificity of 93% (95% CI 81-98%) in the 109 participants analysed.'),
+ ('T2', 'Table 2', 'Table 2. Inter-reader agreement for lesion-level CVS ratings.\n\n| Reconstruction | Lesions rated | Cohen kappa (95% CI) |\n|---|---|---|\n| DL-FLAIR* | 2,059 | 0.81 (0.78-0.84) |\n| Conventional FLAIR* | 2,059 | 0.74 (0.71-0.77) |'),
+ ('P21', 'Results: lesion burden', 'Median total FLAIR lesion volume was 6.8 mm3 (IQR 3.1-12.4) in MS and 1.9 mm3 (IQR 0.8-3.6) in mimics (Table 3).'),
+ ('T3', 'Table 3', 'Table 3. Lesion characteristics on DL-FLAIR* by final diagnosis.\n\n| Measure | MS | Mimics |\n|---|---|---|\n| Lesions, n | 1,562 | 497 |\n| Total lesion volume, mL, median (IQR) | 6.8 (3.1-12.4) | 1.9 (0.8-3.6) |\n| CVS-positive lesions per participant, %, median (IQR) | 71 (58-83) | 14 (6-25) |'),
+ ('P22', 'Results: secondary analyses', 'In MS, the CVS proportion was not associated with disease duration (rho = 0.08) or with EDSS (rho = -0.11); Holm-adjusted p = 0.74 for both.'),
+ ('P23', 'Discussion', 'Deep-learning reconstruction of threefold undersampled data provided FLAIR* images with good inter-reader agreement for the CVS from an acquisition of less than 5 minutes in this two-centre cohort.'),
+ ('P24', 'Discussion', 'Because DL-FLAIR* is fast and detects the central vein reliably, it makes lumbar puncture and follow-up MRI unnecessary in suspected MS and should replace the McDonald criteria in routine practice.'),
+ ('P25', 'Discussion: limitations', 'Limitations include a single scanner vendor, a referral population with a high prevalence of MS, and few mimics other than small vessel disease, so specificity in unselected patients may differ.'),
+ ('P26', 'Conclusion', 'DL-FLAIR* enabled central vein sign assessment from a 5-minute acquisition with good inter-reader agreement; validation on other vendors and in unselected populations is needed.'),
+]
+
+PLANTED = [
+ {'issue': 'K1', 'paragraphs': ['P06'], 'categories': ['test_set_leakage_or_tuning']},
+ {'issue': 'K2', 'paragraphs': ['P11', 'P19'], 'categories': ['statistical_unit_pseudoreplication']},
+ {'issue': 'K3', 'paragraphs': ['P09', 'P17'], 'categories': ['inappropriate_statistical_test']},
+ {'issue': 'K4', 'paragraphs': ['P14', 'T1'], 'categories': ['text_table_inconsistency']},
+ {'issue': 'K5', 'paragraphs': ['P21'], 'categories': ['unit_error', 'text_table_inconsistency']},
+ {'issue': 'K6', 'paragraphs': ['P16'], 'categories': ['undefined_or_post_hoc_exclusion']},
+ {'issue': 'K7', 'paragraphs': ['P08', 'P18'], 'categories': ['circular_analysis']},
+ {'issue': 'K8', 'paragraphs': ['P24'], 'categories': ['unsupported_causal_or_clinical_claim', 'missing_reference_standard']},
+]
+SOUND = ['P01', 'P02', 'P03', 'P04', 'P05', 'P07', 'P10', 'P12', 'P13', 'P15', 'P20', 'T2', 'T3', 'P22', 'P23', 'P25', 'P26']
+
+if __name__ == '__main__':
+    ids = [p[0] for p in P]
+    flawed = {x for i in PLANTED for x in i['paragraphs']}
+    assert len(set(ids)) == len(ids) and set(SOUND).isdisjoint(flawed) and set(SOUND) | flawed == set(ids), (set(ids) - set(SOUND) - flawed)
+    L = ['# ' + TITLE, '', '*' + NOTE + '*', '', 'Each paragraph and table carries an ID in square brackets.', '']
+    sec = None
+    for pid, s, t in P:
+        top = s.split(':')[0]
+        if not pid.startswith('T') and top != sec:
+            L += ['## ' + top, '']; sec = top
+        L += [f'[{pid}] ' + t, '']
+    (PUB / 'manuscript.md').write_text('\n'.join(L))
+    (PUB / 'manuscript_paragraphs.json').write_text(json.dumps({'title': TITLE, 'note': NOTE, 'paragraphs': [{'id': a, 'section': b, 'text': c} for a, b, c in P]}, indent=1) + '\n')
+    key = {'paragraphs': {a: c for a, b, c in P}, 'planted': PLANTED, 'sound': SOUND, 'recall_min': 7, 'false_accusations_max': 2,
+           'recommendation_ok': ['major_revision', 'reject'], 'quote_min_chars': 10, 'md_max_words': 2000, 'max_issues': 25}
+    (HERE / 'key.json').write_text(json.dumps(key, indent=1) + '\n')
+    print('paragraphs', len(P), 'sound', len(SOUND), 'planted', len(PLANTED))
+

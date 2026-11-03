@@ -1,0 +1,47 @@
+{
+ "id": "heldout-v4-t2epg-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "quantitative_T2_mapping_from_CPMG_multi_echo_spin_echo_with_stimulated_echo_and_B1_correction",
+ "inputs": {
+  "directory": "inputs/",
+  "mese.nii.gz": "4D NIfTI [i, j, k, echo] magnitude images of a 3D CPMG multi-echo spin-echo scan (arbitrary units, Rician noise); echo n (1-based) at TE_n = n * EchoSpacing_s",
+  "labels.nii.gz": "3D NIfTI int16 region labels on the same grid (0 = background, 1..5 = regions of interest)",
+  "acquisition.json": "EchoSpacing_s, EchoTime_s, NumberOfEchoes, ExcitationFlipAngle_deg, RefocusingFlipAngle_deg (nominal), RefocusingPhase, AssumedT1_s"
+ },
+ "conventions": {
+  "pulses": "non-selective rectangular (hard) pulses: one excitation of nominal ExcitationFlipAngle_deg followed by NumberOfEchoes refocusing pulses of nominal RefocusingFlipAngle_deg, spaced EchoSpacing_s apart with the first refocusing pulse at EchoSpacing_s/2; identical crusher gradients around every refocusing pulse, so the coherence pathways are those of the extended phase graph (EPG) description; no slice-profile effects",
+  "refocusing_phase": "CPMG: every refocusing pulse is applied about an axis 90 degrees from the excitation axis",
+  "b1": "the actual flip angle of every pulse is B1 * nominal, with a spatially smooth, unknown B1+ scale factor; inside the object 0.45 <= B1 <= 1.15 and B1 * RefocusingFlipAngle_deg never exceeds 180 degrees",
+  "relaxation": "T2 between 0.03 and 0.26 s; tissue T1 is unknown but between 0.9 and 1.65 s and its effect is weak; use AssumedT1_s in the model",
+  "stimulated_echoes": "because the refocusing flip angles differ from 180 degrees, the echo train is not a mono-exponential decay; T2 means the true transverse relaxation time of the tissue, not an apparent decay constant",
+  "noise": "magnitude data with Rician noise; the noise level is not given"
+ },
+ "required_outputs": [
+  "fit_t2.py",
+  "t2_map.nii.gz",
+  "b1_map.nii.gz",
+  "roi_t2.json",
+  "t2 / B1 figure (PNG)",
+  "report.json",
+  "README.md",
+  "environment record (report.json 'software' object, or environment.txt / requirements.txt)"
+ ],
+ "entrypoint_cli": "python fit_t2.py --input-dir <dir> --output-dir <dir> . Reads mese.nii.gz, labels.nii.gz and acquisition.json from --input-dir and writes t2_map.nii.gz, b1_map.nii.gz and roi_t2.json to --output-dir. Standalone: helper code inside this one file; installed third-party imports allowed. It will be rerun on hidden data with the same file conventions but a different object, grid, affine, echo spacing, number of echoes, nominal refocusing angle and B1 field; read every protocol value from acquisition.json.",
+ "map_output_schema": {
+  "t2_map.nii.gz": "3D float NIfTI, T2 in seconds, exactly the input grid and affine (values outside labels > 0 are not graded)",
+  "b1_map.nii.gz": "3D float NIfTI, fitted B1+ scale (actual / nominal flip angle), same grid and affine"
+ },
+ "roi_output_schema": {
+  "label_mean_T2_s": "object mapping every nonzero label (as a string, e.g. \"1\") to the mean of t2_map over all voxels of that label, in seconds"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "model": "string (signal model and free parameters)",
+  "fit_method": "string",
+  "roi_mean_T2_s": "object, identical to roi_t2.json label_mean_T2_s",
+  "software": "object (package names and versions)",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader compares the T2 and B1 maps and the label means with the ground truth, including the lowest-B1 voxels, and reruns fit_t2.py on the public data and on hidden data."
+}

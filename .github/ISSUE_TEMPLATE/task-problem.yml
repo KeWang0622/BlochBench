@@ -1,0 +1,18 @@
+name: Task problem
+description: A task is unclear, or a grader accepts a wrong answer or rejects a correct one.
+labels: [task]
+body:
+  - type: input
+    id: instance
+    attributes: {label: Instance, placeholder: heldout-v7-pcasl-r4}
+    validations: {required: true}
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options: [Instructions unclear or wrong, Grader rejects a correct result, Grader accepts a wrong result, Data problem, Other]
+    validations: {required: true}
+  - type: textarea
+    id: details
+    attributes: {label: Details, description: What you expected, what happened, and the check names involved.}
+    validations: {required: true}

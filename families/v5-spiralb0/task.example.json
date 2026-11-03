@@ -1,0 +1,111 @@
+{
+ "id": "heldout-v5-spiralb0-r4-chain-01",
+ "split": "heldout_evaluation",
+ "scope": "field_map_estimation_spiral_sequence_design_under_hardware_limits_bloch_simulation_with_off_resonance_corrected_reconstruction",
+ "time_expectation": "about 60 minutes of agent work on a CPU-only machine; one plane of about 730 isochromats and a single readout",
+ "fov_m": 0.216,
+ "matrix": [
+  40,
+  40
+ ],
+ "image_grid": "voxel (row i, column j) is centred at x = (j-20)*fov_m/40, y = (i-20)*fov_m/40 (metres); arrays are indexed [y, x]",
+ "gamma_Hz_per_T": 42576000,
+ "hardware_limits": {
+  "max_gradient_mT_per_m": 30,
+  "max_slew_T_per_m_per_s": 125,
+  "max_b1_peak_uT": 13.0,
+  "note": "per gradient axis, read back from the exported sequence.seq"
+ },
+ "system_timing": {
+  "gradient_raster_s": 1e-05,
+  "rf_raster_s": 1e-06,
+  "adc_raster_s": 1e-07,
+  "block_raster_s": 1e-05,
+  "rf_dead_time_s": 0.0001,
+  "rf_ringdown_time_s": 2e-05,
+  "adc_dead_time_s": 1e-05
+ },
+ "acquisition": {
+  "type": "2D single-shot spiral-out gradient echo on a single-plane object (slice selection not required)",
+  "excitation": "exactly one amplitude-modulated 90 deg excitation pulse (flip evaluated as 360 deg x |integral of the RF waveform in Hz over time|; tolerance 2 deg); no other RF pulses",
+  "readout": "exactly one ADC event; the ADC duration (samples x dwell) at most 22 ms",
+  "echo_time": "2.4 ms +/- 0.05 ms from the centre of the excitation pulse to the first ADC sample (the spiral starts at k = 0)",
+  "trajectory_contract": "the first ADC sample lies within 2 cycles/m of k = 0; every Cartesian k-space point (m/fov_m, n/fov_m), m, n = -20..19, with radius <= 0.95 * 92.6 cycles/m (kmax = 40/(2*fov_m)) must have an ADC sample within 0.75/fov_m cycles/m"
+ },
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m, y_m, z_m, density, T1_s, T2_s, B0_Hz and an integer label map on the 40x40 [y,x] grid; one isochromat per voxel centre (z = 0); voxels with density 0 contain no spins",
+  "labels": "0 outside, 1 background body, 2.. vials",
+  "B0_Hz": "true off-resonance frequency df of each isochromat (Hz); use it for the Bloch simulation only",
+  "note": "T2 is the only transverse relaxation. Magnetisation starts at thermal equilibrium. The hidden object has different geometry, a different number of vials and a different field (|df| < 300 Hz)"
+ },
+ "field_convention": {
+  "simulator": "in KomaMRI the phantom off-resonance is Delta-omega = 2*pi*df in rad/s",
+  "signal_phase": "after receiver demodulation, an isochromat with off-resonance df contributes phase -2*pi*df*t to the simulated signal, with t measured from the centre of the excitation pulse; spatial encoding is exp(-2*pi*i*(kx*x + ky*y))",
+  "fieldmap_scan_phase": "fieldmap_scan.npz images follow the same sign: phase(TE) = phi0(x,y) - 2*pi*df(x,y)*TE + noise"
+ },
+ "fieldmap_scan": {
+  "file": "inputs/fieldmap_scan.npz",
+  "content": "images complex [2, 40, 40] on the image grid acquired at echo_times_s [2] = [0.0020, 0.0031]; noisy; outside the object only noise",
+  "rule": "reconstruct.py must take the field information from this scan (passed on the command line); it must not read phantom.npz"
+ },
+ "simulation_requirement": "simulate the exported sequence.seq with an established Bloch simulator (for example KomaMRI) on the public phantom including its B0_Hz; do not substitute a homemade Bloch or signal-equation simulation for the measurement data",
+ "endpoint": {
+  "image": "complex [40,40] image of the transverse magnetisation, corrected for off-resonance so that the image phase contains no off-resonance phase (demodulated to the centre of the excitation pulse); one arbitrary global phase is allowed",
+  "field_map": "your field map in Hz on the image grid",
+  "signal_ratio": "for each vial label k: mean magnitude over label k divided by the mean over label 1, each after removing every voxel whose 8-neighbourhood touches a different label (one-voxel erosion)",
+  "accuracy_targets": "on the public data and on a hidden object/field/field-map scan, within the eroded labelled voxels: field map median absolute error <= 3 Hz and 95th percentile <= 8 Hz; magnitude NRMSE <= 7% relative to the grader's reconstruction with the true field (exact encoding model including off-resonance, regularised least squares) after a least-squares intensity scale; every signal ratio within 0.03 of density_k*exp(-TE/T2_k) / (density_1*exp(-TE/T2_1)) with the realised TE; circular standard deviation of the phase difference to the grader's reconstruction <= 0.2 rad"
+ },
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "image.npz",
+  "comparison.png (uncorrected versus corrected image and the field map)",
+  "reconstruct.py",
+  "sequence-building and simulation scripts (.py)",
+  "report.json",
+  "README.md",
+  "environment record (environment.txt or requirements/pip-freeze file)"
+ ],
+ "file_locations": "put deliverables in the workspace root or in one subfolder; each requested file must exist exactly once",
+ "simulation_output_schema": {
+  "raw_signal": "complex [Ns] Bloch Mx+iMy at the ADC samples of the exported sequence, chronological, after receiver demodulation",
+  "kxy_cycles_per_m": "float [Ns, 2] actual ADC trajectory [kx, ky] of the exported sequence measured from the excitation pulse centre",
+  "adc_times_s": "float [Ns] absolute ADC sample times",
+  "excitation_time_s": "float absolute time of the centre of the excitation pulse",
+  "echo_time_s": "float realised echo time (excitation centre to first ADC sample)",
+  "fov_m": "float 0.216",
+  "matrix": "int [2] = [40, 40]",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --fieldmap fieldmap_scan.npz --output image.npz. Standalone: helper code inside this one file, installed third-party imports allowed; must run in a clean directory containing only this file and the two input files. It is rerun on an archive with exactly the simulation_output_schema keys, simulated by the grader from your sequence.seq on a hidden object with a hidden field, together with that object's field-mapping scan.",
+ "image_output_schema": {
+  "image": "complex [40,40] on the [y,x] grid (no flips or shifts)",
+  "field_map_hz": "float [40,40] your field estimate in Hz on the same grid",
+  "input_sha256": "SHA256 of the measurement archive",
+  "fieldmap_sha256": "SHA256 of the field-mapping scan file"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "scanner_ready": "boolean false",
+  "realized_echo_time_ms": "float measured from the exported sequence",
+  "readout_duration_ms": "float",
+  "max_gradient_mT_per_m": "float measured from the exported sequence",
+  "max_slew_T_per_m_per_s": "float measured from the exported sequence",
+  "max_b1_uT": "float measured from the exported sequence",
+  "off_resonance_model": "string",
+  "signal_ratio_by_label": "object mapping \"2\"..\"6\" to the endpoint ratio measured on your image.npz",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads back sequence.seq (hardware limits, timing, trajectory coverage), replays it with KomaMRI on the public phantom and compares with simulation.npz, scores image.npz, and reruns reconstruct.py on a hidden object, field and field-mapping scan simulated with your sequence.",
+ "replay_conventions": {
+  "adc_sample_times": "sample i of an ADC event occurs at block start + adc delay + (i + 0.5) * dwell (Pulseq convention)",
+  "rf_centre": "the RF centre is the Pulseq RF centre (rf delay + calc_rf_center)",
+  "grader_simulator": "KomaMRI 0.14 (Julia) reading sequence.seq, one isochromat per voxel centre with density, T1, T2 and off-resonance from the phantom; the submitted raw_signal must agree with this replay to within 5% relative RMS error after one global complex phase (amplitude scale within 5%)"
+ }
+}

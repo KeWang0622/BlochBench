@@ -1,0 +1,27 @@
+[
+ {
+  "path": "public/inputs/acquisition.json",
+  "bytes": 645,
+  "sha256": "2eb6cb46c5da10a214512e2829cc71e66b44eef7f468075a2710e8ba1e18c15d"
+ },
+ {
+  "path": "public/inputs/brain_mask.nii.gz",
+  "bytes": 18133,
+  "sha256": "58bb780bc71d1e7ad04a4c3c27b0cec701207df2c4237b47934cc933cefaf5c9"
+ },
+ {
+  "path": "public/inputs/gre_mag.nii.gz",
+  "bytes": 17504710,
+  "sha256": "f37c2d802860ad7342fa2282c982db8a1f66046089eb8e22b93da8452d253f6f"
+ },
+ {
+  "path": "public/inputs/gre_phase.nii.gz",
+  "bytes": 9043919,
+  "sha256": "029ff48d5f5626c1e640d19c8d779e20f6c8943e6fab0ae36038a03c1f27e965"
+ },
+ {
+  "path": "public/inputs/rois.nii.gz",
+  "bytes": 17710,
+  "sha256": "dca2b42ef728a3e25ea84438fb52c23e9a25a6ac45550edb18bbb67f21605458"
+ }
+]

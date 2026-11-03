@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v6-methodreview",
+  "source": "heldout-v6-methodreview",
+  "manifest_sha256": "37e56b3e68c71a1688fd51759410b1a30cecaadcb76576f92f731aab0e50c43d",
+  "grader": "grade_methodreview_arm.py",
+  "package": "heldout-v6-methodreview.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "aa204945ae743c8dc5537fb115ceec79e79296e73da15fc4cd23350ce1602445",
+  "package_bytes": 307200
+ },
+ {
+  "instance": "heldout-v6-methodreview-r2",
+  "source": "sealed-r2/heldout-v6-methodreview-r2",
+  "manifest_sha256": "773800c5e6a6c6a0f0227379f6db35bd997ad806ee2cf0574e21116526058870",
+  "grader": "grade_methodreview_arm.py",
+  "package": "heldout-v6-methodreview-r2.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "3905bfd2a6ce395298d3d25da480ece808e540171a88bace3bc9f8b98ade8cdc",
+  "package_bytes": 276480
+ },
+ {
+  "instance": "heldout-v6-methodreview-r3",
+  "source": "sealed-r3-ext/heldout-v6-methodreview-r3",
+  "manifest_sha256": "c2cf87129ed54a846c3edbf565d8e443fe521506cf353a5e71297f21c3ebc126",
+  "grader": "grade_methodreview_arm.py",
+  "package": "heldout-v6-methodreview-r3.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "e9fbfc0b8b096e63d56bb4554ebe9ba23dfe1553f7dea7b3f55273316a105967",
+  "package_bytes": 307200
+ },
+ {
+  "instance": "heldout-v6-methodreview-r4",
+  "source": "sealed-r4/heldout-v6-methodreview-r4",
+  "manifest_sha256": "da8d1638e1f0572a528465fe1ef5ae17dfbaa6cc16ab88fd473dd0f6aa388b0b",
+  "grader": "grade_methodreview_arm.py",
+  "package": "heldout-v6-methodreview-r4.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "ccd2212c44aef840831815f6bcbcee10102cfea611704a88dae96c8396a30d18",
+  "package_bytes": 307200
+ }
+]

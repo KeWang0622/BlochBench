@@ -1,0 +1,57 @@
+{
+ "id": "heldout-v7-epidti-r4-01",
+ "split": "heldout_evaluation",
+ "family": "EPI correction + diffusion MRI (multi-area pipeline)",
+ "scope": "diffusion tensor maps (FA, MD, principal direction) from raw single-shot EPI k-space with navigator echoes, a B0 field map and a gradient-nonlinearity field",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "epi_raw.npz": "key 'raw': complex64 [n_volumes, n_slices, n_navigators + ny, nx] raw single-shot EPI readouts of every volume and slice (coil-combined), readouts in temporal order: first the n_navigators navigator readouts (no phase-encoding blip, ky = 0), then the ny imaging readouts; key 'readout_polarity': int [n_navigators + ny] (+1 or -1) readout-gradient polarity of each readout in the same order; key 'ky_index_of_imaging_line': int [ny] ky index (from -ny/2 to ny/2-1) encoded by each imaging readout in acquisition order.",
+  "fieldmap.npz": "key 'fieldmap_hz': float32 [n_slices, ny, nx] B0 off-resonance in Hz on the UNDISTORTED image grid (positive = precession faster than the reference frequency); measured separately, smooth, defined everywhere.",
+  "grad_nonlin.npz": "key 'L': float32 [n_slices, ny, nx, 3, 3] gradient-nonlinearity tensor per voxel: the actual diffusion-gradient vector at that voxel equals (I + L) times the nominal gradient vector (same convention as HCP grad_dev).",
+  "bvals.txt": "one row, nominal b-value of every volume in s/mm^2 (0 for b0 volumes)",
+  "bvecs.txt": "three rows (x, y, z) by n_volumes columns, nominal unit gradient directions in the image frame (x = column index direction, y = row index direction, z = slice index direction); zeros for b0 volumes",
+  "params.json": "matrix [ny, nx], n_slices, n_navigators, echo_spacing_ms (time between the centres of consecutive readouts, navigators included), dwell_time_ms, te_ms (time of the centre of the ky = 0 imaging readout), pe_direction_sign (+1: the blip sequence steps ky upward in time; -1: downward), bvalue_units"
+ },
+ "raw_data_conventions": "Samples of every readout are stored in acquisition (time) order. Nominally, sample j of a readout with polarity +1 has kx index j - nx/2, and sample j of a readout with polarity -1 has kx index nx/2 - 1 - j. The data were acquired as raw = (1/N) * sum over voxels of m(x, y) * exp(-2 pi i (kx x + ky y)/N) * exp(+2 pi i fieldmap_hz(x, y) * t), with x = column - nx/2, y = row - ny/2, N = nx = ny, and t the acquisition time of the sample; m is the voxel's complex transverse magnetization, i.e. the diffusion-weighted magnitude times a smooth, volume-dependent phase (shot-to-shot motion phase). Readouts of polarity -1 additionally carry a small gradient-delay shift along kx and a constant phase error relative to polarity +1 readouts; navigators and imaging readouts of the same polarity carry the same error. T2* decay during the readout is negligible. Complex Gaussian noise.",
+ "diffusion_conventions": "The magnitude of each volume is S0 * exp(-b * g_actual^T D g_actual) with g_actual = (I + L) g_nominal, b the nominal b-value and D the voxel's diffusion tensor in mm^2/s; there is no diffusion weighting from imaging gradients.",
+ "endpoint": {
+  "fa": "fractional anisotropy [n_slices, ny, nx] on the undistorted image grid",
+  "md_mm2_per_s": "mean diffusivity in mm^2/s",
+  "v1": "principal eigenvector [n_slices, ny, nx, 3] in the image frame (x, y, z); sign arbitrary",
+  "mean_b0": "mean of the corrected b = 0 magnitude images [n_slices, ny, nx] on the undistorted image grid (any scale)"
+ },
+ "accuracy_targets": "On hidden datasets (different ghost errors, field maps, phase-encoding polarity, echo spacing, gradient-nonlinearity fields, b-values and gradient tables) and on the public dataset: mean_b0 must match the undistorted proton-density geometry with normalised RMS error <= 0.13 after a least-squares global scale; the mean background signal (outside the object, eroded by two voxels) must be <= 5% of the mean object signal; in each tissue region (eroded by one voxel) the median MD must be within 6% and the median FA within 0.04 of truth (FA not scored in CSF); at most 5% of brain voxels may have |FA error| > 0.15; in the four anisotropic regions the median angle between v1 and the true principal direction must be <= 8 degrees.",
+ "entrypoint": {
+  "file": "epi_dti.py",
+  "cli": "python epi_dti.py --input-dir <directory containing epi_raw.npz, fieldmap.npz, grad_nonlin.npz, bvals.txt, bvecs.txt, params.json> --output <path ending in .npz>",
+  "standalone": "all custom code inside this one file; installed third-party packages may be imported; must run in a clean directory containing only this file and the input directory, reading every parameter from the inputs.",
+  "output_schema": {
+   "fa": "float [n_slices, ny, nx]",
+   "md_mm2_per_s": "float [n_slices, ny, nx]",
+   "v1": "float [n_slices, ny, nx, 3]",
+   "mean_b0": "float [n_slices, ny, nx]"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "epi_dti.py",
+  "dti.npz (entrypoint run on the public inputs)",
+  "dti_maps.png (corrected b0 before/after correction, FA, MD, colour-coded v1)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "ghost_correction": "string",
+  "distortion_correction": "string",
+  "gradient_nonlinearity": "string",
+  "tensor_fit": "string",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads dti.npz, reruns epi_dti.py with the workspace .venv interpreter on the public inputs and on hidden datasets, and compares geometry, ghost level, regional FA/MD, voxel-wise FA and principal directions with ground truth."
+}

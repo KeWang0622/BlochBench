@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "repair": "remove-unmanifested-symlinks-and-reference-environment-v1",
+  "totals": {
+    "packages": 88,
+    "repacked": 18,
+    "unchanged": 70,
+    "original_bytes": 6691614720,
+    "release_bytes": 5742141440,
+    "verified_frozen_files": 16762
+  },
+  "removed": {
+    "directories": 1591,
+    "file_bytes": 908145525,
+    "files": 21538,
+    "symlinks": 189
+  },
+  "packages": [
+    {
+      "package": "heldout-v4-t2epg-r3.tar",
+      "instance": "heldout-v4-t2epg-r3",
+      "original_sha256": "11e2c444c08fb35fe19be467d553242f6b2ff3c93bdf2b53edbf986728ec404d",
+      "release_sha256": "24c15aceb14f6c76f2bde070e8fa02099688d73b856bc6556f516e8ad2bbe744",
+      "original_bytes": 26337280,
+      "release_bytes": 26337280,
+      "manifest_sha256": "86e92947421ac2da5cac23a7624b0b277faf668f150efd7d246eaa8641bbcd50",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v4-t2epg-r4.tar",
+      "instance": "heldout-v4-t2epg-r4",
+      "original_sha256": "c433cdc8e17068030a605cc86cfbf4e6d954248e0f40ab6b7c1cff4b1a6154e0",
+      "release_sha256": "c0aec198edf34965442a1898f188fcd84ad120b99fcb744bf51cdfb432b8c0e9",
+      "original_bytes": 27473920,
+      "release_bytes": 27473920,
+      "manifest_sha256": "2131679d4211ac8d2768f5a8765a0ee2660ae2d780f363ac47e33f959ec7340a",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-dwigroup-r2.tar",
+      "instance": "heldout-v5-dwigroup-r2",
+      "original_sha256": "e71725fea4e314dc071f5aae8ea5139e72fa93c7a15661ee8fe1b472668d15ca",
+      "release_sha256": "569783d786bb358a640d57ab36136fe8a3184355bf2675fd95739075e0ea4063",
+      "original_bytes": 60620800,
+      "release_bytes": 60600320,
+      "manifest_sha256": "3be7edfe81ad4d2cd8106a96de73f93e29ba117162821fb48de298fd77a074b3",
+      "removed": {
+        "symlinks": 13,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-dwigroup-r3.tar",
+      "instance": "heldout-v5-dwigroup-r3",
+      "original_sha256": "8d013098408ae490548d7a5cb4428b8370ccc0fa027931312256de7842c06d1e",
+      "release_sha256": "85d527a654c2a4c084bfdebfc9b35d5568cf4816f4246f8c16627a2ed6cbaa11",
+      "original_bytes": 87859200,
+      "release_bytes": 87838720,
+      "manifest_sha256": "d645148e084039865485da4d5b56e24ca74195e12eb54e1a6b73f10f5f19acc0",
+      "removed": {
+        "symlinks": 13,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-dwigroup-r4.tar",
+      "instance": "heldout-v5-dwigroup-r4",
+      "original_sha256": "e9dd337960be0a34f74f93a0732037aeef0f7c6c8208d3d9bebc66d95d8fbead",
+      "release_sha256": "1c0af7000ceb90b5d439b7b87e86e50fbb40d69b657fb5ece723206292411838",
+      "original_bytes": 93706240,
+      "release_bytes": 93685760,
+      "manifest_sha256": "94a22ee294a3d172a6b7230049800e9486297964bfaff13164bcf59254181598",
+      "removed": {
+        "symlinks": 13,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-dwigroup.tar",
+      "instance": "heldout-v5-dwigroup",
+      "original_sha256": "94b8ed571e57ba52c926fd7c9e136792ebda339f4ccd110c55a952a9d4644d75",
+      "release_sha256": "ea47eb2516275fac797214fac66c27dbd9696970f1f32651b5cfd26461f161a1",
+      "original_bytes": 74977280,
+      "release_bytes": 74936320,
+      "manifest_sha256": "d019f6ec8be82d76f775518b017186756c743cbc6f38097ff0e8398fc0609d5d",
+      "removed": {
+        "symlinks": 27,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-irt1-r3.tar",
+      "instance": "heldout-v5-irt1-r3",
+      "original_sha256": "760368d6531c3565bad7afb00ceb88698ed02e251d15830f13bae605e7e78457",
+      "release_sha256": "426af258483945cfa267574a269421f424cefebfb9d54e6cc91c3c80c3d7b188",
+      "original_bytes": 20172800,
+      "release_bytes": 20172800,
+      "manifest_sha256": "93c2c83c481b9b1657fda2d9dc1e126396cbc9d5e137f2ce0cf22c98b20c7be4",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-irt1-r4.tar",
+      "instance": "heldout-v5-irt1-r4",
+      "original_sha256": "eb9e79b0a7fe990571e1d9618ca8a4ef8b7d157c13a92d36e2d0ae8a139c98ee",
+      "release_sha256": "0fad4ee9bd8bc4a458eb42f0549a04343ebdf39af671c7b7c60091c623a64dab",
+      "original_bytes": 16998400,
+      "release_bytes": 16998400,
+      "manifest_sha256": "9b2765aadcf32b3a032ceca4e37fe24841fcd1fc8d278e7a15a51dc147454f54",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-learnrecon-r2.tar",
+      "instance": "heldout-v5-learnrecon-r2",
+      "original_sha256": "dc82eeab853f467fb9cd3b2b40ab90c9db1189a73fbe62d04460ea3f4942d4ef",
+      "release_sha256": "95b7ee49ee7aec66a1dcf3bc6ef822da0916f4381ffdafbe9a2280e1c847ab5b",
+      "original_bytes": 547758080,
+      "release_bytes": 547737600,
+      "manifest_sha256": "fb15c2aea2c75405212af277a972f62787d39b50cab06cc01e63e78eff20a9ea",
+      "removed": {
+        "symlinks": 11,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-learnrecon-r3.tar",
+      "instance": "heldout-v5-learnrecon-r3",
+      "original_sha256": "4d9606e1b50cb2d3ca4dbd5a61f3faee0c1263920004d1dfe251fc3a666b0d38",
+      "release_sha256": "8b00eea0746e92aa6c8d49b04962932a37b9f122c90779f40124a318c17d2001",
+      "original_bytes": 545730560,
+      "release_bytes": 545720320,
+      "manifest_sha256": "2b432934358a37f3576d6e3c41b822dba751f557b4202513da5a842093a7c67b",
+      "removed": {
+        "symlinks": 11,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-learnrecon-r4.tar",
+      "instance": "heldout-v5-learnrecon-r4",
+      "original_sha256": "75918f01aec8b6fe8604381579279d93c869d627ace8b8a14447e5ad80bb3531",
+      "release_sha256": "0de47424731d1b6151134da2eeb86e5a2b0526fbfd08109a1cdb226ac0d9583d",
+      "original_bytes": 547840000,
+      "release_bytes": 547819520,
+      "manifest_sha256": "ec3d45d2baa9b0e5bbaded684d4b02d12399bcaf732c1581113664b4491d585e",
+      "removed": {
+        "symlinks": 11,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-learnrecon.tar",
+      "instance": "heldout-v5-learnrecon",
+      "original_sha256": "3ec5320ffc822897324d9745dad5340c6d189ed634e0255b3c03e95beacdf89b",
+      "release_sha256": "10980ef5c0cde0aa3cfa277a57bf3e06de77b989fe2b9524b1092a466e554fab",
+      "original_bytes": 1591695360,
+      "release_bytes": 642488320,
+      "manifest_sha256": "8c8af0204ad0191046ed20e3507a1e1af688d7f01b4aef33b201b2508ba0a678",
+      "removed": {
+        "directories": 1591,
+        "file_bytes": 908145525,
+        "files": 21538,
+        "symlinks": 14
+      }
+    },
+    {
+      "package": "heldout-v5-safecpmg-r2.tar",
+      "instance": "heldout-v5-safecpmg-r2",
+      "original_sha256": "3c8d4ca2781827750a0abf4a959aebed69effb7f57eb272542b20937c80b741a",
+      "release_sha256": "a1a0edc02a50e3916b20ab3d6b5106f32613f554a56daab9c5349d03c71ffd04",
+      "original_bytes": 2396160,
+      "release_bytes": 2375680,
+      "manifest_sha256": "4bd6c3816346a7d1534332ebcb91f67004ddfe63326754da09b0efebe9d99f21",
+      "removed": {
+        "symlinks": 14,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-safecpmg-r3.tar",
+      "instance": "heldout-v5-safecpmg-r3",
+      "original_sha256": "f96d706e24670913835d282daa51daa3bea4eecb26d218f52bda9cf6bbe8a285",
+      "release_sha256": "6a320ec4ac90c2d0cf8c1e6e31cfb083a8c536fbefbee687174958abbb7bf572",
+      "original_bytes": 2355200,
+      "release_bytes": 2334720,
+      "manifest_sha256": "8aef6540642e75399143958011ff08df6efdbb5b8336543e05fa629d05c32869",
+      "removed": {
+        "symlinks": 13,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-safecpmg-r4.tar",
+      "instance": "heldout-v5-safecpmg-r4",
+      "original_sha256": "681dccc4cc98c0ea383922c34e78e8a1e3744e3bf6c79d23169cd360a37c08c6",
+      "release_sha256": "80b8211da32d2a809ca21ccc8f148a14f27e485327fbd6dabfcadd25382a7cb8",
+      "original_bytes": 2304000,
+      "release_bytes": 2283520,
+      "manifest_sha256": "a0ef8cd0e081ef7a31c04a4c994c19fdda85b55fb80fc130d99711d747b40c69",
+      "removed": {
+        "symlinks": 13,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-safecpmg.tar",
+      "instance": "heldout-v5-safecpmg",
+      "original_sha256": "09d46d9b526d2ad2c423164972237cd54adbe496aa09a79eed9386092bf7c619",
+      "release_sha256": "5a40650db031fef257c396a04da2c82de721cfbf0c19ab9463fdce4c5e73d594",
+      "original_bytes": 4648960,
+      "release_bytes": 4597760,
+      "manifest_sha256": "4261107a92e54f89a14c37912f9a872445e79f711dfc433032d3f7fdee69f9c2",
+      "removed": {
+        "symlinks": 30,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-spiralb0-r3.tar",
+      "instance": "heldout-v5-spiralb0-r3",
+      "original_sha256": "421250de76e8708ab966d662f9978062f02a0fdbdfef9c0010696a1cb7446709",
+      "release_sha256": "7d43f2bc13269b94ad170638aae99cf568b029b70263114ad2c64a878e816f75",
+      "original_bytes": 8734720,
+      "release_bytes": 8734720,
+      "manifest_sha256": "6f3590e0dce77faed9d7d060947e93baef305c642f20ce45992af246a6ec41f7",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    },
+    {
+      "package": "heldout-v5-spiralb0-r4.tar",
+      "instance": "heldout-v5-spiralb0-r4",
+      "original_sha256": "fc08da49dba25f9cc7141c6e2f1b330e45b0cb3402882ca2e16e45f6d52dab12",
+      "release_sha256": "fd66e49898385c5a9d043e4e623eafbb9bb2d0216c0db61c1b901ed33ea0c5d8",
+      "original_bytes": 7321600,
+      "release_bytes": 7321600,
+      "manifest_sha256": "1c6db31275d2f836f295550f170852c98b67e3cff7e62dcf35e2fcdd3ac6b8e1",
+      "removed": {
+        "symlinks": 1,
+        "file_bytes": 0
+      }
+    }
+  ]
+}

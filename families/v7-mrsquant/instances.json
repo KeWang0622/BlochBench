@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v7-mrsquant",
+  "source": "heldout-v7-mrsquant",
+  "manifest_sha256": "9ee9abaf4029eaed8ccb0bb4919c8fffb2796035024f2be1224034c13f18aa73",
+  "grader": "grade_mrsquant_arm.py",
+  "package": "heldout-v7-mrsquant.tar",
+  "cap_s": 3600,
+  "domain": "mrs",
+  "package_sha256": "3306445df194a47d99622f12e1ae98dc7edf97fa5a523787a4ae9feaf1a7d298",
+  "package_bytes": 14848000
+ },
+ {
+  "instance": "heldout-v7-mrsquant-r2",
+  "source": "sealed-r2-v7/heldout-v7-mrsquant-r2",
+  "manifest_sha256": "5291992a5260143076d0f5b8ee9958031309415a42ecc4db876ff8b18e561fb2",
+  "grader": "grade_mrsquant_arm.py",
+  "package": "heldout-v7-mrsquant-r2.tar",
+  "cap_s": 3600,
+  "domain": "mrs",
+  "package_sha256": "83d38c5433edea5b09846a649ddf3856a6015bfbd8b35f8a55514fe992428472",
+  "package_bytes": 13875200
+ },
+ {
+  "instance": "heldout-v7-mrsquant-r3",
+  "source": "sealed-r3-v7/heldout-v7-mrsquant-r3",
+  "manifest_sha256": "40bd1f017f943de1864b4f1c3d1d326a706ad83bae10aaed858ae4a116fb7afb",
+  "grader": "grade_mrsquant_arm.py",
+  "package": "heldout-v7-mrsquant-r3.tar",
+  "cap_s": 3600,
+  "domain": "mrs",
+  "package_sha256": "fc80fe67a4015c034fdf23e5237931c2a4cb7b06360cae96dcdb64d4e5a17a24",
+  "package_bytes": 15370240
+ },
+ {
+  "instance": "heldout-v7-mrsquant-r4",
+  "source": "sealed-r4/heldout-v7-mrsquant-r4",
+  "manifest_sha256": "78423c62a14cc74ad3c8ba8b9320808fd7f2667fddd541df88188747ea7e5ffe",
+  "grader": "grade_mrsquant_arm.py",
+  "package": "heldout-v7-mrsquant-r4.tar",
+  "cap_s": 3600,
+  "domain": "mrs",
+  "package_sha256": "c8f81f4b0d9836a75744c0f224be862b34dfb91720af8c0475c3ef8537a3f2d9",
+  "package_bytes": 143892480
+ }
+]

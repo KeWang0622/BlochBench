@@ -1,0 +1,20 @@
+# v5-safecpmg
+
+- Domain: Hardware, field and safety
+- Tier: Core (v1.0 candidate); review status: pending
+- Time cap: 60 min
+- Instances recorded: 4 (instances.json)
+- Automated checks (15): deliverables_present, sequence_readable, cpmg_structure, crusher_moments, hardware_limits, b1_rms_limit, pns_limit, gradient_rms_limit, report_matches_sequence, simulation_matches_replay, public_fit_accuracy, hidden_rerun_runs, hidden_t2_accuracy, hidden_b1_accuracy, readme_validation_limitations
+
+## Task (example instance)
+
+~~~text
+We need T2 values from a multi-echo spin-echo (CPMG) train that stays within our scanner's RF and gradient safety limits, and because the refocusing pulses will be imperfect we also need each sample's transmit-field (B1) scale. The safety limits (B1+rms, B1 peak, a peripheral nerve stimulation model, gradient rms and the hardware limits), the echo-train rules, the system timing constants, the sample model and the accuracy we need are all given in task.json.
+
+Please design the sequence and export it as a Pulseq file, compute the safety quantities from that exported file, run the same file through an established Bloch simulator for the six public samples, and write a fitting program that returns T2 and the B1 scale of each sample from its echo train. Meeting the safety limits will constrain the refocusing pulses and the crushers, so the signal model used in the fit must describe the sequence you actually exported. Use established tools where they help and write the code that connects them yourself.
+
+fit_t2.py must work on its own: I will simulate further samples with your exported sequence, add noise and run it on those measurements. Please return the sequence, the simulation archive, the report, runnable code, a figure, an environment record and a README that explains the design trade-offs, how you verified the safety numbers and the fit, and what the limitations are. Everything is simulated; plan for about an hour.
+~~~
+
+The full specification is in task.example.json. code/ holds the generator, grader, reference solution and control scripts of the example instance; VALIDATION.md lists how the reference and the controls scored.
+

@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v7-dixonraw",
+  "source": "heldout-v7-dixonraw",
+  "manifest_sha256": "a01b4d61bdb4e6b854133e776e27c9dcf2e386dfe2d6cc1a78a795de5b1bd944",
+  "grader": "grade_dixonraw_arm.py",
+  "package": "heldout-v7-dixonraw.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "7193b7231086adb509a2f1ddc7d58578b098f3b9a6bebc3a2085f6baee79fa34",
+  "package_bytes": 21432320
+ },
+ {
+  "instance": "heldout-v7-dixonraw-r2",
+  "source": "sealed-r2-v7/heldout-v7-dixonraw-r2",
+  "manifest_sha256": "514dfa811c00af6785991781a29ca6bb0507d722c8e93d9b290e52aa19fb60c1",
+  "grader": "grade_dixonraw_arm.py",
+  "package": "heldout-v7-dixonraw-r2.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "2eba5a9318d78d1e5df319be340e9427080a4f691fd58b4041e6ec54c65299ae",
+  "package_bytes": 22138880
+ },
+ {
+  "instance": "heldout-v7-dixonraw-r3",
+  "source": "sealed-r3-v7/heldout-v7-dixonraw-r3",
+  "manifest_sha256": "3910e2ee5413cc49b3221a47b3e5ed810c041e5510b705ee0939de44c437e9f8",
+  "grader": "grade_dixonraw_arm.py",
+  "package": "heldout-v7-dixonraw-r3.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "c91d525d63ed8c84532ae62d2d3653dad492b486927dce534787b231e3361873",
+  "package_bytes": 22589440
+ },
+ {
+  "instance": "heldout-v7-dixonraw-r4",
+  "source": "sealed-r4/heldout-v7-dixonraw-r4",
+  "manifest_sha256": "bbcaf0e59f5f6cf8232f1e032bc41749e1fb034a6f5be873d43cfc00f3697e2f",
+  "grader": "grade_dixonraw_arm.py",
+  "package": "heldout-v7-dixonraw-r4.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "5808e7b9d4e3b8f69201355c9f24cb97a534c1295481e6c327da30e4f251670b",
+  "package_bytes": 223713280
+ }
+]

@@ -1,0 +1,11 @@
+name: Bug in mrab or the grader image
+description: Something in the tooling does not work.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes: {label: What happened, description: Command, output, and what you expected.}
+    validations: {required: true}
+  - type: input
+    id: env
+    attributes: {label: Environment, placeholder: "OS, Python version, mrab version, grader image digest"}

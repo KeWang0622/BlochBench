@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v6-gapproposal",
+  "source": "heldout-v6-gapproposal",
+  "manifest_sha256": "a2e75b72e84a37d43f3e1ae9c30444b14ddcbc2f053932ac0270c5c11f8ae0d6",
+  "grader": "grade_gapproposal_arm.py",
+  "package": "heldout-v6-gapproposal.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "08ad4416093eba98d543caf7d570220d585708cbf5354bd6f700adba57a33978",
+  "package_bytes": 491520
+ },
+ {
+  "instance": "heldout-v6-gapproposal-r2",
+  "source": "sealed-r2/heldout-v6-gapproposal-r2",
+  "manifest_sha256": "afb3bd62190eed6f2639a4d73c85b2035e6a2bc6e1d4c0e8c8b99ab8eb505448",
+  "grader": "grade_gapproposal_arm.py",
+  "package": "heldout-v6-gapproposal-r2.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "320384662203802cc9362c2fd69e5790df1f2c0694d011f79d996f15426a3bb0",
+  "package_bytes": 471040
+ },
+ {
+  "instance": "heldout-v6-gapproposal-r3",
+  "source": "sealed-r3-ext/heldout-v6-gapproposal-r3",
+  "manifest_sha256": "c4a15c54add3caafcdc3b617df98c03e5bcfe63d557deb1c2d05480531c96a5e",
+  "grader": "grade_gapproposal_arm.py",
+  "package": "heldout-v6-gapproposal-r3.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "db14c8c76915e23d73b633c0c376d81af6a6dc6f78ffb8defc058191ac0cee79",
+  "package_bytes": 532480
+ },
+ {
+  "instance": "heldout-v6-gapproposal-r4",
+  "source": "sealed-r4/heldout-v6-gapproposal-r4",
+  "manifest_sha256": "653c10a88c8f5e003686fe5254e7dcdeddde2e51cb742565f46860254e079806",
+  "grader": "grade_gapproposal_arm.py",
+  "package": "heldout-v6-gapproposal-r4.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "68d2a91af884d29c530543265b139669a41c7bd87fc932e2c74a65e0d1cece90",
+  "package_bytes": 552960
+ }
+]

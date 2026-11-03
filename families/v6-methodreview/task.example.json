@@ -1,0 +1,55 @@
+{
+ "id": "heldout-v6-methodreview-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "methodological_peer_review_of_an_mri_manuscript",
+ "inputs": {
+  "manuscript": "inputs/manuscript.md",
+  "paragraphs": "inputs/manuscript_paragraphs.json (the same text keyed by paragraph/table ID)",
+  "synthetic": true,
+  "note": "The manuscript, study and numbers are fictional and were written for this evaluation."
+ },
+ "role": "Methodological referee: assess design, data handling, statistics, numbers, units and the conclusions drawn.",
+ "issue_categories": {
+  "statistical_unit_pseudoreplication": "non-independent observations (voxels, slices, repeated measures, several lesions per patient) analysed as independent units, inflating n or significance",
+  "test_set_leakage_or_tuning": "test data used for training, model selection or hyperparameter tuning, or subject overlap between training/validation and test data",
+  "multiple_comparisons_uncorrected": "many hypothesis tests without correction, with conclusions drawn from individually significant results",
+  "text_table_inconsistency": "a number in the text disagrees with a table or with another part of the manuscript, or counts do not add up",
+  "unit_error": "a quantity reported with a wrong or physically incorrect unit",
+  "unsupported_causal_or_clinical_claim": "causal, diagnostic, outcome or practice-changing claims that the design and data do not support",
+  "undefined_or_post_hoc_exclusion": "data excluded without prespecified objective criteria, or exclusion decided after seeing outputs or results",
+  "inappropriate_statistical_test": "a test whose design assumptions do not match the data (for example an unpaired test for paired measurements)",
+  "circular_analysis": "regions, features or thresholds selected with the same data and outcome that are then tested",
+  "inadequate_blinding": "assessors not blinded where knowledge of the method or reference could bias the result",
+  "missing_reference_standard": "accuracy or detection claims without an appropriate reference standard",
+  "other_methodological": "another problem that invalidates a result or conclusion"
+ },
+ "review_rules": [
+  "Report only problems that invalidate a result, misstate a number or unit, use an unsuitable analysis, or overstate a conclusion. Do not report style, wording, missing background, or generic limitations that the authors already acknowledge (single centre, retrospective undersampling, sample size).",
+  "Locate each issue at the paragraph or table ID where the flawed statement appears. One entry per problem and location; list a problem at a second location only if the flawed statement also appears there.",
+  "quote: a verbatim excerpt of at least 10 characters copied from that paragraph or table that shows the problem (whitespace and letter case are normalized when checking).",
+  "recommendation: one of accept, minor_revision, major_revision, reject."
+ ],
+ "pass_thresholds": {
+  "planted_problems": "The manuscript contains 8 problems of the kinds listed in issue_categories; the other paragraphs and tables are sound.",
+  "recall": "At least 7 of the 8 problems reported with a correct paragraph/table ID and a correct category.",
+  "false_accusations": "At most 2 issues located at paragraphs or tables that contain none of the problems.",
+  "quotes": "Every issue has a verbatim quote from its paragraph or table.",
+  "max_issues": 25,
+  "recommendation": "Consistent with the problems found."
+ },
+ "required_outputs": [
+  "review.json",
+  "review.md"
+ ],
+ "review_json_schema": {
+  "recommendation": "accept | minor_revision | major_revision | reject",
+  "summary": "string",
+  "issues": "list of {issue_id: string, paragraph_id: 'P..' or 'T..', category: one key of issue_categories, quote: verbatim excerpt, justification: string, suggested_fix: string}",
+  "limitations": "list of strings (limitations of your review)"
+ },
+ "review_md_requirements": [
+  "A readable referee report of at most 2000 words.",
+  "Mention the paragraph/table ID of every issue listed in review.json."
+ ],
+ "grading_note": "Deterministic automated checks of review.json against the planted problems (ID and category), quotes against the manuscript text, false accusations of sound paragraphs, recommendation, and review.md. Deliverables are read from the workspace root or one subfolder."
+}

@@ -1,0 +1,81 @@
+{
+ "id": "heldout-v6-pilotdesign-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "repeatability_estimation_and_sample_size_design_from_pilot_mri_data",
+ "biomarker": "femorotibial cartilage T2 (multi-echo spin echo T2 mapping of the weight-bearing femoral and tibial cartilage, 3 T), in ms",
+ "inputs": {
+  "pilot_test_retest.csv": "22 healthy volunteers (V01..V22) scanned in two sessions 6 days apart; one row per participant, session and knee (L, R); columns subject_id, session, knee, cartilage_t2_ms, qc_pass",
+  "pilot_groups.csv": "18 patients with early knee osteoarthritis (OA01..OA18) and 15 asymptomatic controls (CT01..CT15) scanned once; one row per participant and knee; columns subject_id, group (early_oa or control), knee, cartilage_t2_ms, qc_pass",
+  "synthetic": true,
+  "note": "Pilot data are simulated for this evaluation."
+ },
+ "endpoint": "For one participant and session, the study endpoint is the mean of the left- and right-knee cartilage T2 values (ms).",
+ "qc_rule": "Exclude every row with qc_pass = false. A test-retest participant without two sessions that pass QC is excluded from the repeatability analysis; a group-pilot participant whose scan fails QC is excluded from the group analysis.",
+ "estimands": {
+  "within_subject_sd": "square root of the within-participant mean square of the endpoint over the two sessions (one-way random-effects ANOVA with participant as the factor), with a 95% CI from the chi-square distribution on its degrees of freedom",
+  "repeatability_coefficient": "1.96 * sqrt(2) * within_subject_sd",
+  "icc": "ICC(2,1) of the endpoint (Shrout and Fleiss: two-way random effects, absolute agreement, single measurement, sessions as the second factor) with its 95% CI from the Shrout and Fleiss / McGraw and Wong F-based interval",
+  "pilot_group_difference": "mean endpoint difference, early_oa minus controls, with a 95% CI from the pooled-variance two-sample t interval, and the pooled within-group SD of the endpoint"
+ },
+ "studies_to_design": {
+  "acute_challenge": {
+   "question": "Does a standardized 30-minute treadmill run, finished 45 minutes before the scan, change the endpoint compared with a non-loading rest day in healthy volunteers?",
+   "effect": 1.1,
+   "effect_unit": "ms",
+   "alpha": 0.05,
+   "power": 0.85,
+   "sided": 2,
+   "logistics": "Volunteers comparable to the test-retest pilot. Each participant can be scanned on two days at least 5 days apart (after the run or after rest, in random order). The loading effect is acute and fully reversible; no carryover or period effect is expected. Assume that the day-to-day within-participant variability equals that of the test-retest pilot."
+  },
+  "group_difference": {
+   "question": "Does the endpoint differ between patients with early knee osteoarthritis and asymptomatic controls?",
+   "effect": 2.0,
+   "effect_unit": "ms",
+   "alpha": 0.05,
+   "power": 0.85,
+   "sided": 2,
+   "logistics": "Cross-sectional, one scan per participant, equal group sizes. Use the variability observed in the group pilot."
+  }
+ },
+ "nonevaluable_fraction": 0.15,
+ "sample_size_rules": "For each study choose the most efficient valid design and the SD that matches it. Compute the number of evaluable units with the normal-approximation formula, rounding up: paired, n = ((z_{1-alpha/2} + z_{1-beta}) * SD / Delta)^2 where SD is the SD of the within-participant differences; independent groups, n per group = 2 * ((z_{1-alpha/2} + z_{1-beta}) * SD / Delta)^2. The exact noncentral-t calculation is also accepted. Then inflate for non-evaluable participants: n_enrol = ceil(n_evaluable / (1 - nonevaluable_fraction)).",
+ "design_vocabulary": {
+  "design": [
+   "paired_crossover",
+   "parallel_groups"
+  ],
+  "unit_of_analysis": [
+   "participant",
+   "knee",
+   "session",
+   "voxel"
+  ],
+  "sd_type": [
+   "sd_of_within_participant_differences",
+   "between_participant_sd",
+   "within_subject_sd"
+  ]
+ },
+ "required_outputs": [
+  "design.json",
+  "plan.md"
+ ],
+ "design_json_schema": {
+  "endpoint_unit_of_analysis": "value from design_vocabulary.unit_of_analysis",
+  "qc_exclusions": "{test_retest: [subject_id..], groups: [subject_id..]} participants excluded by the QC rule",
+  "repeatability": "{n_participants, within_subject_sd, within_subject_sd_ci95: [lo, hi], repeatability_coefficient, icc_form: string, icc, icc_ci95: [lo, hi]}",
+  "pilot_group_comparison": "{n_patients (early_oa), n_controls, mean_difference, mean_difference_ci95: [lo, hi], pooled_sd}",
+  "designs": {
+   "acute_challenge": "{design, unit_of_analysis, sd_type, sd_used, effect, alpha, power, n_evaluable (participants), n_enrol (participants), rationale: string}",
+   "group_difference": "{design, unit_of_analysis, sd_type, sd_used, effect, alpha, power, n_evaluable_per_group, n_enrol_per_group, rationale: string}"
+  },
+  "assumptions": "list of strings",
+  "limitations": "list of strings",
+  "units": "all T2 quantities in ms"
+ },
+ "plan_md_requirements": [
+  "A short study plan of at most 1000 words.",
+  "State the chosen design, the SD used and the numbers to enrol for both studies, matching design.json."
+ ],
+ "grading_note": "Deterministic automated checks: QC exclusions and counts, unit of analysis, within-subject SD and CI, repeatability coefficient, ICC and CI, pilot group estimates, design and SD choices, sample sizes (normal-approximation to exact-t range around the correct SD) and enrolment inflation, and plan.md consistency. Tolerances: within-subject SD and pooled SD 3%, their CI bounds 5%, ICC 0.01 and its CI bounds 0.02, mean difference 0.05 ms and CI bounds 0.1 ms, SD used in a design 4%. Deliverables are read from the workspace root or one subfolder."
+}

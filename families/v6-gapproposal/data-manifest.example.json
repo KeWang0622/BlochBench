@@ -1,0 +1,12 @@
+[
+ {
+  "path": "public/inputs/corpus.json",
+  "bytes": 45135,
+  "sha256": "d204944a566c2d29dff9f4aa362dbe05f523b4f477d4c923be4b93d3a4357c24"
+ },
+ {
+  "path": "public/inputs/corpus.md",
+  "bytes": 37525,
+  "sha256": "3d952b4190d48427e8eaeae26f5ae341483e9beb6beda198d753978ec3ba6abe"
+ }
+]

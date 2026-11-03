@@ -1,0 +1,257 @@
+{
+ "v4-qsm": {
+  "checks": 11,
+  "covered": 6,
+  "negatives": 6,
+  "scientific": 7,
+  "scientific_covered": 6,
+  "uncovered_scientific": [
+   "hidden_rerun_runs"
+  ]
+ },
+ "v4-t2epg": {
+  "checks": 18,
+  "covered": 10,
+  "negatives": 6,
+  "scientific": 15,
+  "scientific_covered": 10,
+  "uncovered_scientific": [
+   "hidden_runs",
+   "hidden_t2_grid",
+   "public_t2_grid",
+   "rerun_public_reproduces_submitted",
+   "rerun_public_runs"
+  ]
+ },
+ "v5-dwigroup": {
+  "checks": 13,
+  "covered": 10,
+  "negatives": 9,
+  "scientific": 10,
+  "scientific_covered": 10,
+  "uncovered_scientific": []
+ },
+ "v5-irt1": {
+  "checks": 11,
+  "covered": 7,
+  "negatives": 7,
+  "scientific": 8,
+  "scientific_covered": 7,
+  "uncovered_scientific": [
+   "sequence_timing_contract"
+  ]
+ },
+ "v5-learnrecon": {
+  "checks": 13,
+  "covered": 8,
+  "negatives": 7,
+  "scientific": 10,
+  "scientific_covered": 8,
+  "uncovered_scientific": [
+   "hidden_classical_runs",
+   "hidden_learned_runs"
+  ]
+ },
+ "v5-safecpmg": {
+  "checks": 15,
+  "covered": 8,
+  "negatives": 10,
+  "scientific": 13,
+  "scientific_covered": 8,
+  "uncovered_scientific": [
+   "cpmg_structure",
+   "gradient_rms_limit",
+   "hardware_limits",
+   "hidden_rerun_runs",
+   "sequence_readable"
+  ]
+ },
+ "v5-spiralb0": {
+  "checks": 10,
+  "covered": 6,
+  "negatives": 9,
+  "scientific": 7,
+  "scientific_covered": 6,
+  "uncovered_scientific": [
+   "sequence_timing_contract"
+  ]
+ },
+ "v5-t2study": {
+  "checks": 9,
+  "covered": 6,
+  "negatives": 10,
+  "scientific": 6,
+  "scientific_covered": 6,
+  "uncovered_scientific": []
+ },
+ "v6-gapproposal": {
+  "checks": 17,
+  "covered": 12,
+  "negatives": 17,
+  "scientific": 13,
+  "scientific_covered": 12,
+  "uncovered_scientific": [
+   "hypothesis_and_endpoint_measurable"
+  ]
+ },
+ "v6-honestresults": {
+  "checks": 16,
+  "covered": 12,
+  "negatives": 15,
+  "scientific": 13,
+  "scientific_covered": 12,
+  "uncovered_scientific": [
+   "claim_numbers_in_text"
+  ]
+ },
+ "v6-methodreview": {
+  "checks": 8,
+  "covered": 5,
+  "negatives": 9,
+  "scientific": 4,
+  "scientific_covered": 4,
+  "uncovered_scientific": []
+ },
+ "v6-pilotdesign": {
+  "checks": 14,
+  "covered": 10,
+  "negatives": 11,
+  "scientific": 10,
+  "scientific_covered": 10,
+  "uncovered_scientific": []
+ },
+ "v7-cestapt": {
+  "checks": 14,
+  "covered": 9,
+  "negatives": 6,
+  "scientific": 9,
+  "scientific_covered": 9,
+  "uncovered_scientific": []
+ },
+ "v7-dixonraw": {
+  "checks": 11,
+  "covered": 6,
+  "negatives": 7,
+  "scientific": 6,
+  "scientific_covered": 6,
+  "uncovered_scientific": []
+ },
+ "v7-epidti": {
+  "checks": 20,
+  "covered": 15,
+  "negatives": 7,
+  "scientific": 15,
+  "scientific_covered": 15,
+  "uncovered_scientific": []
+ },
+ "v7-fmriglm": {
+  "checks": 14,
+  "covered": 9,
+  "negatives": 6,
+  "scientific": 9,
+  "scientific_covered": 9,
+  "uncovered_scientific": []
+ },
+ "v7-mrsquant": {
+  "checks": 8,
+  "covered": 3,
+  "negatives": 6,
+  "scientific": 3,
+  "scientific_covered": 3,
+  "uncovered_scientific": []
+ },
+ "v7-pcasl": {
+  "checks": 11,
+  "covered": 6,
+  "negatives": 7,
+  "scientific": 6,
+  "scientific_covered": 6,
+  "uncovered_scientific": []
+ },
+ "v8-epinav": {
+  "checks": 12,
+  "covered": 6,
+  "negatives": 7,
+  "scientific": 10,
+  "scientific_covered": 5,
+  "uncovered_scientific": [
+   "bloch_replay",
+   "hardware_limits",
+   "raster_and_dead_times",
+   "sequence_readback",
+   "single_slice_selective_excitation"
+  ]
+ },
+ "v8-mprage": {
+  "checks": 14,
+  "covered": 6,
+  "negatives": 6,
+  "scientific": 12,
+  "scientific_covered": 5,
+  "uncovered_scientific": [
+   "bloch_replay",
+   "hardware_limits",
+   "nonselective_rf",
+   "public_image_and_report_ratios",
+   "raster_and_dead_times",
+   "sampling_contract",
+   "sequence_readback"
+  ]
+ },
+ "v8-sedwi": {
+  "checks": 14,
+  "covered": 8,
+  "negatives": 6,
+  "scientific": 12,
+  "scientific_covered": 8,
+  "uncovered_scientific": [
+   "hardware_limits",
+   "raster_and_dead_times",
+   "rf_slice_selection_and_tr",
+   "sequence_readback"
+  ]
+ },
+ "v8-spiral": {
+  "checks": 11,
+  "covered": 5,
+  "negatives": 6,
+  "scientific": 9,
+  "scientific_covered": 4,
+  "uncovered_scientific": [
+   "bloch_replay",
+   "public_image_and_report_ratios",
+   "raster_and_dead_times",
+   "rf_slice_selection_and_tr",
+   "sequence_readback"
+  ]
+ },
+ "v8-tse": {
+  "checks": 15,
+  "covered": 8,
+  "negatives": 10,
+  "scientific": 13,
+  "scientific_covered": 7,
+  "uncovered_scientific": [
+   "bloch_replay",
+   "flip_angles_and_slice_selection",
+   "hardware_limits",
+   "public_image_and_report_ratios",
+   "raster_and_dead_times",
+   "sequence_readback"
+  ]
+ },
+ "v8-ute": {
+  "checks": 12,
+  "covered": 6,
+  "negatives": 6,
+  "scientific": 10,
+  "scientific_covered": 5,
+  "uncovered_scientific": [
+   "bloch_replay",
+   "hardware_limits",
+   "raster_and_dead_times",
+   "rf_flip_slice_selection_tr",
+   "sequence_readback"
+  ]
+ }
+}

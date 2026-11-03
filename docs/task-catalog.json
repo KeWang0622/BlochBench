@@ -1,0 +1,146 @@
+{
+  "v4-qsm": {
+    "title": "Quantitative susceptibility mapping",
+    "input": "Multi-echo magnitude and scanner-scaled phase images, brain and region masks, and acquisition geometry.",
+    "output": "Local-field and susceptibility maps, regional susceptibility relative to ventricular CSF, and a reusable pipeline.",
+    "verification": "Map and regional-value accuracy against simulated truth, including a rerun with a different subject and acquisition."
+  },
+  "v4-t2epg": {
+    "title": "T2 and transmit-field mapping from imperfect echoes",
+    "input": "A multi-echo spin-echo image series, region labels, and pulse timing with imperfect refocusing.",
+    "output": "T2 and relative B1 maps on the input grid, regional mean T2 values, and a reusable fitting program.",
+    "verification": "Map accuracy, low-B1 bias, regional values, and reproducible fits on public and unseen scans."
+  },
+  "v5-dwigroup": {
+    "title": "Diffusion processing and a two-group comparison",
+    "input": "Scanner-exported diffusion images, gradient directions, acquisition times, region labels, and group assignments.",
+    "output": "Regional FA, MD and principal directions, group differences with confidence intervals, and a subject-processing program.",
+    "verification": "Tensor metrics and directions against truth, recomputed Welch statistics, and reruns on unseen subjects."
+  },
+  "v5-irt1": {
+    "title": "Inversion-recovery T1 mapping with radial readouts",
+    "input": "A numerical object, prescribed inversion times, a radial sampling contract, and scanner hardware limits.",
+    "output": "An exported sequence, Bloch-simulated measurements, reconstructed images, a T1 map, and reusable reconstruction and fitting code.",
+    "verification": "Exported timing and trajectory, independent Bloch replay, T1 accuracy, and reconstruction and fitting on unseen inputs."
+  },
+  "v5-learnrecon": {
+    "title": "Learned versus classical quantitative reconstruction",
+    "input": "Fully sampled training subjects and undersampled test scans, with echo times, masks, and tissue labels.",
+    "output": "A trained network, tuned classical baseline, both test reconstructions, and a comparison based on regional R2* and B0 accuracy.",
+    "verification": "Subject-level data separation, sampled k-space consistency, downstream accuracy, and both methods rerun on unseen subjects."
+  },
+  "v5-safecpmg": {
+    "title": "CPMG design under RF and gradient limits",
+    "input": "Sample properties, echo-train requirements, and numerical RF, gradient, and peripheral-nerve-stimulation limits.",
+    "output": "An exported CPMG sequence, simulated echo trains, computed safety quantities, and a T2/B1 fitting program.",
+    "verification": "Limits recomputed from exported waveforms, independent Bloch replay, and T2/B1 accuracy on unseen noisy samples."
+  },
+  "v5-spiralb0": {
+    "title": "Spiral imaging with off-resonance correction",
+    "input": "A numerical object with a spatial B0 field, a dual-echo field-mapping scan, and sequence constraints.",
+    "output": "An exported spiral sequence, simulated measurements, an estimated field map, and an off-resonance-corrected image.",
+    "verification": "Waveform limits and coverage, independent Bloch replay, field and image accuracy, and reconstruction on an unseen object."
+  },
+  "v5-t2study": {
+    "title": "Scan-rescan T2 study from k-space to statistics",
+    "input": "Undersampled multi-coil scans, noise prescans, region labels, and an analysis plan for a study with one missing rescan.",
+    "output": "Per-scan T2 maps and measurements, participant-level group statistics, repeatability estimates, and reusable analysis code.",
+    "verification": "T2 accuracy, map-to-table consistency, prescribed statistics, and reruns on unseen scans and study tables."
+  },
+  "v6-gapproposal": {
+    "title": "Evidence audit and research proposal",
+    "input": "A synthetic cardiac MRI study corpus and rules for evidence, research gaps, study design, and sample size.",
+    "output": "An evidence audit and cited proposal with a supported research gap, endpoint, controls, and enrolment calculation.",
+    "verification": "Claims and citations against the supplied corpus, gap and design rules, and sample-size arithmetic."
+  },
+  "v6-honestresults": {
+    "title": "Trial reporting with traceable quantitative claims",
+    "input": "Synthetic trial results, reporting rules, and an allowed bibliography.",
+    "output": "An abstract, a Results section, and a claim ledger linking reported values and uncertainty to source entries.",
+    "verification": "Endpoint coverage, units and precision, uncertainty, supported language, citation keys, and claim-to-text consistency."
+  },
+  "v6-methodreview": {
+    "title": "Methods and statistics review of an MRI manuscript",
+    "input": "A synthetic imaging manuscript with labelled paragraphs and tables, review categories, and pass criteria.",
+    "output": "A structured review and referee report with quoted evidence, issue categories, proposed fixes, and a recommendation.",
+    "verification": "Detected methodological problems, exact supporting quotations, and false accusations of sound passages."
+  },
+  "v6-pilotdesign": {
+    "title": "Study design from pilot cartilage T2 measurements",
+    "input": "Synthetic test-retest and patient-control pilot measurements, quality flags, and two proposed study questions.",
+    "output": "Repeatability and group estimates, study designs, sample sizes, enrolment targets, and a short plan.",
+    "verification": "Quality exclusions, participant-level analysis, uncertainty, design-specific variability, and sample-size calculations."
+  },
+  "v7-cestapt": {
+    "title": "APT-weighted CEST mapping",
+    "input": "CEST and WASSR image series, an unsaturated reference, frequency offsets, and saturation parameters.",
+    "output": "A B0 map and an APT-weighted asymmetry map at 3.5 ppm, with a reusable processing program.",
+    "verification": "Regional and voxelwise asymmetry and B0 accuracy on public and unseen acquisitions."
+  },
+  "v7-dixonraw": {
+    "title": "Fat fraction and R2* from multi-coil k-space",
+    "input": "Raw multi-echo k-space, receiver noise, a transmit-field map, acquisition parameters, and the fat spectrum.",
+    "output": "Proton-density fat-fraction and R2* maps, a field-map figure, and a reusable reconstruction program.",
+    "verification": "Regional fat-fraction and R2* accuracy against truth, including reruns with different acquisition and coil settings."
+  },
+  "v7-epidti": {
+    "title": "Diffusion tensor mapping from raw EPI",
+    "input": "Raw diffusion EPI and navigator readouts, a B0 map, gradient-nonlinearity fields, and a diffusion gradient table.",
+    "output": "FA, MD and principal-direction maps plus a corrected mean unweighted image on the undistorted grid.",
+    "verification": "Geometry, ghosting, regional tensor metrics and directions against truth, with reruns on unseen acquisitions."
+  },
+  "v7-fmriglm": {
+    "title": "Event-related fMRI effect estimation",
+    "input": "A BOLD time series, event timings, slice and volume timing, and realignment parameters.",
+    "output": "Single-event percent-signal-change and positive-response z-statistic maps, with a reusable analysis program.",
+    "verification": "Effect-size accuracy and the null z distribution, including reruns with different timings and noise properties."
+  },
+  "v7-mrsquant": {
+    "title": "Single-voxel metabolite quantification",
+    "input": "Raw multi-coil spectroscopy transients, a water reference, tissue fractions, and relaxation and acquisition parameters.",
+    "output": "NAA, total creatine and total choline concentrations, a spectrum-fit figure, and a reusable quantification program.",
+    "verification": "All three concentrations against truth on public and unseen data with different tissue and acquisition conditions."
+  },
+  "v7-pcasl": {
+    "title": "Cerebral blood flow from pCASL",
+    "input": "Alternating control and label images, an M0 reference, tissue T1 maps, and slice and labelling parameters.",
+    "output": "A cerebral-blood-flow map in mL/100 g/min and a reusable quantification program.",
+    "verification": "Grey- and white-matter flow by slice against truth, including reruns with changed timing and suppression settings."
+  },
+  "v8-epinav": {
+    "title": "Gradient-echo EPI with delay-robust reconstruction",
+    "input": "A numerical object, EPI timing and sampling requirements, hardware limits, and a gradient-delay model.",
+    "output": "An exported sequence with any required reference echoes, simulated measurements, and an image-reconstruction program.",
+    "verification": "Timing and sampling, independent Bloch replay, and image accuracy on unseen objects with unknown gradient delays."
+  },
+  "v8-mprage": {
+    "title": "3D MP-RAGE with tissue nulling",
+    "input": "A numerical object, a target tissue T1, fixed readout and cycle constraints, and hardware limits.",
+    "output": "An exported MP-RAGE sequence with a justified inversion time, simulated measurements, and a reconstructed 3D image.",
+    "verification": "Waveforms and timing, steady-state tissue nulling, independent Bloch replay, and reconstruction on an unseen object."
+  },
+  "v8-sedwi": {
+    "title": "Spin-echo EPI diffusion acquisition and ADC mapping",
+    "input": "A numerical object, diffusion and spin-echo requirements, a diffusion model, and hardware limits.",
+    "output": "An exported diffusion sequence, simulated measurements with b-matrices, an ADC map, and a reusable fitting program.",
+    "verification": "Waveforms, spin-echo timing and b-matrices, independent simulation replay, and ADC accuracy on public and unseen objects."
+  },
+  "v8-spiral": {
+    "title": "Interleaved spiral acquisition and reconstruction",
+    "input": "A numerical object, gradient and slew limits, sampling coverage requirements, and a recorded-delay model.",
+    "output": "An exported spiral sequence, simulated measurements, and a reconstruction program that handles the recorded gradient delay.",
+    "verification": "Integrated trajectories and coverage, independent Bloch replay, and image accuracy on unseen objects with gradient delays."
+  },
+  "v8-tse": {
+    "title": "Multi-shot turbo spin-echo acquisition",
+    "input": "A numerical object, prescribed refocusing angles and timing, echo-train requirements, and hardware limits.",
+    "output": "An exported turbo spin-echo sequence, simulated echo trains, a reconstructed image, and reusable reconstruction code.",
+    "verification": "Sampling and timing, echo phase and steady-state consistency, independent Bloch replay, and unseen-object reconstruction."
+  },
+  "v8-ute": {
+    "title": "Ultrashort-echo imaging with half-pulse excitation",
+    "input": "A numerical object containing short-T2 tissue, half-pulse pairing and radial coverage requirements, and hardware limits.",
+    "output": "An exported UTE sequence, simulated paired measurements, a reconstructed slice image, and reusable reconstruction code.",
+    "verification": "Echo time, pair slice profile and coverage, independent Bloch replay, short-T2 signal, and unseen-object reconstruction."
+  }
+}

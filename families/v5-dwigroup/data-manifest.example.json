@@ -1,0 +1,217 @@
+[
+ {
+  "path": "public/inputs/participants.tsv",
+  "bytes": 231,
+  "sha256": "a906d7920a6951c80acae763fbfd5d349581db0c62a0c079c74c6f5cc1ffc468"
+ },
+ {
+  "path": "public/inputs/sub-01/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-01/dwi.nii.gz",
+  "bytes": 1619920,
+  "sha256": "644ead522b36277f1785bd4e033a28b438dbeab31a38b149343687348d330a70"
+ },
+ {
+  "path": "public/inputs/sub-01/labels.nii.gz",
+  "bytes": 3655,
+  "sha256": "d192d3e65d23cba4a0977bab62d2f1c1ada085696d1a6e37029758e3a8ffc082"
+ },
+ {
+  "path": "public/inputs/sub-02/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-02/dwi.nii.gz",
+  "bytes": 1615503,
+  "sha256": "1ba3c0105e938155b4aaffef64a0c902a171b7e30efd2f6399c0982e11b2f4c4"
+ },
+ {
+  "path": "public/inputs/sub-02/labels.nii.gz",
+  "bytes": 3506,
+  "sha256": "c2087c9e9fa6259029ba6061d8fb95565050829f4360676d404db1fd93389818"
+ },
+ {
+  "path": "public/inputs/sub-03/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-03/dwi.nii.gz",
+  "bytes": 1619373,
+  "sha256": "93c7007ff6411307b912a256e9857489219d5a117c78f02df7ff2efb4a380690"
+ },
+ {
+  "path": "public/inputs/sub-03/labels.nii.gz",
+  "bytes": 3428,
+  "sha256": "4c81aacffd6db03b66079280e213b4f86d3c82517bd6fdf7c340d299ba7ef292"
+ },
+ {
+  "path": "public/inputs/sub-04/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-04/dwi.nii.gz",
+  "bytes": 1616367,
+  "sha256": "8c3bc226a8b69da141164a656e9b843abc2c1cda81a458e253eb6e2c9ff76f51"
+ },
+ {
+  "path": "public/inputs/sub-04/labels.nii.gz",
+  "bytes": 3482,
+  "sha256": "8bb25c74a08dd80da501b4256e63c0088ab5395235c259af7f75b912ee226606"
+ },
+ {
+  "path": "public/inputs/sub-05/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-05/dwi.nii.gz",
+  "bytes": 1617588,
+  "sha256": "4eaa97b50113fa916a7b084752b83636bcc9f00d6218c83d56820759ba869019"
+ },
+ {
+  "path": "public/inputs/sub-05/labels.nii.gz",
+  "bytes": 3519,
+  "sha256": "61de8022e7179440f53ccc89dae84fa69dc880e9ba50c74748a3eab8697b47d6"
+ },
+ {
+  "path": "public/inputs/sub-06/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-06/dwi.nii.gz",
+  "bytes": 1622712,
+  "sha256": "afc4516d998755bb506963c6ba853bb0b197fd1edbe45adb5dc51b6707fa2719"
+ },
+ {
+  "path": "public/inputs/sub-06/labels.nii.gz",
+  "bytes": 3555,
+  "sha256": "7661c2c13d86e565ae7ee969883fe636fa097eb38ce97aa53744b718b53dbb8c"
+ },
+ {
+  "path": "public/inputs/sub-07/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-07/dwi.nii.gz",
+  "bytes": 1619967,
+  "sha256": "18d8fd72b4b9c8d73d608d3bf17c6535c5a10386d5e76df76e50ee693139b1f8"
+ },
+ {
+  "path": "public/inputs/sub-07/labels.nii.gz",
+  "bytes": 3596,
+  "sha256": "9398cdd7cd45e447d027736c122ff531891294de4713fb47b728f2d006d26905"
+ },
+ {
+  "path": "public/inputs/sub-08/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-08/dwi.nii.gz",
+  "bytes": 1616111,
+  "sha256": "cab5f75baebaf0316342a5ff27b67da35bc796322e971c00842fb9c872495439"
+ },
+ {
+  "path": "public/inputs/sub-08/labels.nii.gz",
+  "bytes": 3548,
+  "sha256": "b2a2535cc507713662146e2b634ae8ae3aded7b34b47c2dc2275b3b36bb424c7"
+ },
+ {
+  "path": "public/inputs/sub-09/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-09/dwi.nii.gz",
+  "bytes": 1616808,
+  "sha256": "cf9741cb1ad119477dd962ffe027881a22f22f5c828fe23574fa04ad9c23400a"
+ },
+ {
+  "path": "public/inputs/sub-09/labels.nii.gz",
+  "bytes": 3628,
+  "sha256": "a629f1c5bd05482f617b97f345189ee6ef229fe2c2d68d655823e1ade2a842fa"
+ },
+ {
+  "path": "public/inputs/sub-10/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-10/dwi.nii.gz",
+  "bytes": 1620336,
+  "sha256": "dbe19c8008bc25c897687cdfbf472fb505df9d25e6ccd18d455a5aa060d978a4"
+ },
+ {
+  "path": "public/inputs/sub-10/labels.nii.gz",
+  "bytes": 3574,
+  "sha256": "7e9081291b9c9897b702cef13e6ae64af785f98710034e615396951c84e62440"
+ },
+ {
+  "path": "public/inputs/sub-11/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-11/dwi.nii.gz",
+  "bytes": 1617162,
+  "sha256": "7fe22c1e628f6f01dfab4d9b632ce26d2f8f69aea9852072c90e404fefa68020"
+ },
+ {
+  "path": "public/inputs/sub-11/labels.nii.gz",
+  "bytes": 3585,
+  "sha256": "b6ff6237d034b10cca71d35727cbc2731ce0601400926af669c7cda5c8515beb"
+ },
+ {
+  "path": "public/inputs/sub-12/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-12/dwi.nii.gz",
+  "bytes": 1611192,
+  "sha256": "140f611dd52f12280e8cb5ab721124444df933bbfc6226d65bb8d720634cd4bd"
+ },
+ {
+  "path": "public/inputs/sub-12/labels.nii.gz",
+  "bytes": 3462,
+  "sha256": "8a97143e3d7c24d241dc7f523ae4ddcb6b92fa6acc707e521efd07ca8e591247"
+ },
+ {
+  "path": "public/inputs/sub-13/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-13/dwi.nii.gz",
+  "bytes": 1616823,
+  "sha256": "251e110c546605887a2fce591f90a3f32e4e4a9bb5d6c2be1efa598cc0684516"
+ },
+ {
+  "path": "public/inputs/sub-13/labels.nii.gz",
+  "bytes": 3545,
+  "sha256": "0133bee46b584defc032475c5d199130dacd3ce8f1741d0f9bbb4845e1782b6b"
+ },
+ {
+  "path": "public/inputs/sub-14/dwi.json",
+  "bytes": 3816,
+  "sha256": "1196850bc2372a5be10c4b7e75f4ae7e8eeb65d7cc547978d22cfcb9eaf2c940"
+ },
+ {
+  "path": "public/inputs/sub-14/dwi.nii.gz",
+  "bytes": 1614175,
+  "sha256": "48c0233c65f1b2b0c3579bf9673558f16084a53b35cbb78abc978a9dcecda5d0"
+ },
+ {
+  "path": "public/inputs/sub-14/labels.nii.gz",
+  "bytes": 3589,
+  "sha256": "1588438d756bbbb92a95015d86bf96998a70a7235344ef47cc070571b5f08cc3"
+ }
+]

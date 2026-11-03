@@ -1,0 +1,104 @@
+{
+ "id": "heldout-v5-safecpmg-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "safety-constrained sequence design, Bloch simulation of the exported sequence, and stimulated-echo-aware T2/B1 estimation (CPMG relaxometry)",
+ "time_expectation_minutes": 60,
+ "experiment": "Non-selective multi-echo spin-echo (CPMG) relaxometry of homogeneous samples without spatial encoding. The exported file is one repetition (TR) of a protocol that is repeated back to back; each simulated measurement starts from thermal equilibrium and plays the file once. The measurement for echo n is the complex value of the middle ADC sample of the n-th ADC.",
+ "system": {
+  "gamma_Hz_per_T": 42576000,
+  "max_gradient_mT_per_m": 38,
+  "max_slew_T_per_m_per_s": 150,
+  "gradient_raster_s": 1e-05,
+  "rf_raster_s": 1e-06,
+  "adc_raster_s": 1e-07,
+  "block_raster_s": 1e-05,
+  "rf_dead_time_s": 0.0001,
+  "rf_ringdown_time_s": 2e-05,
+  "adc_dead_time_s": 1e-05
+ },
+ "sequence_requirements": {
+  "rf": "one excitation pulse (flip 90 +/- 2 deg) followed by N identical refocusing pulses; all pulses non-selective (no gradient on any axis while RF is on) and on resonance (zero frequency offset); CPMG phase: refocusing phase = excitation phase +/- 90 deg (+/- 2 deg), the same for every refocusing pulse",
+  "timing": "echo spacing ESP <= 12 ms; refocusing centres at t_exc + ESP/2 + (n-1) ESP and echo n at t_exc + n ESP, where t_exc is the excitation RF centre (Pulseq RF centre); tolerance 2 us; 26 <= N <= 40",
+  "adc": "exactly one ADC per echo; its middle sample (index floor(num_samples/2); Pulseq sample time = ADC start + delay + (i + 0.5) dwell) at the echo time within 2 us (half a dwell extra allowed for an even sample count); no gradient during any ADC",
+  "gradients": "x and y gradients identically zero. Crushers on z: the z gradient moment from each refocusing centre to the following echo, and from the preceding echo (the excitation centre for n = 1) to that refocusing centre, must each be between 800 and 2000 cycles/m, equal to each other within 2 %, and identical for all echoes within 2 %",
+  "tr": "total duration of the exported file (one TR) <= 1.0 s",
+  "file": "Pulseq .seq (version 1.4 or 1.5) readable by PyPulseq 1.5 and KomaMRI"
+ },
+ "safety_limits": {
+  "b1_rms_uT": {
+   "limit": 0.55,
+   "definition": "sqrt( (1/TR) * integral over the whole exported file of |B1(t)|^2 dt ), nominal RF amplitudes (B1 scale 1), B1 = |rf signal in Hz| / gamma"
+  },
+  "b1_peak_uT": {
+   "limit": 12.0
+  },
+  "pns": {
+   "limit": 0.8,
+   "definition": "On each gradient axis, a ramp is a maximal time interval over which the piecewise-linear waveform changes monotonically with non-zero slope (adjacent segments of the same slope sign belong to one ramp; a flat segment ends it). For a ramp with total change dG (T/m) and duration tau (s): P = |dG| / (S_r * (tau + c)) with S_r = 52 T/m/s and c = 0.34e-3 s. The maximum P over all ramps must not exceed the limit."
+  },
+  "gz_rms_mT_per_m": {
+   "limit": 7.0,
+   "definition": "root-mean-square of Gz over the whole exported file"
+  },
+  "hardware": "max |G| <= 38 mT/m and max slew <= 150 T/m/s on every axis"
+ },
+ "object": {
+  "file": "inputs/samples.json",
+  "content": "six public samples (id, T1_s, T2_s, B1_scale) and the isochromat layout shared by every sample",
+  "layout": "2000 isochromats along z at z_k = ((k + 0.5)/2000 - 0.5) * 0.012 m (x = y = 0), Hann-weighted proton density w_k = sin^2(pi (k + 0.5)/2000) normalised to sum 1; B0 = 0; single T1/T2 per sample",
+  "b1_scale": "B1_scale multiplies the amplitude of every RF pulse (excitation and refocusing) for that sample"
+ },
+ "simulation_requirement": "Simulate the exported sequence.seq itself (not an idealised re-implementation) with an established MRI Bloch simulator that reads Pulseq files (for example KomaMRI or MRzero) on the six public samples. Your own model may be used for fitting, not for this simulation.",
+ "quantitative_target": "fit_t2.py must estimate T2 within 3 % and B1_scale within 0.03 (absolute) for every hidden sample: hidden samples have 0.025 s <= T2 <= 0.30 s, 0.78 <= B1_scale <= 1.22, 0.4 s <= T1 <= 2.2 s; their T1 is supplied in the measurement archive. Hidden measurements are simulated from your exported sequence with the layout above and complex Gaussian noise of standard deviation 0.0008 per real and imaginary channel (total sample magnetization M0 = 1).",
+ "fit_cli": "python fit_t2.py --input measurement.npz --output fit.npz. Run in a clean directory that contains only fit_t2.py, your sequence.seq and the archive; installed third-party imports are allowed; it must not read samples.json or earlier outputs.",
+ "measurement_schema": {
+  "signals": "complex [n_samples, n_echoes]: middle ADC sample of each echo, chronological; overall scale and a global phase may differ from your simulator",
+  "echo_times_s": "float [n_echoes], n * ESP measured from the excitation centre",
+  "t1_s": "float [n_samples], known T1 of each sample",
+  "sample_ids": "str [n_samples]"
+ },
+ "fit_output_schema": {
+  "t2_s": "float [n_samples]",
+  "b1": "float [n_samples] estimated B1_scale"
+ },
+ "simulation_output_schema": {
+  "file": "simulation.npz",
+  "fields": "same fields as measurement_schema for the six public samples in samples.json order (no noise), plus sequence_sha256 (SHA256 of sequence.seq) and simulator (name and version)"
+ },
+ "report_schema": {
+  "file": "report.json",
+  "sequence": {
+   "echo_spacing_ms": "float",
+   "n_echoes": "int",
+   "refocusing_flip_deg": "float",
+   "refocusing_duration_ms": "float",
+   "excitation_duration_ms": "float",
+   "tr_s": "float",
+   "crusher_moment_cycles_per_m": "float"
+  },
+  "safety": {
+   "b1_rms_uT": "float",
+   "b1_peak_uT": "float",
+   "pns_max_fraction": "float",
+   "gz_rms_mT_per_m": "float",
+   "max_grad_mT_per_m": "float",
+   "max_slew_T_per_m_per_s": "float"
+  },
+  "simulator": "string",
+  "fit_public": "object mapping each public sample id to {t2_s, b1} estimated by fit_t2.py from your simulation",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "required_outputs": [
+  "sequence.seq",
+  "simulation.npz",
+  "fit_t2.py",
+  "report.json",
+  "a figure (.png) with the gradient/RF timing of the first echoes and the simulated echo trains",
+  "README.md (design rationale, validation evidence, a section titled Limitations)",
+  "environment record (environment.txt with Python/Julia package versions)",
+  "all build/simulation/analysis scripts"
+ ],
+ "file_locations": "Deliverables in the workspace root or one subfolder; each requested file must exist exactly once.",
+ "grading_note": "The grader reads sequence.seq, recomputes every timing, structure and safety quantity defined above, compares them with report.json (3 % tolerance), replays the sequence with KomaMRI on the public samples to check simulation.npz, then simulates hidden samples with your sequence and runs fit_t2.py on them."
+}

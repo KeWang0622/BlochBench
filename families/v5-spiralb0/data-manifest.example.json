@@ -1,0 +1,12 @@
+[
+ {
+  "path": "public/inputs/fieldmap_scan.npz",
+  "bytes": 24505,
+  "sha256": "ae46462c7a061faf6b28f215ac1af31014cdb224103c5fc0cf0184383fc22375"
+ },
+ {
+  "path": "public/inputs/phantom.npz",
+  "bytes": 8777,
+  "sha256": "8d935c31e1d37b2dfd42a90d8b11031e1c2a76ce98a5797602d09de4dab382f6"
+ }
+]

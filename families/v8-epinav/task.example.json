@@ -1,0 +1,91 @@
+{
+ "id": "heldout-v8-epinav-r4",
+ "round": "sealed-r4",
+ "split": "heldout_evaluation",
+ "scope": "single_shot_gradient_echo_epi_ramp_sampling_ghost_correction_sequence_design_bloch_simulation_reconstruction",
+ "time_expectation": "Designed so that a correct solution (sequence export, Bloch simulation of about 1e4 isochromats, reconstruction and checks) fits within the 60-minute session on a shared CPU without GPU.",
+ "fov_m": 0.21,
+ "matrix": [
+  24,
+  24
+ ],
+ "slice_thickness_m": 0.0045,
+ "acquisition": "2D single-shot gradient-echo echo-planar imaging of the slice at z = 0: exactly one slice-selective 90 deg excitation (no other RF pulse), followed by an echo train with alternating readout polarity along x and phase-encode blips along y",
+ "flip_angle_deg": 90,
+ "flip_angle_definition": "realized on-resonance flip angle 360 deg x |integral of the RF waveform (Hz) over time|, tolerance 2%; the RF pulse is played with a z gradient on and no x or y gradient, RF frequency offset 0",
+ "effective_echo_time_s": 0.024,
+ "effective_echo_time_definition": "from the centre of the excitation pulse to the instant at which the nominal k-space trajectory of the ky = 0 imaging echo crosses kx = 0; tolerance 10 us",
+ "echo_spacing_max_s": 0.0004,
+ "echo_spacing_definition": "interval between the kx = 0 crossings of consecutive imaging echoes; identical (within 1 us) for all consecutive imaging echoes and at most 0.40 ms",
+ "max_gradient_mT_per_m": 28,
+ "max_slew_T_per_m_per_s": 140,
+ "gamma_Hz_per_T": 42576000,
+ "gradient_raster_s": 1e-05,
+ "rf_raster_s": 1e-06,
+ "adc_raster_s": 1e-07,
+ "block_raster_s": 1e-05,
+ "rf_dead_time_s": 0.0001,
+ "rf_ringdown_time_s": 2e-05,
+ "adc_dead_time_s": 1e-05,
+ "sampling_contract": {
+  "adc_events": "the last 24 ADC events of the sequence are the imaging echoes j = 0..23 in chronological order; any ADC events before them are reference/navigator echoes of your choice; every ADC event has the same number of samples",
+  "phase_encoding": "during every sample of imaging echo j: ky = (j-12)/fov_m within 0.05 cycles/m (no blip during an ADC window) and kz = 0 within 0.05 cycles/m",
+  "readout_coverage": "the nominal kx positions of the samples of every imaging echo must cover [-12/fov_m, +11/fov_m] with no gap between consecutive samples larger than 1/fov_m inside that interval (samples outside the interval are allowed); sample times are delay + (i+0.5) x dwell",
+  "k_space_rule": "nominal k-space positions are the time integrals of the exported gradients from the centre of the excitation pulse"
+ },
+ "gradient_delay_model": "Real gradient chains lag the ADC. Hidden measurements are acquired with an unknown constant delay delta, |delta| <= 6 us, between all gradient waveforms and the ADC: the sample recorded at nominal time t has the k-space position k_nominal(t - delta). The simulator realises this by shifting every ADC sampling time by -delta. The public measurement you simulate has delta = 0. The reconstruction must work without being told delta, from the measurement archive alone.",
+ "image_quality_requirement": "for each of the two hidden delayed measurements, the magnitude image from reconstruct.py must have a mean magnitude in background voxels at least 2 voxels away from the object below 8% of the median magnitude in the reference region, and must agree with the image reconstruct.py produces from the same object acquired with delta = 0 (normalized RMS difference after a least-squares scale at most 0.12); that delta = 0 image must agree with a reference reconstruction within 0.25",
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m [24] and y_m [24] in-plane voxel-centre coordinates (x_m[12] = y_m[12] = 0), z_offsets_m [31], and 24x24 [y,x] maps density, T1_s, T2_s, B0_Hz, labels",
+  "isochromat_model": "the object is the outer product of the in-plane grid and z_offsets_m: every in-plane voxel with density > 0 is a column of 31 isochromats at (x_m[ix], y_m[iy], z_offsets_m[n]) spread uniformly over -6.75 mm < z < 6.75 mm, each with density/31 and the voxel's T1, T2 (T2 is the only transverse decay), B0 = 0; magnetization starts at thermal equilibrium; noise-free",
+  "labels": "0 outside, 1 reference body, 2..6 vials"
+ },
+ "endpoint": "complex image on the 24x24 [y,x] grid; per vial, the median magnitude over the vial voxels not touching another label divided by the same quantity for label 1",
+ "bloch_simulation": "simulate the exported sequence.seq file itself with an established Bloch simulator (KomaMRI is the reference implementation; MRzero is acceptable); do not replace it with your own Bloch or EPG code",
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "image.npz",
+  "reconstruct.py",
+  "sequence build script(s)",
+  "simulation script(s)",
+  "report.json",
+  "environment.txt",
+  "README.md"
+ ],
+ "simulation_output_schema": {
+  "raw_signal": "complex [n_adc, n_samples], all ADC events in chronological order (reference echoes first, then the 24 imaging echoes), after ADC phase demodulation; encoding exp(-2 pi i (kx x + ky y)); an arbitrary single global receiver phase is accepted",
+  "kxy_cycles_per_m": "float [n_adc, n_samples, 2] nominal k-space position [kx, ky] of every sample computed from the exported sequence",
+  "adc_times_s": "float [n_adc, n_samples] nominal absolute sample times",
+  "is_navigator": "bool [n_adc], true for the reference/navigator echoes",
+  "fov_m": "float",
+  "matrix": "int [2]",
+  "effective_echo_time_s": "float realized TE",
+  "echo_spacing_s": "float realized echo spacing",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used",
+  "other_keys": "allowed; they are passed through unchanged to the hidden archives"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --output image.npz. Standalone: helper code inside this one file, installed third-party imports allowed; it must work in a clean directory containing only this file and the archive, using only the archive contents. It is rerun on archives with the same keys whose raw_signal comes from another object acquired with your sequence under an unknown gradient delay.",
+ "image_output_schema": {
+  "image": "complex [24,24] on the [y,x] grid of the phantom (row index increases with y, column with x), no flips or shifts",
+  "input_sha256": "SHA256 of the input archive"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "simulator": "string with name and version",
+  "scanner_ready": "boolean false",
+  "realized_effective_echo_time_ms": "float measured from the exported sequence",
+  "realized_echo_spacing_ms": "float measured from the exported sequence",
+  "readout_design": "string",
+  "ghost_correction": "string: what reference data the sequence acquires and how reconstruct.py uses it",
+  "signal_ratio_by_label": "object mapping \"2\"..\"6\" to the endpoint ratio measured on your image",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads the exported sequence back, checks limits, rasters, the excitation, TE, echo spacing and the sampling contract, replays the file in KomaMRI on the public object and on a hidden object with delta = 0 and with two hidden nonzero delays, compares your simulated signal with the replay, and reruns reconstruct.py on the hidden measurements."
+}

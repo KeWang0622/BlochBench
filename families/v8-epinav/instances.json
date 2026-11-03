@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v8-epinav",
+  "source": "heldout-v8-epinav",
+  "manifest_sha256": "e46a0d7487df570f2966053623dd8a534b7ab40d49c8163f887c98059034bea1",
+  "grader": "grade_epinav_arm.py",
+  "package": "heldout-v8-epinav.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "234cc4a37ac0db36c161b86926d16318d4f2fb9d9cfbb87a5be2384bdbc53c54",
+  "package_bytes": 12308480
+ },
+ {
+  "instance": "heldout-v8-epinav-r3",
+  "source": "sealed-r3-v8/heldout-v8-epinav-r3",
+  "manifest_sha256": "79e7ecf91184db270d757cd423fefd051bec110abaecee0afbeb7b8ea6656f2e",
+  "grader": "grade_epinav_arm.py",
+  "package": "heldout-v8-epinav-r3.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "c441b5392a9c101dfce342797d5776dc34a77ae2c81678021c584ab738b1e155",
+  "package_bytes": 9482240
+ },
+ {
+  "instance": "heldout-v8-epinav-r4",
+  "source": "sealed-r4/heldout-v8-epinav-r4",
+  "manifest_sha256": "a5c66daa7d27170f7b64caae76aa9bcd964d087fc7d2b3123e7ef231805ffede",
+  "grader": "grade_epinav_arm.py",
+  "package": "heldout-v8-epinav-r4.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "fa66aeacd4080f73413e55b80017c708ff94f2873acbda85db39d6794586a956",
+  "package_bytes": 34949120
+ }
+]

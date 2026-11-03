@@ -1,0 +1,11 @@
+.git
+.github
+data
+runs
+site
+paper
+docs
+leaderboard
+infra
+**/__pycache__
+**/*.pyc

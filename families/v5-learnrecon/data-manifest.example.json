@@ -1,0 +1,17 @@
+[
+ {
+  "path": "private/test_truth.npz",
+  "bytes": 5167023,
+  "sha256": "7d459a4c7b401ec789ce815a094ec3f7e1c22bba731ce61a0877dd2d67cb35bb"
+ },
+ {
+  "path": "public/inputs/test.npz",
+  "bytes": 1767335,
+  "sha256": "a95bbd0eb6223358a4a33b65f25ad588eafea50de0385bef79d2bb4953f8af91"
+ },
+ {
+  "path": "public/inputs/train.npz",
+  "bytes": 27533624,
+  "sha256": "7c0572a537af311af6ac3ed1c4974aca9b2bcfc872f5f68585572cabac2473c6"
+ }
+]

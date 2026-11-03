@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v5-irt1",
+  "source": "heldout-v5-irt1",
+  "manifest_sha256": "a4859c7b437372084aff7074d9930e208e759bb840c7de9ee23deda6a13a08e8",
+  "grader": "grade_irt1_arm.py",
+  "package": "heldout-v5-irt1.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "41c154a1d0b1548e1521d2a81da390619e93963632e002904559dea24e8c0e67",
+  "package_bytes": 23552000
+ },
+ {
+  "instance": "heldout-v5-irt1-r2",
+  "source": "sealed-r2/heldout-v5-irt1-r2",
+  "manifest_sha256": "42104acc8cf092785085c0cfde452443143abcffe2cea389744fffc26a4cf7c7",
+  "grader": "grade_irt1_arm.py",
+  "package": "heldout-v5-irt1-r2.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "f7dc1375523fe76d1b7db87de4c92107f5a06a519d2efcf14c108a1a7ce6d750",
+  "package_bytes": 19722240
+ },
+ {
+  "instance": "heldout-v5-irt1-r3",
+  "source": "sealed-r3-ext/heldout-v5-irt1-r3",
+  "manifest_sha256": "93c2c83c481b9b1657fda2d9dc1e126396cbc9d5e137f2ce0cf22c98b20c7be4",
+  "grader": "grade_irt1_arm.py",
+  "package": "heldout-v5-irt1-r3.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "426af258483945cfa267574a269421f424cefebfb9d54e6cc91c3c80c3d7b188",
+  "package_bytes": 20172800
+ },
+ {
+  "instance": "heldout-v5-irt1-r4",
+  "source": "sealed-r4/heldout-v5-irt1-r4",
+  "manifest_sha256": "9b2765aadcf32b3a032ceca4e37fe24841fcd1fc8d278e7a15a51dc147454f54",
+  "grader": "grade_irt1_arm.py",
+  "package": "heldout-v5-irt1-r4.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "0fad4ee9bd8bc4a458eb42f0549a04343ebdf39af671c7b7c60091c623a64dab",
+  "package_bytes": 16998400
+ }
+]

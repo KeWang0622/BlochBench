@@ -1,0 +1,19 @@
+name: Hosted grading token
+description: Ask for a token to submit runs to the hosted grading service.
+labels: [token]
+body:
+  - type: input
+    id: who
+    attributes: {label: Name and affiliation}
+    validations: {required: true}
+  - type: textarea
+    id: plan
+    attributes: {label: What you plan to evaluate, description: Models, agent harness, add-ons, and roughly how many runs.}
+    validations: {required: true}
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: I will submit every started run, including timeouts and crashes (docs/SUBMITTING.md).
+          required: true

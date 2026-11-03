@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v6-honestresults",
+  "source": "heldout-v6-honestresults",
+  "manifest_sha256": "7410189703f02e5f7ab5ea6cedc0d90792329335dd2ef9e62c86e1dedd858b37",
+  "grader": "grade_honestresults_arm.py",
+  "package": "heldout-v6-honestresults.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "5d1171049220e4884f5789cff69a09dfcc13bca8366ebce725637f1edfa7a10f",
+  "package_bytes": 460800
+ },
+ {
+  "instance": "heldout-v6-honestresults-r2",
+  "source": "sealed-r2/heldout-v6-honestresults-r2",
+  "manifest_sha256": "564072d16cc9d7b707cb11a32a25931169214706c54778565f436fdea7119a8a",
+  "grader": "grade_honestresults_arm.py",
+  "package": "heldout-v6-honestresults-r2.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "8f8f4d0e273ead32e202355f0f28d36992cdb4f8065e4cdd693e465169f7978c",
+  "package_bytes": 460800
+ },
+ {
+  "instance": "heldout-v6-honestresults-r3",
+  "source": "sealed-r3-ext/heldout-v6-honestresults-r3",
+  "manifest_sha256": "808ad5bee61585f32968638671b6eb4d456cbfdab020d808c2afc59c234163ae",
+  "grader": "grade_honestresults_arm.py",
+  "package": "heldout-v6-honestresults-r3.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "1ab09ec651536a4b37a98eb7e915a0e0d8fbdf8c52a514e839ea53a6b06b145e",
+  "package_bytes": 491520
+ },
+ {
+  "instance": "heldout-v6-honestresults-r4",
+  "source": "sealed-r4/heldout-v6-honestresults-r4",
+  "manifest_sha256": "5c01eaaeda7817bdc48b215ceb817e124d00b38be7595ee3d039e0e6f914e03a",
+  "grader": "grade_honestresults_arm.py",
+  "package": "heldout-v6-honestresults-r4.tar",
+  "cap_s": 2700,
+  "domain": "write",
+  "package_sha256": "df717e8484b6f4173ee40a7cf92d0ac2ceed298c8d17d6f958163e3650854689",
+  "package_bytes": 491520
+ }
+]

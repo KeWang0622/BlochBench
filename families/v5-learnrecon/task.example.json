@@ -1,0 +1,55 @@
+{
+ "id": "heldout-v5-learnrecon-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "learned versus classical undersampled multi-echo GRE reconstruction, compared through downstream R2* and B0 ROI measurements",
+ "time_expectation_minutes": 60,
+ "compute": "CPU only (no GPU). Training of the learned reconstruction should take minutes, not hours.",
+ "inputs": {
+  "inputs/train.npz": "kspace complex64 [180, 5, 64, 64] fully sampled (noisy) k-space of 30 training subjects x 6 slices; labels int16 [180, 64, 64]; subject_id str [180]; slice_index int [180]; te_s float [5]",
+  "inputs/test.npz": "kspace complex64 [32, 5, 64, 64] undersampled k-space (zeros where not sampled) of 8 test subjects x 4 slices; mask bool [32, 5, 64, 64] (True = sampled); labels; subject_id; slice_index; te_s. No fully sampled data or truth is provided for test subjects."
+ },
+ "conventions": {
+  "fft": "k = fftshift(fft2(ifftshift(img, axes=(-2,-1)), norm='ortho'), axes=(-2,-1)) and img = fftshift(ifft2(ifftshift(k, axes=(-2,-1)), norm='ortho'), axes=(-2,-1)) (numpy). Axis -2 = y (rows), axis -1 = x (columns). Single receive coil.",
+  "acquisition": "5-echo spoiled GRE, TE = 4.0, 9.9, 15.8, 21.7, 27.6 ms (te_s). Each 64x64 k-space is the phase-encode plane of a 3D acquisition and is undersampled in 2D.",
+  "sampling": "Independently for every slice and echo: all k-space points within radius 5.5 (in samples) of the centre (index 32, 32) are sampled; the remaining samples are drawn without replacement with probability proportional to 1/(1 + (r/8)^2), r = distance from the centre in samples, for a total of 1024 samples per echo (acceleration 4). Masks of the test and hidden data follow this distribution; use the supplied mask of each case.",
+  "noise": "complex Gaussian, standard deviation 0.018 per real/imaginary channel in k-space (orthonormal FFT, so the same in image space)",
+  "signal_model": "S_n(r) = PD(r) exp(-R2*(r) TE_n) exp(i (phi0(r) + 2 pi dB0(r) TE_n)) inside the object (labels > 0), zero outside; phi0 is a smooth background phase, |dB0| < 75 Hz",
+  "labels": "0 background, 1 white-matter-like, 2 deep grey, 3 cortex-like rim, 4 focal lesions with high R2*"
+ },
+ "downstream_definition": {
+  "r2s": "voxelwise weighted log-linear fit of ln|S_n| = ln S0 - R2* TE_n with weights |S_n|^2 over all 5 echoes; R2* in 1/s",
+  "b0": "voxelwise dB0 = angle( sum_{n=1..4} S_{n+1} conj(S_n) ) / (2 pi dTE), dTE = 5.9 ms; in Hz",
+  "roi": "for each slice and label k in {1,2,3,4}: ROI = one-voxel binary erosion of (labels == k) (scipy.ndimage.binary_erosion default 3x3 cross); the ROI is used only if it has >= 10 voxels; ROI value = mean of the voxelwise R2* (or dB0) over the ROI",
+  "error_metrics": "relative R2* error |R2*_roi / R2*_ref - 1| and absolute dB0 error |dB0_roi - dB0_ref| (Hz) pooled over all used (slice, label) ROIs; summarised by the median and the 90th percentile"
+ },
+ "requirements": {
+  "split": "Split the training subjects into training and validation sets BY SUBJECT (no subject in both; at least 3 validation subjects). Use validation subjects (with masks you draw from the stated distribution) for model selection, tuning of the classical method and the method comparison; the reference for validation is the downstream analysis of the fully sampled validation images.",
+  "learned": "a reconstruction network trained by you on CPU from train.npz",
+  "classical": "a non-learned reconstruction (for example compressed sensing) with its regularisation tuned on the validation subjects",
+  "fairness": "both methods reconstruct identical test data with the identical supplied masks",
+  "outputs_scale": "returned images are in the image space defined by the FFT convention, at the same intensity scale and orientation (no normalisation, flips or shifts)"
+ },
+ "entrypoints": {
+  "predict.py": "python predict.py --input <archive.npz> --output <recon.npz>: learned reconstruction from an archive with the schema of test.npz; uses only code and saved weights in its own folder (it is run with that folder as working directory)",
+  "classical_recon.py": "python classical_recon.py --input <archive.npz> --output <recon.npz>: the tuned classical reconstruction, same interface",
+  "recon_schema": "recon.npz with key recon: complex [n_cases, 5, 64, 64]",
+  "rerun": "Both entrypoints are rerun on hidden test subjects (same protocol and mask distribution, new masks)."
+ },
+ "required_outputs": {
+  "test_recon_learned.npz": "predict.py output for inputs/test.npz",
+  "test_recon_classical.npz": "classical_recon.py output for inputs/test.npz",
+  "split.json": "{\"train_subjects\": [...], \"validation_subjects\": [...]}",
+  "downstream_results.json": {
+   "validation": "{subjects: [...], learned: {...}, classical: {...}, zero_filled: {...}} where each method has r2s_rel_err_median, r2s_rel_err_p90, b0_abs_err_median_hz, b0_abs_err_p90_hz (and optionally image metrics) measured on the validation subjects against the fully sampled reference",
+   "classical_tuning": "{parameter: str, values: [tried values], selected: value, criterion: str}",
+   "test": "{learned: [...], classical: [...]}: for each test case in test.npz order an object mapping each used label (\"1\"..\"4\") to {r2s_per_s, b0_hz} computed with the downstream definition from your reconstruction",
+   "preferred_method": "\"learned\" or \"classical\" for this downstream task, with preferred_rationale"
+  },
+  "figure": "a .png comparing zero-filled, learned and classical images and R2* maps",
+  "code": "training script, network definition, saved weights, predict.py, classical_recon.py and evaluation scripts",
+  "README.md": "methods, validation evidence and a section titled Limitations",
+  "environment record": "environment.txt (Python and package versions)"
+ },
+ "file_locations": "Deliverables in the workspace root or one subfolder; each requested file must exist exactly once.",
+ "grading_note": "The grader recomputes the downstream analysis from your test reconstructions and compares it with the ground-truth R2* and dB0 maps (expected for EACH method: R2* relative error median <= 3.5 % and 90th percentile <= 11 %; dB0 error median <= 0.5 Hz and 90th percentile <= 1.5 Hz; zero filling does not meet these), checks the k-space residual of each reconstruction at the sampled locations (<= 0.35 of the measured norm), checks that your reported test ROI values match your reconstructions, checks the split, and reruns both entrypoints on hidden subjects."
+}

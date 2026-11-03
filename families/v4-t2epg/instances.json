@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v4-t2epg",
+  "source": "heldout-v4-t2epg",
+  "manifest_sha256": "0fae49945e3b6ad9596df4d863b105d3da5d3d168b60e8c4e936492d5ba0e352",
+  "grader": "grade_t2epg_arm.py",
+  "package": "heldout-v4-t2epg.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "38774897161056f915c15b76799eabeee0d2b3626f640701a8d47e0b1e08b533",
+  "package_bytes": 12840960
+ },
+ {
+  "instance": "heldout-v4-t2epg-r3",
+  "source": "sealed-r3-ext/heldout-v4-t2epg-r3",
+  "manifest_sha256": "86e92947421ac2da5cac23a7624b0b277faf668f150efd7d246eaa8641bbcd50",
+  "grader": "grade_t2epg_arm.py",
+  "package": "heldout-v4-t2epg-r3.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "24c15aceb14f6c76f2bde070e8fa02099688d73b856bc6556f516e8ad2bbe744",
+  "package_bytes": 26337280
+ },
+ {
+  "instance": "heldout-v4-t2epg-r4",
+  "source": "sealed-r4/heldout-v4-t2epg-r4",
+  "manifest_sha256": "2131679d4211ac8d2768f5a8765a0ee2660ae2d780f363ac47e33f959ec7340a",
+  "grader": "grade_t2epg_arm.py",
+  "package": "heldout-v4-t2epg-r4.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "c0aec198edf34965442a1898f188fcd84ad120b99fcb744bf51cdfb432b8c0e9",
+  "package_bytes": 27473920
+ }
+]

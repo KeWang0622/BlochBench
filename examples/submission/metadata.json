@@ -1,0 +1,18 @@
+{
+  "format": "blochbench-results/1",
+  "track": "exploratory",
+  "benchmark_commit": "REPLACE_WITH_FULL_40_CHARACTER_COMMIT",
+  "config": "my-agent",
+  "model": "provider/model-id",
+  "agent": "codex",
+  "agent_version": null,
+  "mrab_version": "0.1.0",
+  "instances": ["heldout-v7-pcasl-r4"],
+  "repeats": 1,
+  "network": "offline",
+  "hardware": "REPLACE_WITH_CPU_RAM_OS",
+  "addon": null,
+  "deviations": [],
+  "redactions": [],
+  "all_started_runs_included": false
+}

@@ -1,0 +1,7 @@
+Please produce T2 maps from a CPMG multi-echo spin-echo scan whose refocusing pulses are imperfect, and treat the problem the way a quantitative-MRI researcher would.
+
+The inputs (a 4D magnitude NIfTI holding the echo train, a label image and an acquisition description) and all the conventions you need are set out in task.json: pulse and echo timing, the refocusing phase, the possible range of the unknown transmit-field (B1+) scale, the relaxation ranges, output units and file interfaces. Treat task.json as authoritative.
+
+The refocusing flip angle departs from its nominal value across the object, so stimulated-echo pathways enter the echo trains. Estimate each voxel's true T2 together with its B1+ scale, write T2 and B1+ maps on the input grid, and report the mean T2 of every labelled region. Use established open-source tools where they help and write the glue code yourself.
+
+fit_t2.py has to be a standalone entrypoint that needs nothing but an input directory, because it will be rerun on other scans with a different echo spacing, number of echoes, nominal refocusing angle, grid and transmit field. Return the maps, the region values, a figure of the maps, runnable code, a record of the software environment and its versions, and a short note on how you validated the fit and where it is limited. The data are simulated; no clinical interpretation is needed.

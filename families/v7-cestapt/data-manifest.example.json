@@ -1,0 +1,17 @@
+[
+ {
+  "path": "public/inputs/cest.npz",
+  "bytes": 1564827,
+  "sha256": "7ccbb9e8c6893c5a9dc8951decdca174d99bff67ff36628bdab3788600c138b7"
+ },
+ {
+  "path": "public/inputs/params.json",
+  "bytes": 244,
+  "sha256": "33046ef08b9b663a5f2344fc8fe8c628a829e9b8090c6ffdda773515ded34bf0"
+ },
+ {
+  "path": "public/inputs/wassr.npz",
+  "bytes": 604706,
+  "sha256": "4dc2dc79a2e7e1d6b99b968a000bdd80e16f6693af1a9a1113e79c4c2854bec1"
+ }
+]

@@ -1,0 +1,17 @@
+[
+ {
+  "path": "public/inputs/metab.npz",
+  "bytes": 5443239,
+  "sha256": "f9c1cfa2308bccff7e4e1f009f35810931f4b4bc5350123917067ce7552384fc"
+ },
+ {
+  "path": "public/inputs/params.json",
+  "bytes": 724,
+  "sha256": "da80bb726ece2f94ba74e6265aea7c786db7ae6a1cc53ccf3f2ef91b2bc437d4"
+ },
+ {
+  "path": "public/inputs/water.npz",
+  "bytes": 247214,
+  "sha256": "3e0189d7bd72426699abe602c28b9b8a4da11cd17e3b2ff520aff65116bf5e5a"
+ }
+]

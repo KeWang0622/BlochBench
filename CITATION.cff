@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use BlochBench, please cite it as below."
+title: "BlochBench: a benchmark for AI agents on end-to-end MRI research"
+type: software
+authors:
+  - family-names: Wang
+    given-names: Ke
+repository-code: "https://github.com/KeWang0622/BlochBench"
+license: Apache-2.0
+version: 0.1.0
+keywords:
+  - MRI
+  - benchmark
+  - AI agents
+  - evaluation
+  - Bloch simulation
+abstract: >-
+  BlochBench tests whether AI agents can carry out end-to-end MRI research tasks and deliver results that hold up
+  when checked independently. Graders replay exported sequences in a Bloch simulator, rerun submitted code on hidden
+  data, compare maps with ground truth and recompute statistics. Research preview; task expert review remains pending.

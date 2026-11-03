@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v5-learnrecon",
+  "source": "heldout-v5-learnrecon",
+  "manifest_sha256": "8c8af0204ad0191046ed20e3507a1e1af688d7f01b4aef33b201b2508ba0a678",
+  "grader": "grade_learnrecon_arm.py",
+  "package": "heldout-v5-learnrecon.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "10980ef5c0cde0aa3cfa277a57bf3e06de77b989fe2b9524b1092a466e554fab",
+  "package_bytes": 642488320
+ },
+ {
+  "instance": "heldout-v5-learnrecon-r2",
+  "source": "sealed-r2/heldout-v5-learnrecon-r2",
+  "manifest_sha256": "fb15c2aea2c75405212af277a972f62787d39b50cab06cc01e63e78eff20a9ea",
+  "grader": "grade_learnrecon_arm.py",
+  "package": "heldout-v5-learnrecon-r2.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "95b7ee49ee7aec66a1dcf3bc6ef822da0916f4381ffdafbe9a2280e1c847ab5b",
+  "package_bytes": 547737600
+ },
+ {
+  "instance": "heldout-v5-learnrecon-r3",
+  "source": "sealed-r3-ext/heldout-v5-learnrecon-r3",
+  "manifest_sha256": "2b432934358a37f3576d6e3c41b822dba751f557b4202513da5a842093a7c67b",
+  "grader": "grade_learnrecon_arm.py",
+  "package": "heldout-v5-learnrecon-r3.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "8b00eea0746e92aa6c8d49b04962932a37b9f122c90779f40124a318c17d2001",
+  "package_bytes": 545720320
+ },
+ {
+  "instance": "heldout-v5-learnrecon-r4",
+  "source": "sealed-r4/heldout-v5-learnrecon-r4",
+  "manifest_sha256": "ec3d45d2baa9b0e5bbaded684d4b02d12399bcaf732c1581113664b4491d585e",
+  "grader": "grade_learnrecon_arm.py",
+  "package": "heldout-v5-learnrecon-r4.tar",
+  "cap_s": 3600,
+  "domain": "recon",
+  "package_sha256": "0de47424731d1b6151134da2eeb86e5a2b0526fbfd08109a1cdb226ac0d9583d",
+  "package_bytes": 547819520
+ }
+]

@@ -1,0 +1,140 @@
+{
+ "id": "heldout-v6-gapproposal-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "research_gap_identification_and_study_proposal_from_a_supplied_corpus",
+ "corpus": {
+  "files": [
+   "inputs/corpus.json",
+   "inputs/corpus.md"
+  ],
+  "content": "35 study records (M01..M35) on quantitative cardiac MRI in myocardial inflammation; corpus.json and corpus.md contain the same records",
+  "synthetic": true,
+  "note": "All records are fictional and were written for this evaluation; they do not describe real studies. Work only from the corpus.",
+  "citation_rule": "Cite evidence only by corpus record IDs (for example [M03] in markdown and \"M03\" in JSON). Do not cite or name any source outside the corpus: no author-year citations, DOIs, URLs, PMIDs, arXiv IDs or 'et al.'."
+ },
+ "codes": {
+  "technique": {
+   "T2": "myocardial T2 mapping",
+   "T1": "native myocardial T1 mapping",
+   "ECV": "extracellular volume fraction (pre- and post-contrast T1 with haematocrit)",
+   "LGE": "late gadolinium enhancement (presence or extent)",
+   "STRAIN": "feature-tracking global longitudinal strain",
+   "EDR": "T2-weighted STIR edema ratio"
+  },
+  "population": {
+   "HV": "healthy volunteers",
+   "MYO": "adults with suspected or confirmed acute myocarditis",
+   "DCM": "adults with recent-onset dilated cardiomyopathy",
+   "ICI": "patients receiving immune checkpoint inhibitors with suspected myocarditis",
+   "SARC": "adults with cardiac sarcoidosis",
+   "MULTIPLE": "only for audit entries that pool several populations"
+  },
+  "reference": {
+   "BX": "active myocardial inflammation on endomyocardial biopsy (reference-positive = at least 14 leukocytes/mm2 including at least 7 CD3+ T lymphocytes/mm2)",
+   "EVENT": "prospective cardiac outcome during follow-up (cardiovascular death, heart-failure hospitalisation or sustained ventricular arrhythmia)",
+   "HVDIFF": "difference from healthy volunteers",
+   "REPEAT": "technical success and/or test-retest repeatability",
+   "CONF": "confounder, time-course or method-comparison study",
+   "TREAT": "effect of a treatment on the MRI measure (scans before and after therapy)",
+   "NONE": "no new data (position statement, protocol)"
+  }
+ },
+ "definitions": {
+  "examined": "A record has examined a technique-population-reference combination if it reports any result relating that technique to that reference standard in that population, whatever its size or result.",
+  "underpowered": "A record is underpowered if its main finding is a significant (p < 0.05) association or group difference and its smallest compared group has fewer than 15 participants (for correlation or regression analyses without groups: fewer than 30 participants in total).",
+  "replicated_finding": "The same technique-population-reference association reported as significant in the same direction by at least two records that are not underpowered.",
+  "contradiction": "Records that are not underpowered, examine the same technique, population and reference standard, and disagree: at least one significant and at least one null result.",
+  "dependent_record": "A record whose own conclusion or rationale explicitly relies on an underpowered record by naming its record ID.",
+  "technical_success": "As reported in each record's technical_success field (fraction of scanned participants with analysable measurements for that technique)."
+ },
+ "gap_rules": [
+  "G1 The proposed primary question relates one MRI technique (technique code) in one patient population (population code other than HV and MULTIPLE) to one reference standard (BX or EVENT).",
+  "G2 Not examined: no corpus record has examined that combination.",
+  "G3 Validated elsewhere: in at least one other population a record that is not underpowered found a significant association of that technique with that reference standard, and that technique-reference association is not the subject of a contradiction in any population.",
+  "G4 Technically feasible in the target population: a corpus record reports technical success >= 85% for that technique in the target population.",
+  "G5 Reference obtainable: a corpus record reports that reference standard obtained in the target population.",
+  "G6 The proposal must not rely on any record you flag as underpowered."
+ ],
+ "explaining_factor_vocabulary": [
+  "field_strength",
+  "vendor",
+  "breath_hold_vs_free_breathing",
+  "exercise_before_mri",
+  "mri_to_biopsy_interval",
+  "t1_sequence_variant",
+  "roi_placement",
+  "histology_criteria",
+  "sample_size",
+  "slice_thickness"
+ ],
+ "design_vocabulary": {
+  "type": [
+   "prospective_cross_sectional",
+   "retrospective_cross_sectional",
+   "case_control",
+   "prospective_longitudinal_cohort",
+   "randomized_controlled_trial"
+  ],
+  "unit_of_analysis": [
+   "participant",
+   "segment",
+   "roi",
+   "voxel",
+   "slice"
+  ],
+  "recruitment": [
+   "consecutive",
+   "selected_by_reference_result",
+   "convenience"
+  ]
+ },
+ "controls_vocabulary": {
+  "blinded_image_analysis": "MRI measurements made blinded to the reference standard",
+  "exercise_abstinence_before_mri": "no strenuous exercise for a fixed period before MRI",
+  "corticosteroid_timing_control": "MRI before high-dose corticosteroid treatment, or record and adjust for treatment timing, where the corpus shows that treatment changes the MRI measure independently of the reference standard",
+  "fixed_field_strength_and_sequence": "all MRI with one field strength and one sequence for the primary measure; no pooling across protocols",
+  "mri_close_in_time_to_reference": "MRI within a short prespecified interval of the reference standard",
+  "consecutive_recruitment": "consecutive recruitment without selection on the reference result",
+  "healthy_volunteer_reference_group": "add a healthy-volunteer comparison group",
+  "gadolinium_contrast_administration": "administer gadolinium-based contrast",
+  "blood_pool_excluded_roi_placement": "measure in mid-wall myocardial regions of interest that exclude the blood pool and epicardial fat",
+  "free_breathing_or_motion_corrected_acquisition": "use a free-breathing, respiratory-triggered or motion-corrected acquisition",
+  "sedation_protocol": "sedate participants who cannot stay still",
+  "repeat_mri_subset": "repeat MRI in a subset to estimate repeatability"
+ },
+ "sample_size_rules": {
+  "analysis": "two-sided comparison of the mean of the primary MRI measure between two independent groups defined by the reference standard (reference-positive vs reference-negative)",
+  "alpha": 0.05,
+  "power": 0.9,
+  "sided": 2,
+  "formula": "n_per_group = ceil(2 * (z_{1-alpha/2} + z_{power})^2 * SD^2 / Delta^2) (normal approximation, equal group sizes)",
+  "inputs": "Delta (target difference) must be a between-group difference reported by corpus records that are not underpowered and that related the same technique to the same reference standard (one record's value or a combination of such records). SD must be a within-group or between-subject SD reported by such records or by a record that measured the same technique in the target population. List the record IDs used.",
+  "recruitment": "Prospective consecutive recruitment from the target population without selection on the reference result. smaller_group_fraction = expected fraction of evaluable participants in the smaller reference-defined group, from corpus records in the target population. nonevaluable_fraction = expected fraction of recruited participants without an evaluable MRI measurement or an evaluable reference standard, from corpus records in the target population; combine independent sources as 1 - prod(1 - p_i). n_total_to_enrol = ceil(n_per_group / (smaller_group_fraction * (1 - nonevaluable_fraction)))."
+ },
+ "required_outputs": [
+  "proposal.json",
+  "proposal.md"
+ ],
+ "proposal_json_schema": {
+  "evidence_audit": {
+   "replicated_findings": "list of {technique, population, reference (codes), record_ids: [..], finding: string}; every replicated finding in the corpus per the definition",
+   "contradictions": "list of {technique, population, reference, significant_record_ids: [..], null_record_ids: [..], explaining_factor: one value of explaining_factor_vocabulary, explanation: string, explanation_support_ids: [..] (optional)}",
+   "underpowered_claims": "list of {record_id, dependent_record_ids: [..], reason: string}; every underpowered record per the definition"
+  },
+  "gap": "{technique, population, reference (codes), statement: string, supporting_record_ids: [..] (records that establish G3, G4 and G5)}",
+  "hypothesis": "{statement: string, direction: 'higher' or 'lower' (primary MRI measure in the reference-positive group relative to the reference-negative group)}",
+  "primary_endpoint": "{name, technique (code), unit, definition (how and where it is measured), reference (code), reference_positive_definition}",
+  "design": "{type, unit_of_analysis, recruitment (values from design_vocabulary), description: string}",
+  "sample_size": "{alpha, power, sided, target_difference, target_difference_source_ids: [..], sd, sd_source_ids: [..], n_per_group (integer), smaller_group_fraction, smaller_group_fraction_source_ids: [..], nonevaluable_fraction, nonevaluable_fraction_source_ids: [..], n_total_to_enrol (integer), formula: string}",
+  "controls": "list of {code (from controls_vocabulary), record_ids: [..] (corpus records that motivate it; [] if none), justification: string}",
+  "risks": "list of at least two {risk, mitigation}",
+  "limitations": "list of strings"
+ },
+ "proposal_md_requirements": [
+  "At most 1500 words.",
+  "Sections for the evidence audit, gap, hypothesis, primary endpoint, design, sample size, controls, risks and limitations.",
+  "Cite records as [Mxx]; every record in gap.supporting_record_ids must be cited in the markdown.",
+  "State n_per_group and n_total_to_enrol as numbers matching proposal.json."
+ ],
+ "grading_note": "Deterministic automated checks of proposal.json and proposal.md against the corpus and the rules above: schema and vocabularies, record IDs and external citations, evidence-audit sets, the gap and its support, endpoint and design choices, sample-size inputs and arithmetic, controls and their supporting records, and the markdown. Deliverables are read from the workspace root or one subfolder."
+}

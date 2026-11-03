@@ -1,0 +1,8 @@
+Quantify cerebral blood flow from the pseudo-continuous arterial spin labelling (pCASL) dataset described in task.json. The data are a 2D multislice, background-suppressed pCASL series with alternating control and label volumes, a separately acquired M0 scan and a co-registered tissue T1 map; every acquisition parameter you need is in the accompanying acq.json, and the conventions, accuracy targets and file interfaces are in task.json.
+
+Write a standalone entrypoint, asl_cbf.py, that reads one input directory and writes a CBF map in mL/100 g/min. It must keep all custom code in that single file and read every parameter from acq.json, because it will be rerun on other datasets acquired with different labelling durations, delays, slice orders, background-suppression schemes and M0 repetition times. Run it on the public inputs and return the resulting map.
+
+Use established tools or libraries where they help, and keep your own code minimal and readable. Decide which physical corrections the quantification needs from the acquisition description, and justify them.
+
+Return the runnable code, the output files listed in task.json, a figure of the CBF map, an environment record with Python and package versions, and a README.md that explains your validation evidence and the limitations of the result. Do not claim performance on real patient data. Expect to spend about an hour.
+

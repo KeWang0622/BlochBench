@@ -1,0 +1,32 @@
+[
+ {
+  "path": "public/inputs/bvals.txt",
+  "bytes": 152,
+  "sha256": "9cffa49099f5a43dcec8545878fe8750e1bf52570016291f0accfd5528d46b0a"
+ },
+ {
+  "path": "public/inputs/bvecs.txt",
+  "bytes": 1115,
+  "sha256": "667362472443df83095d55c2598ebff46066ccb8163febe6f25d7ad40dc18136"
+ },
+ {
+  "path": "public/inputs/epi_raw.npz",
+  "bytes": 3866419,
+  "sha256": "a75c3a393cf01a815630299eb06c04b678a0200e6740aa327b09c17a6e051de2"
+ },
+ {
+  "path": "public/inputs/fieldmap.npz",
+  "bytes": 45571,
+  "sha256": "0becf9c1af0f243c213aef8dc6b0ff58b05907d15f0ed19d068a37f7f57149a8"
+ },
+ {
+  "path": "public/inputs/grad_nonlin.npz",
+  "bytes": 86627,
+  "sha256": "4f8bc223cb0643022dbda3c443937f6c6b223c28453ac60109d84708d23e9a36"
+ },
+ {
+  "path": "public/inputs/params.json",
+  "bytes": 191,
+  "sha256": "d4c26c6ece2790aa74fa1974a343927b86286560d395ea2672f75ab1727caf01"
+ }
+]

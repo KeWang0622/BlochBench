@@ -1,0 +1,60 @@
+name: Results submission
+description: Share an exploratory or full Core evaluation with reproducible result records.
+title: "Results: "
+body:
+  - type: markdown
+    attributes:
+      value: "Follow [the submission guide](https://github.com/KeWang0622/BlochBench/blob/main/docs/SUBMITTING.md). Submit public Core material only. Results are self-reported; do not paste credentials or private traces."
+  - type: dropdown
+    id: track
+    attributes:
+      label: Coverage
+      options:
+        - Exploratory subset
+        - Full Core (88 instances × 3 attempts)
+    validations:
+      required: true
+  - type: textarea
+    id: metadata
+    attributes:
+      label: metadata.json
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Local validation output
+      description: Output of python tools/validate_submission.py PATH.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: archive
+    attributes:
+      label: Public result archive URL
+      description: Stable download containing records, grades and reviewed traces. No private or expiring links.
+    validations:
+      required: true
+  - type: input
+    id: sha256
+    attributes:
+      label: Archive SHA-256
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Add-on comparison (optional)
+      description: Link the other configuration, add-on manifest and mrab compare output.
+  - type: checkboxes
+    id: attestations
+    attributes:
+      label: Submission checks
+      options:
+        - label: Every started attempt is included, including failures and unfinished runs.
+          required: true
+        - label: I reviewed all shared files and removed credentials, personal information and private benchmark material.
+          required: true
+        - label: I understand local validation checks records and does not independently verify performance.
+          required: true

@@ -1,0 +1,91 @@
+{
+ "id": "heldout-v5-t2study-r4-chain-01",
+ "split": "heldout_evaluation",
+ "scope": "multi_coil_parallel_imaging_reconstruction_t2_mapping_roi_measurement_and_prespecified_subject_level_study_statistics",
+ "time_expectation": "about 60 minutes of agent work on a CPU-only machine; 35 small 2D scans",
+ "study": {
+  "design": "18 adults (controls and patients, see inputs/participants.tsv), each booked for two same-day scans (ses-1, ses-2) with the head repositioned in between (scan-rescan); the second session of one participant was lost to a receive-coil failure and is absent, so that participant has only ses-1 and there are 35 scan files; the subject is the unit of analysis",
+  "participants_file": "inputs/participants.tsv (tab separated: subject_id, group in {control, patient}, age, sex)",
+  "scans": "inputs/scans/<subject_id>_ses-<1|2>.npz (35 files)"
+ },
+ "scan_file_schema": {
+  "kspace": "complex64 [9 echoes, 12 coils, 72 ky, 72 kx]; non-acquired phase-encode lines are stored as zeros",
+  "sampling_mask": "bool [72] over ky; True where the line was acquired",
+  "echo_times_ms": "float [9] = 9.5, 19, ..., 85.5",
+  "noise_prescan": "complex64 [512, 12] noise-only samples with the same coil noise statistics as the k-space data (coil noise is correlated)",
+  "labels": "int16 [72, 72] on the reconstructed image grid of this scan: 0 background, 1 target region (ROI), 2 other brain tissue, 3 cerebrospinal fluid",
+  "scan_id": "string"
+ },
+ "conventions": {
+  "image_grid": "72 x 72, field of view 0.216 m, arrays indexed [y, x]; row i / column j is centred at (i-36, j-36) x 3.0 mm",
+  "fft": "k-space of each coil image is fftshift(fft2(ifftshift(image), norm='ortho')) over the last two axes [ky, kx]; DC is at index [36, 36]; encoding exp(-2*pi*i*(kx*x + ky*y))",
+  "undersampling": "regular 3-fold undersampling in ky (lines with (ky - 36) mod 3 == 0) plus a fully sampled calibration block |ky - 36| < 12; the same mask for every echo and coil; coil sensitivities are not provided",
+  "signal_model": "multi-echo spin echo with ideal refocusing: each voxel follows S(TE) = S0 * exp(-TE/T2); the coil image is the coil sensitivity times this signal; complex Gaussian noise"
+ },
+ "measurements": {
+  "t2_map": "voxelwise T2 in ms on the image grid of each scan",
+  "roi_t2_ms": "per scan: mean of the voxelwise T2 map over the label-1 voxels of that scan's own label map",
+  "accuracy_targets": "per scan: ROI mean T2 within 3% of the true value; median absolute relative voxel error over labels 1 and 2 at most 6%; the same holds when map_t2.py is rerun on hidden scans with other anatomy, coil arrays and T2 values"
+ },
+ "statistical_analysis_plan": {
+  "subject_value": "mean of the subject's available roi_t2_ms values (both sessions when present)",
+  "primary": "Welch unequal-variance two-sample t-test on subject values, difference = mean(patient) - mean(control); report the Welch t, the Welch-Satterthwaite degrees of freedom, the two-sided p-value and the 95% confidence interval of the difference using the t quantile at those degrees of freedom",
+  "effect_size": "Hedges g = difference / s_pooled * (1 - 3/(4*(n_control + n_patient) - 9)), s_pooled = sqrt(((n_c-1)*var_c + (n_p-1)*var_p)/(n_c + n_p - 2)) with sample variances (ddof = 1)",
+  "repeatability": "over subjects with both sessions: d = ses2 - ses1, m = (ses1 + ses2)/2; within-subject SD = sqrt(mean(d^2)/2); repeatability coefficient = 2.77 x within-subject SD; within-subject CV (%) = 100 x sqrt(mean((d/m)^2)/2)",
+  "missing_data": "a subject with only one scan contributes that scan as its subject value in the primary analysis and is excluded from the repeatability analysis",
+  "expected_accuracy": "the difference reported for the public study must be within 1.0 ms of the same analysis applied to the true per-scan values, your 95% confidence interval must contain that true-value difference, and the conclusion at alpha = 0.05 must agree"
+ },
+ "required_outputs": [
+  "map_t2.py",
+  "study_stats.py",
+  "t2maps/<scan_id>.npz for all 35 scans (one folder named t2maps)",
+  "roi_t2_by_scan.csv",
+  "study_stats.json",
+  "summary.png (subject values by group)",
+  "report.json",
+  "README.md",
+  "environment record (environment.txt or requirements/pip-freeze file)"
+ ],
+ "file_locations": "put deliverables in the workspace root or in one subfolder; each requested file must exist exactly once",
+ "map_cli": "python map_t2.py --input <scan>.npz --output <out>.npz. Standalone: helper code inside this one file, installed third-party imports allowed; must run in a clean directory containing only this file and the scan file. It is rerun on hidden scans with the same file schema.",
+ "t2map_output_schema": {
+  "t2_ms": "float [72, 72] T2 in ms; finite in every voxel with label 1 or 2",
+  "roi_mean_t2_ms": "float, mean of t2_ms over label 1 (the table value for this scan must agree within 0.05 ms)",
+  "input_sha256": "SHA256 of the input scan file",
+  "other keys": "optional"
+ },
+ "table_schema": "roi_t2_by_scan.csv with header subject_id,group,session,roi_t2_ms; one row per scan; session is 1 or 2; group copied from participants.tsv",
+ "stats_cli": "python study_stats.py --input <table>.csv --output <stats>.json. Standalone; reads only the table (schema above). It is rerun on other tables with the same schema, which may have unequal group sizes, subjects with a single scan and rows in any order.",
+ "stats_output_schema": {
+  "unit_of_analysis": "string",
+  "n_control": "int",
+  "n_patient": "int",
+  "mean_control_ms": "float",
+  "mean_patient_ms": "float",
+  "difference_ms": "float (patient - control)",
+  "ci95_low_ms": "float",
+  "ci95_high_ms": "float",
+  "welch_t": "float",
+  "welch_df": "float",
+  "p_value_two_sided": "float",
+  "hedges_g": "float",
+  "repeatability": {
+   "n_subjects_with_two_scans": "int",
+   "within_subject_sd_ms": "float",
+   "repeatability_coefficient_ms": "float",
+   "within_subject_cv_percent": "float"
+  },
+  "precision": "write unrounded double-precision numbers; values are compared with a relative tolerance of 1e-3"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "reconstruction_method": "string",
+  "fit_model": "string",
+  "unit_of_analysis": "string",
+  "primary_result": "string",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader compares every per-scan ROI value and map with ground truth, reruns map_t2.py on hidden scans, recomputes the pre-specified analysis from your table, reruns study_stats.py on your table and on hidden tables, and compares the study result with the analysis of the true values."
+}

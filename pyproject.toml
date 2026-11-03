@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mragentbench"
+version = "0.1.0"
+description = "Benchmark for AI agents on end-to-end MRI research tasks"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "Ke Wang"}]
+keywords = ["MRI", "benchmark", "AI agents", "evaluation", "Bloch simulation"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+[project.urls]
+Homepage = "https://github.com/KeWang0622/BlochBench"
+Documentation = "https://github.com/KeWang0622/BlochBench/tree/main/docs"
+Issues = "https://github.com/KeWang0622/BlochBench/issues"
+"Companion skill library" = "https://github.com/KeWang0622/MRFoundry"
+
+[project.scripts]
+mrab = "mragentbench.cli:main"
+
+[tool.setuptools]
+packages = ["mragentbench", "mragentbench.service"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["families"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra"

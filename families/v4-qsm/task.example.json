@@ -1,0 +1,35 @@
+{
+ "id": "heldout-v4-qsm-megre-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "quantitative_susceptibility_mapping_phase_scaling_background_field_removal_oblique_dipole_inversion_roi_values",
+ "acquisition": "3D multi-echo spoiled gradient echo of the head (monopolar readouts), coil-combined complex data exported as magnitude and phase NIfTI volumes. The slab is acquired obliquely, so B0 is not parallel to the third voxel axis, and voxels are anisotropic.",
+ "input_dir_layout": {
+  "gre_mag.nii.gz": "float32 [nx, ny, nz, n_echoes] magnitude",
+  "gre_phase.nii.gz": "int16 [nx, ny, nz, n_echoes] phase as stored by the scanner export (see phase_scaling)",
+  "brain_mask.nii.gz": "uint8 brain mask (tissue to analyse); air, sinus, skull and scalp lie outside it",
+  "rois.nii.gz": "uint8 labels of anatomical regions (names in acquisition.json roi_labels); label 7 is the lateral-ventricle CSF reference region",
+  "acquisition.json": "field_strength_T, gamma_bar_Hz_per_T, echo_times_s, voxel_size_mm (along the three array axes), b0_direction_voxel_axes (unit vector of B0 in the array axis frame), phase_scaling, phase_sign, roi_labels"
+ },
+ "conventions": {
+  "phase": "radians = stored_value * pi / 4096; phase(TE) = phi0(r) + 2*pi*f(r)*TE (wrapped to [-pi, pi)), with f the field offset in Hz and phi0 a spatially varying receive phase offset that does not depend on TE and is not zero",
+  "field_model": "f(r) = gamma_bar*B0*1e-6*(d * chi)(r) with chi in ppm and d the unit dipole kernel for the given B0 direction: in k-space D(k) = 1/3 - (k.b)^2/|k|^2 with k in physical units (cycles/mm along each array axis, using voxel_size_mm). A positive (paramagnetic) chi gives positive f inside a sphere-like source along B0",
+  "background": "strong fields from air in the sinus and outside the head (sources outside the brain mask) are superimposed and must be removed; the field inside the brain mask from sources outside it is harmonic",
+  "local_field": "the field inside the brain mask produced only by susceptibility sources inside the brain mask, in Hz",
+  "chi_reference": "report chi in ppm relative to the mean of the lateral-ventricle CSF ROI (label 7): subtract that mean so the CSF reference is 0"
+ },
+ "entrypoint_cli": "python qsm.py --input-dir DIR --out-dir OUTDIR. Standalone: custom helper code inside this one file, installed third-party imports allowed. It must work in a clean directory containing only this file and an input directory with the layout above, and it will be rerun on another subject scanned with different echo times, number of echoes, voxel size, matrix and B0 direction: read every parameter from acquisition.json. It should finish within about 15 minutes on one CPU core.",
+ "output_schema": {
+  "OUTDIR/local_field_hz.nii.gz": "float32 [nx, ny, nz] local field in Hz; it must be valid at least everywhere inside the brain mask farther than 12 mm from its boundary (values elsewhere may be 0)",
+  "OUTDIR/chi_ppm.nii.gz": "float32 [nx, ny, nz] susceptibility in ppm referenced to ventricular CSF; same validity region",
+  "OUTDIR/roi_results.json": "{\"reference_region\": string, \"rois\": {label string: {name, mean_chi_ppm, n_voxels}}}"
+ },
+ "required_outputs": [
+  "qsm.py",
+  "the OUTDIR files above for the public inputs (inputs/ as DIR)",
+  "a PNG figure of the local field and the susceptibility map",
+  "report.json with keys method, software (object), validation_summary, limitations (nonempty list)",
+  "README.md",
+  "an environment/version record (e.g. environment.txt)"
+ ],
+ "grading_note": "Graded against the simulated ground truth on the public data and by rerunning qsm.py on a hidden subject: local field and susceptibility maps in the deep grey-matter region (spatially smoothed correlation and scale), and deep grey-matter ROI values relative to CSF (scale and correlation). Moderate underestimation typical of regularised dipole inversion is tolerated."
+}

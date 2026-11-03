@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v8-spiral",
+  "source": "heldout-v8-spiral",
+  "manifest_sha256": "1fc4f4ced2f8ad63b35d34b31fbec2ab0b52f55132dcdcf8b2557794d3675483",
+  "grader": "grade_spiral_arm.py",
+  "package": "heldout-v8-spiral.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "d1d748a552ab74ebb8a4d7f766b464a5f2396fac1805dc4345a25b951f7408a6",
+  "package_bytes": 12288000
+ },
+ {
+  "instance": "heldout-v8-spiral-r3",
+  "source": "sealed-r3-v8/heldout-v8-spiral-r3",
+  "manifest_sha256": "bb32847e0f39c9cddbaca41406d4985f87d1c90f375da5822461cc2b7df6aca2",
+  "grader": "grade_spiral_arm.py",
+  "package": "heldout-v8-spiral-r3.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "ca5db18c6b012b4c1caa6d4848adfd5fac148399d045519739c30cc7a89a852a",
+  "package_bytes": 16250880
+ },
+ {
+  "instance": "heldout-v8-spiral-r4",
+  "source": "sealed-r4/heldout-v8-spiral-r4",
+  "manifest_sha256": "93ea63cd60b66c854029cd0ac9c4e7d9fc98a48577794247118bc4ab1e8208cc",
+  "grader": "grade_spiral_arm.py",
+  "package": "heldout-v8-spiral-r4.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "470146a671893ab4cc4538654e29cedeadbbd0ab09c46817159667258e8a5e41",
+  "package_bytes": 32962560
+ }
+]

@@ -1,0 +1,93 @@
+{
+ "id": "heldout-v8-spiral-r4",
+ "round": "sealed-r4",
+ "split": "heldout_evaluation",
+ "scope": "interleaved_spiral_gradient_echo_slew_limited_trajectory_design_gradient_delay_bloch_simulation_noncartesian_reconstruction",
+ "time_expectation": "Designed so that a correct solution (sequence export, Bloch simulation of about 8e3 isochromats, non-Cartesian reconstruction and checks) fits within the 60-minute session on a shared CPU without GPU.",
+ "fov_m": 0.234,
+ "matrix": [
+  36,
+  36
+ ],
+ "slice_thickness_m": 0.0045,
+ "acquisition": "2D single-slice interleaved spiral-out gradient echo at z = 0: each interleave is one slice-selective 90 deg excitation followed by one ADC during a spiral-out readout gradient in the x-y plane; the number of interleaves (1 to 36) and the spiral design are your choice",
+ "flip_angle_deg": 90,
+ "flip_angle_definition": "realized on-resonance flip angle 360 deg x |integral of the RF waveform (Hz)| within 2%; every RF pulse is played with a z gradient on and no x or y gradient, RF frequency offset 0; no other RF pulses",
+ "repetition_time_s": 3.0,
+ "repetition_time_definition": "interval between consecutive excitation centres, identical for all interleaves (tolerance 1 us); with T1 <= 0.6 s no preparation is needed",
+ "echo_time_s": 0.0027,
+ "echo_time_definition": "from the excitation centre to the first ADC sample of the interleave, at which the nominal trajectory must satisfy |k| <= 1 cycle/m; tolerance 10 us",
+ "max_readout_duration_s": 0.009,
+ "max_gradient_mT_per_m": 22,
+ "max_slew_T_per_m_per_s": 90,
+ "gamma_Hz_per_T": 42576000,
+ "gradient_raster_s": 1e-05,
+ "rf_raster_s": 1e-06,
+ "adc_raster_s": 1e-07,
+ "block_raster_s": 1e-05,
+ "rf_dead_time_s": 0.0001,
+ "rf_ringdown_time_s": 2e-05,
+ "adc_dead_time_s": 1e-05,
+ "hardware_note": "limits apply per axis to the exported piecewise-linear waveforms, including the transitions between the declared first/last values and the raster samples of arbitrary gradients and the boundaries between blocks",
+ "sampling_contract": {
+  "adc_events": "one ADC per interleave, all with the same number of samples (sample times delay + (i+0.5) x dwell), ADC window at most max_readout_duration_s",
+  "k_space_rule": "nominal k-space positions are the time integrals of the exported gradients (Pulseq piecewise-linear interpretation) from the excitation centre",
+  "kz": "kz = 0 within 0.05 cycles/m at every sample",
+  "coverage": "the union of the nominal sample positions of all interleaves must cover the disc |k| <= 18/fov_m: every point of the disc lies within 0.6/fov_m of some sample"
+ },
+ "gradient_delay_model": "Real gradient chains lag the ADC. A measurement may be acquired with a known constant delay delta between all gradient waveforms and the ADC: the sample recorded at nominal time t has the k-space position k_nominal(t - delta). The archive key gradient_delay_s holds delta: 0 for the public measurement you simulate; the hidden measurements use nonzero values with |delta| <= 11 us, written into that key. The simulator realises the delay by shifting every ADC sampling time by -delta.",
+ "image_quality_requirement": "for each hidden measurement, the magnitude image from reconstruct.py must have a normalized RMS difference (after a least-squares scale) of at most 0.10 from a reference reconstruction of the same object acquired with delta = 0",
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m [36], y_m [36] (x_m[18] = y_m[18] = 0), z_offsets_m [11], and 36x36 [y,x] maps density, T1_s, T2_s, B0_Hz, labels",
+  "isochromat_model": "every in-plane voxel with density > 0 is a column of 11 isochromats at (x_m[ix], y_m[iy], z_offsets_m[n]) spread over -3.6 mm < z < 3.6 mm, each with density/11 and the voxel's T1 (<= 0.6 s), T2 (the only transverse decay), B0 = 0; magnetization starts at thermal equilibrium; noise-free",
+  "labels": "0 outside, 1 reference body, 2..6 vials"
+ },
+ "endpoint": "complex image on the 36x36 [y,x] grid; per vial, the median magnitude over the vial voxels not touching another label divided by the same quantity for label 1",
+ "bloch_simulation": "simulate the exported sequence.seq file itself with an established Bloch simulator (KomaMRI is the reference implementation; MRzero is acceptable); do not replace it with your own Bloch or EPG code",
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "image.npz",
+  "reconstruct.py",
+  "sequence build script(s)",
+  "simulation script(s)",
+  "report.json",
+  "environment.txt",
+  "README.md"
+ ],
+ "simulation_output_schema": {
+  "raw_signal": "complex [n_interleaves, n_samples], chronological, after ADC phase demodulation; encoding exp(-2 pi i (kx x + ky y)); an arbitrary single global receiver phase is accepted",
+  "kxy_cycles_per_m": "float [n_interleaves, n_samples, 2] nominal k-space positions from the exported sequence",
+  "adc_times_s": "float [n_interleaves, n_samples] nominal absolute sample times",
+  "gradient_delay_s": "float, 0 for your simulation",
+  "fov_m": "float",
+  "matrix": "int [2]",
+  "echo_time_s": "float",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used",
+  "other_keys": "allowed; passed through unchanged to the hidden archives"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --output image.npz. Standalone: helper code inside this one file, installed third-party imports allowed; it must work in a clean directory with only this file and the archive, using only the archive contents. It is rerun on archives with the same keys whose raw_signal comes from another object acquired with your sequence and whose gradient_delay_s is nonzero.",
+ "image_output_schema": {
+  "image": "complex [36,36] on the [y,x] grid of the phantom (row index increases with y, column with x), no flips or shifts",
+  "input_sha256": "SHA256 of the input archive"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "simulator": "string with name and version",
+  "scanner_ready": "boolean false",
+  "n_interleaves": "int",
+  "readout_duration_ms": "float",
+  "realized_echo_time_ms": "float measured from the exported sequence",
+  "trajectory_design": "string: how the waveform meets the gradient and slew limits on the raster",
+  "delay_handling": "string",
+  "signal_ratio_by_label": "object mapping \"2\"..\"6\" to the endpoint ratio measured on your image",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads the exported sequence back, checks limits, rasters, RF, TR, TE, readout length, kz and k-space coverage from its own integration of the waveforms, replays the file in KomaMRI on the public object and on a hidden object with delta = 0 and two hidden delays, compares your simulated signal, and reruns reconstruct.py on the delayed hidden measurements."
+}

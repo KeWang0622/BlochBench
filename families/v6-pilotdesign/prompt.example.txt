@@ -1,0 +1,7 @@
+We plan two studies with knee cartilage T2 as the outcome and have collected pilot data on our own scanner (the pilot data are synthetic; task.json and the CSV files in public/inputs describe them).
+
+Start with measurement repeatability from the test-retest pilot: report the within-subject SD and its confidence interval, the repeatability coefficient, and the ICC in the form task.json defines, with its confidence interval. Next, summarise the pilot comparing patients with early osteoarthritis and controls. Apply the QC rule and the endpoint definition exactly as task.json gives them.
+
+Then design both studies described in task.json: an acute loading challenge (a treadmill run) in healthy volunteers and a comparison of patients with early knee osteoarthritis against controls. For each study pick the design and the statistical unit that answer the question most efficiently and validly, use the variability estimate that matches that design, and work out how many participants to enrol for the stated effect, power and alpha once the stated non-evaluable fraction is allowed for.
+
+Deliver design.json, following the schema in task.json, and plan.md, a short study plan that sets out the assumptions and finishes with a brief limitations note. Save both files in the workspace root. If you write code, keep it beside the deliverables together with a short record of the environment (interpreter and package versions).

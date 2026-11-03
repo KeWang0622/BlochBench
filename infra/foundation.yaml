@@ -1,0 +1,136 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  BlochBench foundation: monthly cost budget with e-mail alerts, private container registry for the grader image,
+  GitHub Actions OIDC role that may push only that image, and a bucket for deployment artifacts.
+
+Parameters:
+  BudgetEmail:
+    Type: String
+    Description: Address that receives budget alerts.
+  MonthlyBudgetUsd:
+    Type: Number
+    Default: 10
+  GitHubOwner:
+    Type: String
+    Default: KeWang0622
+  GitHubRepo:
+    Type: String
+    Default: BlochBench
+  GitHubOwnerId:
+    Type: String
+    Default: "30745273"
+    Description: Numeric owner ID, used by GitHub's immutable OIDC subject claims.
+  GitHubRepoId:
+    Type: String
+    Default: "1442275549"
+
+Resources:
+  CostBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: mragentbench-monthly
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: !Ref MonthlyBudgetUsd
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 50, ThresholdType: PERCENTAGE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref BudgetEmail}]
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 100, ThresholdType: PERCENTAGE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref BudgetEmail}]
+        - Notification: {NotificationType: FORECASTED, ComparisonOperator: GREATER_THAN, Threshold: 100, ThresholdType: PERCENTAGE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref BudgetEmail}]
+
+  GraderRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: mragentbench/grader
+      ImageTagMutability: MUTABLE
+      ImageScanningConfiguration: {ScanOnPush: true}
+      EncryptionConfiguration: {EncryptionType: AES256}
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {"rules": [
+            {"rulePriority": 1, "description": "Drop untagged images after 7 days",
+             "selection": {"tagStatus": "untagged", "countType": "sinceImagePushed", "countUnit": "days", "countNumber": 7},
+             "action": {"type": "expire"}},
+            {"rulePriority": 2, "description": "Keep the 10 most recent commit images",
+             "selection": {"tagStatus": "tagged", "tagPrefixList": ["sha-"], "countType": "imageCountMoreThan", "countNumber": 10},
+             "action": {"type": "expire"}}
+          ]}
+      Tags: [{Key: project, Value: BlochBench}]
+
+  GitHubOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList: [sts.amazonaws.com]
+      Tags: [{Key: project, Value: BlochBench}]
+
+  GitHubCiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: mragentbench-github-ci
+      Description: Assumed by GitHub Actions on the main branch of the BlochBench repository to push the grader image.
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Federated: !Ref GitHubOidcProvider}
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              StringLike:
+                token.actions.githubusercontent.com:sub:
+                  - !Sub repo:${GitHubOwner}/${GitHubRepo}:ref:refs/heads/main
+                  - !Sub repo:${GitHubOwner}@${GitHubOwnerId}/${GitHubRepo}@${GitHubRepoId}:ref:refs/heads/main
+      Policies:
+        - PolicyName: push-grader-image
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:BatchGetImage
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - ecr:PutImage
+                  - ecr:DescribeImages
+                Resource: !GetAtt GraderRepository.Arn
+      Tags: [{Key: project, Value: BlochBench}]
+
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub mragentbench-artifacts-${AWS::AccountId}
+      OwnershipControls: {Rules: [{ObjectOwnership: BucketOwnerEnforced}]}
+      PublicAccessBlockConfiguration:
+        {BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration: [{ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}}]
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-old-artifacts
+            Status: Enabled
+            ExpirationInDays: 180
+      Tags: [{Key: project, Value: BlochBench}]
+
+Outputs:
+  GraderRepositoryUri:
+    Value: !GetAtt GraderRepository.RepositoryUri
+    Export: {Name: mragentbench-grader-repository-uri}
+  GitHubCiRoleArn:
+    Value: !GetAtt GitHubCiRole.Arn
+  ArtifactsBucketName:
+    Value: !Ref ArtifactsBucket
+    Export: {Name: mragentbench-artifacts-bucket}

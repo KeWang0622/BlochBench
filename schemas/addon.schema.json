@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KeWang0622/BlochBench/blob/main/schemas/addon.schema.json",
+  "title": "BlochBench add-on manifest (addon.json)",
+  "description": "Describes a skill library evaluated on BlochBench by paired runs with and without it. Generated from mragentbench/addon.py (mrab addon schema).",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "description",
+    "homepage",
+    "license",
+    "authors",
+    "hosts",
+    "exposure"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "name": {
+      "description": "Add-on name; part of the run configuration name <agent>-<model>+<name>@<version>.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "version": {
+      "description": "Version of the frozen skill set that was evaluated.",
+      "type": "string",
+      "pattern": "^[0-9A-Za-z][0-9A-Za-z._-]{0,39}$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "homepage": {
+      "type": "string",
+      "pattern": "^https?://\\S+$",
+      "maxLength": 500
+    },
+    "license": {
+      "description": "SPDX identifier or license name.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "hosts": {
+      "description": "Agent hosts the add-on supports: codex (skills in .agents/skills) and claude (Claude Code, skills in .claude/skills).",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "codex",
+          "claude"
+        ]
+      }
+    },
+    "exposure": {
+      "description": "Whether the add-on's authors saw public BlochBench instances while building it.",
+      "type": "object",
+      "required": [
+        "public_instances_seen",
+        "details"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "public_instances_seen": {
+          "enum": [
+            true,
+            false,
+            "partial"
+          ]
+        },
+        "details": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    },
+    "metadata": {
+      "description": "Optional extra string fields.",
+      "type": "object",
+      "maxProperties": 50,
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 500
+      }
+    }
+  }
+}

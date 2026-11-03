@@ -1,0 +1,103 @@
+{
+ "id": "heldout-v8-mprage-r4",
+ "round": "sealed-r4",
+ "split": "heldout_evaluation",
+ "scope": "3d_mprage_inversion_timing_null_sequence_design_bloch_simulation_reconstruction",
+ "time_expectation": "Designed so that a correct solution (sequence export, Bloch simulation of about 4.3e4 isochromats over an about 25 s sequence, 3D reconstruction and checks) fits within the 60-minute session on a shared CPU without GPU.",
+ "fov_m": [
+  0.24,
+  0.144,
+  0.054
+ ],
+ "matrix": [
+  20,
+  12,
+  6
+ ],
+ "matrix_order": "[x, y, z]: 20 readout samples along x, 12 phase-encode lines along y, 6 partitions along z",
+ "acquisition": "3D MP-RAGE with non-selective RF (no gradient on during any RF pulse): each cycle is one inversion pulse followed by a train of 12 RF-spoilable gradient-echo readouts that acquire the 12 ky lines of one kz partition in linear order j = 0..11 (one line per readout pulse); 6 acquired cycles cover the 6 partitions, each exactly once, in any order; non-acquired dummy cycles with identical timing (no ADC) may precede them",
+ "inversion_pulse": "realized on-resonance flip angle 180 deg within 2%",
+ "readout_flip_angle_deg": 7,
+ "readout_flip_definition": "realized on-resonance flip angle 360 deg x |integral of the RF waveform (Hz)| within 1%",
+ "readout_tr_s": 0.0065,
+ "readout_tr_definition": "interval between consecutive readout RF centres within a train (tolerance 1 us)",
+ "cycle_period_s": 2.3,
+ "cycle_period_definition": "interval between consecutive inversion centres, identical for all cycles including dummy cycles (tolerance 1 us)",
+ "echo_time_s": 0.0028,
+ "echo_time_definition": "from each readout RF centre to its kx = 0 ADC sample (sample index 10); tolerance 5 us",
+ "inversion_time": "your choice: it must make the contrast requirement below hold; it is reported as the interval from the inversion centre to the centre of the readout pulse that acquires ky = 0, identical in every cycle",
+ "null_t1_s": 0.78,
+ "contrast_requirement": "tissue with T1 = null_t1_s = 0.78 s must be nulled: for a column of isochromats at x = y = 0 spread over the central partition (z in [-4.5, 4.5) mm, 72 isochromats as in the phantom) with T1 = 0.78 s and any 0.05 s <= T2 <= 0.10 s, the magnitude of the kx = 0 sample of the ky = 0 readout in the cycle that acquires kz = 0 must be at most 1% of M0 sin(7 deg) exp(-TE/T2), M0 being the column's summed equilibrium magnetization",
+ "rf_phase_and_spoiling": "free choice; RF and ADC phase offsets are applied by the simulator (the recorded signal is demodulated by the ADC phase)",
+ "max_gradient_mT_per_m": 30,
+ "max_slew_T_per_m_per_s": 110,
+ "gamma_Hz_per_T": 42576000,
+ "gradient_raster_s": 1e-05,
+ "rf_raster_s": 1e-06,
+ "adc_raster_s": 1e-07,
+ "block_raster_s": 1e-05,
+ "rf_dead_time_s": 0.0001,
+ "rf_ringdown_time_s": 2e-05,
+ "adc_dead_time_s": 1e-05,
+ "sampling_contract": {
+  "readout": "20 samples per ADC at kx = (i-10)/0.240, i = 0..19, chronological (sample 10 at kx = 0); Pulseq sample times are delay + (i+0.5) x dwell",
+  "phase_encoding": "readout j (0..11) of an acquired cycle has ky = (j-6)/0.144 and the cycle's kz = (m-3)/0.054 for its partition m (0..5) during all samples",
+  "tolerance_cycles_per_m": 0.02
+ },
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m [20], y_m [12], z_m [6] voxel-centre coordinates (x_m[10] = y_m[6] = z_m[3] = 0), z_sub_offsets_m [72], and [z,y,x] = [6,12,20] maps density, T1_s, T2_s, B0_Hz, labels",
+  "isochromat_model": "every voxel with density > 0 is a column of 72 isochromats at (x_m[ix], y_m[iy], z_m[iz] + z_sub_offsets_m[n]) uniformly spaced at 0.125 mm across the 9 mm partition thickness, each with density/72 and the voxel's T1 (0.45 to 1.9 s), T2 (0.05 to 0.10 s) (the only transverse decay), B0 = 0; magnetization starts at thermal equilibrium; noise-free",
+  "labels": "0 outside, 1 reference body, 2.. vials; the public and the hidden object each contain a vial with T1 = 0.78 s"
+ },
+ "endpoint": "complex 3D image [z,y,x] = [6,12,20]; per vial, the median magnitude over the vial voxels not touching another label (6-neighbour erosion) divided by the same quantity for label 1",
+ "image_requirement": "on your reconstruction of the hidden measurement, the endpoint of the T1 = 0.78 s vial must be at most 0.30 (the readout train modulates k-space, so the nulled vial is not exactly zero in the image), and the image must match a reference reconstruction of the same data (normalized RMS difference of magnitudes after a least-squares scale at most 3%)",
+ "bloch_simulation": "simulate the exported sequence.seq file itself with an established Bloch simulator (KomaMRI is the reference implementation; MRzero is acceptable); do not replace it with your own Bloch or EPG code",
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "image.npz",
+  "reconstruct.py",
+  "sequence build script(s)",
+  "simulation script(s)",
+  "report.json",
+  "environment.txt",
+  "README.md"
+ ],
+ "simulation_output_schema": {
+  "raw_signal": "complex [6 acquired cycles, 12 lines, 20 samples], chronological, after ADC phase demodulation; encoding exp(-2 pi i (kx x + ky y + kz z)); an arbitrary single global receiver phase is accepted",
+  "kxyz_cycles_per_m": "float [6,12,20,3] k-space positions from the exported sequence",
+  "adc_times_s": "float [6,12,20]",
+  "inversion_time_s": "float realized TI as defined above",
+  "echo_time_s": "float",
+  "readout_tr_s": "float",
+  "cycle_period_s": "float",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used",
+  "other_keys": "allowed; passed through unchanged to the hidden archive"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --output image.npz. Standalone: helper code inside this one file, installed third-party imports allowed; it must work in a clean directory with only this file and the archive, using only the archive contents. It is rerun on an archive with the same keys whose raw_signal comes from another object acquired with your sequence.",
+ "image_output_schema": {
+  "image": "complex [6,12,20] on the [z,y,x] grid of the phantom (index increases with the coordinate), no flips or shifts",
+  "input_sha256": "SHA256 of the input archive"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "simulator": "string with name and version",
+  "scanner_ready": "boolean false",
+  "realized_inversion_time_ms": "float",
+  "realized_echo_time_ms": "float",
+  "realized_readout_tr_ms": "float",
+  "realized_cycle_period_ms": "float",
+  "ti_derivation": "string: how the inversion time was determined",
+  "steady_state_preparation": "string",
+  "signal_ratio_by_label": "object mapping each vial label to the endpoint ratio measured on your image",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads the exported sequence back, checks limits, rasters, flips, timing and the sampling contract, replays it in KomaMRI on test columns, on the public object and on a hidden object, checks the null, compares your simulated signal, and reruns reconstruct.py on the hidden measurement.",
+ "cycle_steady_state_requirement": "all acquired cycles must be in the cycle steady state: for such a column with any 0.45 s <= T1 <= 1.9 s, the kx = 0 magnitude of the first readout (j = 0) of each acquired cycle, divided by |mean over the column's isochromats of exp(-2 pi i kz z)| for that cycle's kz, must agree within 2% (max-min relative to max) across the 6 acquired cycles"
+}

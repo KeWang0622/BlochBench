@@ -1,0 +1,17 @@
+[
+ {
+  "path": "public/inputs/refs.bib",
+  "bytes": 2583,
+  "sha256": "0bf13e3f282376a2bc4715a4a2f06859f9f0d895cb6370f24815669539d4b0b5"
+ },
+ {
+  "path": "public/inputs/results.json",
+  "bytes": 7344,
+  "sha256": "dfb2703bfc846d03a5ac6a91e0a49a52026d1778407bcc40c5f02e7cd3cc997b"
+ },
+ {
+  "path": "public/inputs/results_tables.md",
+  "bytes": 4753,
+  "sha256": "02eec7c6cd823e10c59466c7b8f572546ce212585fc288814a707b230c3121bd"
+ }
+]

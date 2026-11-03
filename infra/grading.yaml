@@ -1,0 +1,339 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  BlochBench hosted grading: HTTPS API (API Gateway + Lambda) that registers submissions and hands out presigned
+  upload URLs, and AWS Batch on Fargate (Spot first) that grades them in the pinned grader image. The grading
+  containers have no AWS credentials; they receive presigned URLs and post results back to the API.
+
+Parameters:
+  GraderImage:
+    Type: String
+    Description: Grader image URI, preferably pinned by digest (...@sha256:...).
+  LambdaCodeKey:
+    Type: String
+    Description: Key of the API code zip in the artifacts bucket.
+  DataBucket:
+    Type: String
+    Default: mragentbench-data
+  DataPrefix:
+    Type: String
+    Default: v1/public/
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Public subnets (grading tasks get a public IP to reach ECR and S3; no NAT gateway needed).
+  MaxVcpus:
+    Type: Number
+    Default: 16
+    Description: Upper bound on concurrent grading vCPUs (cost guard).
+  BenchmarkVersion:
+    Type: String
+    Default: 0.1.0.dev0
+
+Resources:
+  SubmissionsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub mragentbench-submissions-${AWS::AccountId}
+      OwnershipControls: {Rules: [{ObjectOwnership: BucketOwnerEnforced}]}
+      PublicAccessBlockConfiguration:
+        {BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration: [{ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}}]
+      LifecycleConfiguration:
+        Rules:
+          - {Id: expire-bundles, Status: Enabled, Prefix: bundles/, ExpirationInDays: 90}
+          - {Id: expire-job-specs, Status: Enabled, Prefix: jobs/, ExpirationInDays: 30}
+          - {Id: abort-multipart, Status: Enabled, AbortIncompleteMultipartUpload: {DaysAfterInitiation: 2}}
+      Tags: [{Key: project, Value: BlochBench}]
+
+  SubmissionsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SubmissionsBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource: [!GetAtt SubmissionsBucket.Arn, !Sub "${SubmissionsBucket.Arn}/*"]
+            Condition: {Bool: {aws:SecureTransport: "false"}}
+
+  SubmissionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: mragentbench-submissions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - {AttributeName: submission_id, AttributeType: S}
+        - {AttributeName: submitter, AttributeType: S}
+        - {AttributeName: created_at, AttributeType: S}
+      KeySchema: [{AttributeName: submission_id, KeyType: HASH}]
+      GlobalSecondaryIndexes:
+        - IndexName: by-submitter
+          KeySchema: [{AttributeName: submitter, KeyType: HASH}, {AttributeName: created_at, KeyType: RANGE}]
+          Projection: {ProjectionType: ALL}
+      SSESpecification: {SSEEnabled: true}
+      Tags: [{Key: project, Value: BlochBench}]
+
+  SubmittersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: mragentbench-submitters
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions: [{AttributeName: token_sha256, AttributeType: S}]
+      KeySchema: [{AttributeName: token_sha256, KeyType: HASH}]
+      SSESpecification: {SSEEnabled: true}
+      Tags: [{Key: project, Value: BlochBench}]
+
+  ApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: {LogGroupName: /mragentbench/api-access, RetentionInDays: 30}
+
+  ApiFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: {LogGroupName: /aws/lambda/mragentbench-api, RetentionInDays: 30}
+
+  JobLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: {LogGroupName: /mragentbench/grading-jobs, RetentionInDays: 30}
+
+  ApiFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: mragentbench-api
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{Effect: Allow, Principal: {Service: lambda.amazonaws.com}, Action: sts:AssumeRole}]
+      Policies:
+        - PolicyName: api
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub "${ApiFunctionLogGroup.Arn}:*"
+              - Effect: Allow
+                Action: [dynamodb:GetItem, dynamodb:PutItem, dynamodb:UpdateItem, dynamodb:Query]
+                Resource:
+                  - !GetAtt SubmissionsTable.Arn
+                  - !Sub "${SubmissionsTable.Arn}/index/*"
+                  - !GetAtt SubmittersTable.Arn
+              - Effect: Allow
+                Action: [s3:GetObject, s3:PutObject]
+                Resource: !Sub "${SubmissionsBucket.Arn}/*"
+              - Effect: Allow
+                Action: s3:ListBucket
+                Resource: !GetAtt SubmissionsBucket.Arn
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub "arn:aws:s3:::${DataBucket}/${DataPrefix}*"
+              - Effect: Allow
+                Action: [batch:SubmitJob, batch:TagResource]
+                Resource:
+                  - !Ref GradeJobQueue
+                  - !Sub "arn:aws:batch:${AWS::Region}:${AWS::AccountId}:job-definition/mragentbench-grade*"
+                  - !Sub "arn:aws:batch:${AWS::Region}:${AWS::AccountId}:job/*"
+      Tags: [{Key: project, Value: BlochBench}]
+
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: mragentbench-api
+      ProtocolType: HTTP
+      Description: BlochBench hosted grading API
+      Tags: {project: BlochBench}
+
+  ApiFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: ApiFunctionLogGroup
+    Properties:
+      FunctionName: mragentbench-api
+      Description: BlochBench hosted grading API and job-state handler
+      Runtime: python3.12
+      Architectures: [arm64]
+      Handler: api.handler
+      MemorySize: 256
+      Timeout: 60
+      Role: !GetAtt ApiFunctionRole.Arn
+      Code: {S3Bucket: !ImportValue mragentbench-artifacts-bucket, S3Key: !Ref LambdaCodeKey}
+      LoggingConfig: {LogGroup: !Ref ApiFunctionLogGroup}
+      Environment:
+        Variables:
+          SUBMISSIONS_TABLE: !Ref SubmissionsTable
+          SUBMITTERS_TABLE: !Ref SubmittersTable
+          SUBMISSIONS_BUCKET: !Ref SubmissionsBucket
+          DATA_BUCKET: !Ref DataBucket
+          DATA_PREFIX: !Ref DataPrefix
+          JOB_QUEUE: !Ref GradeJobQueue
+          JOB_DEFINITION: !Ref GradeJobDefinition
+          API_URL: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+          BENCHMARK_VERSION: !Ref BenchmarkVersion
+      Tags: [{Key: project, Value: BlochBench}]
+
+  ApiIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt ApiFunction.Arn
+      PayloadFormatVersion: "2.0"
+      TimeoutInMillis: 29000
+
+  RouteHealth:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "GET /v1/health", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteInstances:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "GET /v1/instances", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteCreate:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "POST /v1/submissions", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteList:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "GET /v1/submissions", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteStart:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "POST /v1/submissions/{id}/start", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteGet:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "GET /v1/submissions/{id}", Target: !Sub "integrations/${ApiIntegration}"}
+  RouteJobResults:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: {ApiId: !Ref HttpApi, RouteKey: "POST /v1/jobs/{id}/results", Target: !Sub "integrations/${ApiIntegration}"}
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: $default
+      AutoDeploy: true
+      DefaultRouteSettings: {ThrottlingBurstLimit: 20, ThrottlingRateLimit: 5}
+      AccessLogSettings:
+        DestinationArn: !GetAtt ApiLogGroup.Arn
+        Format: '{"requestId":"$context.requestId","ip":"$context.identity.sourceIp","time":"$context.requestTime","route":"$context.routeKey","status":"$context.status","latency":"$context.responseLatency"}'
+
+  ApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ApiFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*"
+
+  JobSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: BlochBench grading tasks (no inbound traffic)
+      VpcId: !Ref VpcId
+      SecurityGroupEgress: [{IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0, Description: HTTPS only}]
+      Tags: [{Key: project, Value: BlochBench}]
+
+  JobExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: mragentbench-grade-execution
+      Description: Lets ECS pull the grader image and write job logs. Grading containers get no task role.
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{Effect: Allow, Principal: {Service: ecs-tasks.amazonaws.com}, Action: sts:AssumeRole}]
+      ManagedPolicyArns: [arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy]
+      Tags: [{Key: project, Value: BlochBench}]
+
+  SpotComputeEnvironment:
+    Type: AWS::Batch::ComputeEnvironment
+    Properties:
+      ComputeEnvironmentName: mragentbench-fargate-spot
+      Type: MANAGED
+      State: ENABLED
+      ComputeResources:
+        Type: FARGATE_SPOT
+        MaxvCpus: !Ref MaxVcpus
+        Subnets: !Ref SubnetIds
+        SecurityGroupIds: [!Ref JobSecurityGroup]
+      Tags: {project: BlochBench}
+
+  OnDemandComputeEnvironment:
+    Type: AWS::Batch::ComputeEnvironment
+    Properties:
+      ComputeEnvironmentName: mragentbench-fargate
+      Type: MANAGED
+      State: ENABLED
+      ComputeResources:
+        Type: FARGATE
+        MaxvCpus: !Ref MaxVcpus
+        Subnets: !Ref SubnetIds
+        SecurityGroupIds: [!Ref JobSecurityGroup]
+      Tags: {project: BlochBench}
+
+  GradeJobQueue:
+    Type: AWS::Batch::JobQueue
+    Properties:
+      JobQueueName: mragentbench-grading
+      Priority: 1
+      State: ENABLED
+      ComputeEnvironmentOrder:
+        - {Order: 1, ComputeEnvironment: !Ref SpotComputeEnvironment}
+        - {Order: 2, ComputeEnvironment: !Ref OnDemandComputeEnvironment}
+      Tags: {project: BlochBench}
+
+  GradeJobDefinition:
+    Type: AWS::Batch::JobDefinition
+    Properties:
+      JobDefinitionName: mragentbench-grade
+      Type: container
+      PlatformCapabilities: [FARGATE]
+      PropagateTags: true
+      Timeout: {AttemptDurationSeconds: 14400}
+      RetryStrategy:
+        Attempts: 2
+        EvaluateOnExit:
+          - {OnExitCode: "1", Action: EXIT}
+          - {OnReason: "*", Action: RETRY}
+      ContainerProperties:
+        Image: !Ref GraderImage
+        Command: [python, -m, mragentbench.service.job]
+        ExecutionRoleArn: !GetAtt JobExecutionRole.Arn
+        ResourceRequirements: [{Type: VCPU, Value: "2"}, {Type: MEMORY, Value: "8192"}]
+        FargatePlatformConfiguration: {PlatformVersion: LATEST}
+        NetworkConfiguration: {AssignPublicIp: ENABLED}
+        EphemeralStorage: {SizeInGiB: 60}
+        RuntimePlatform: {OperatingSystemFamily: LINUX, CpuArchitecture: X86_64}
+        Environment: [{Name: MRAB_GRADER_IMAGE, Value: !Ref GraderImage}]
+        LogConfiguration:
+          LogDriver: awslogs
+          Options: {awslogs-group: !Ref JobLogGroup, awslogs-region: !Ref "AWS::Region", awslogs-stream-prefix: grade}
+      Tags: {project: BlochBench}
+
+  JobStateRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: mragentbench-grading-job-state
+      Description: Final states of grading jobs go to the API function, which records failures.
+      EventPattern:
+        source: [aws.batch]
+        detail-type: [Batch Job State Change]
+        detail:
+          jobQueue: [!Ref GradeJobQueue]
+          status: [FAILED, SUCCEEDED]
+      Targets: [{Id: api-function, Arn: !GetAtt ApiFunction.Arn}]
+
+  JobStateInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ApiFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt JobStateRule.Arn
+
+Outputs:
+  ApiUrl:
+    Value: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+  SubmissionsBucketName:
+    Value: !Ref SubmissionsBucket
+  JobQueueArn:
+    Value: !Ref GradeJobQueue
+  JobDefinitionArn:
+    Value: !Ref GradeJobDefinition

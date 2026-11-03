@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v8-sedwi",
+  "source": "heldout-v8-sedwi",
+  "manifest_sha256": "791bce3749553cf1f4fd5a70abaa453a2a549eeeb550423a32d5551ee5ed1a85",
+  "grader": "grade_sedwi_arm.py",
+  "package": "heldout-v8-sedwi.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "d0b342584878aa8acc18c32af58ef97795b558a21105f06b975d686363f5089c",
+  "package_bytes": 16199680
+ },
+ {
+  "instance": "heldout-v8-sedwi-r3",
+  "source": "sealed-r3-v8/heldout-v8-sedwi-r3",
+  "manifest_sha256": "5a5b53213eb549ba012b33c808ea0619d8c909fd98c526c9f7791353152bc327",
+  "grader": "grade_sedwi_arm.py",
+  "package": "heldout-v8-sedwi-r3.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "fb5a3fdc26d921f50268f270fde142fe792d3105ead6b099f290d6baa077f52a",
+  "package_bytes": 12062720
+ },
+ {
+  "instance": "heldout-v8-sedwi-r4",
+  "source": "sealed-r4/heldout-v8-sedwi-r4",
+  "manifest_sha256": "5174758480e4a163a12b38e3216a201ad97f3bdb432729de8d7349b8db2e1a39",
+  "grader": "grade_sedwi_arm.py",
+  "package": "heldout-v8-sedwi-r4.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "8a1fdb99c54190a99f7813971e0a96df8657b9ccadb1b4042ae5f47f6906a980",
+  "package_bytes": 61040640
+ }
+]

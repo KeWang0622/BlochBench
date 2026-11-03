@@ -1,0 +1,46 @@
+{
+ "id": "heldout-v7-mrsquant-r4-01",
+ "split": "heldout_evaluation",
+ "family": "MR spectroscopy (single-voxel quantification)",
+ "scope": "absolute, water-referenced metabolite concentrations from raw multi-coil single-voxel PRESS transients",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "metab.npz": "key 'fids': complex64 [n_transients, n_coils, n_points] water-suppressed raw FIDs, one per transient and receive coil, uncombined and unaveraged, in acquisition order",
+  "water.npz": "key 'fids': complex64 [n_water_transients, n_coils, n_points] unsuppressed water-reference FIDs from the same voxel, acquired immediately before the metabolite series with the same sequence, TE, TR, gradients, receiver gain and coils",
+  "params.json": "spectrometer_frequency_MHz, dwell_time_s, n_points, te_s, tr_s, receiver_reference_ppm, tissue_volume_fractions (gm, wm, csf; volume fractions of the voxel), water (per compartment: T1, T2 in s and 'content' = water concentration of the compartment relative to pure water), metabolite_relaxation_s (T1, T2 per metabolite, identical in grey and white matter), pure_water_concentration_mM"
+ },
+ "data_conventions": "Sample k of every FID is at time t = k * dwell_time_s, with t = 0 at the echo top. A resonance at frequency offset f (Hz) relative to the receiver contributes exp(+i 2 pi f t) to the FID; the receiver reference corresponds to receiver_reference_ppm (4.70 ppm, nominal water), and ppm = 4.70 + f / spectrometer_frequency_MHz, apart from a common B0 offset that may differ per dataset. Each coil sees the voxel with its own complex sensitivity and its own noise level; noise is independent between coils. Transients may differ from each other by a frequency offset and a zero-order phase (scanner drift and subject motion). The metabolite spectrum contains only singlet resonances, all with the same intrinsic Lorentzian decay as the water reference: NAA CH3 2.008 ppm, Glx 2.35 ppm, total creatine CH3 3.027 ppm, total choline N(CH3)3 3.185 ppm, myo-inositol 3.522 and 3.614 ppm, Glx 3.75 ppm, total creatine CH2 3.913 ppm, plus residual water near 4.70 ppm with its own linewidth. Metabolites are absent from CSF. Dummy scans were played before each series, so every stored transient is in the steady state for the stated TR.",
+ "endpoint": "concentrations of NAA (from the 2.008 ppm CH3 singlet), total creatine (from the 3.027 ppm CH3 singlet) and total choline (from the 3.185 ppm N(CH3)3 singlet), in mmol per litre of the non-CSF tissue volume of the voxel (mM)",
+ "accuracy_targets": "On hidden datasets (different field strengths, relaxation values, TE, TR, tissue fractions, coil phases, drift, eddy currents, linewidths and concentrations) and on the public dataset, each of the three concentrations must be within 5% of truth.",
+ "entrypoint": {
+  "file": "mrs_quant.py",
+  "cli": "python mrs_quant.py --input-dir <directory containing metab.npz, water.npz, params.json> --output <path ending in .json>",
+  "standalone": "all custom code inside this one file; installed third-party packages may be imported; must run in a clean directory containing only this file and the input directory, reading every parameter from params.json.",
+  "output_schema": {
+   "NAA": "float, mM",
+   "Cr": "float, mM (total creatine)",
+   "Cho": "float, mM (total choline)"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "mrs_quant.py",
+  "conc.json (entrypoint run on the public inputs)",
+  "spectrum_fit.png (processed spectrum, fit and residual)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "preprocessing": "string describing coil combination, phase/frequency handling and any other corrections",
+  "fitting": "string",
+  "quantification_model": "string or object giving the formula and every correction factor used",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads conc.json, reruns mrs_quant.py with the workspace .venv interpreter on the public inputs and on hidden datasets, and compares the three concentrations with ground truth."
+}

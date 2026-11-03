@@ -1,0 +1,17 @@
+[
+ {
+  "path": "public/inputs/acquisition.json",
+  "bytes": 650,
+  "sha256": "46072c6b9c442269906a0e6b2d33e02343e728feff8441ae9f7b32e777f479d0"
+ },
+ {
+  "path": "public/inputs/labels.nii.gz",
+  "bytes": 3151,
+  "sha256": "2831b086a459cf4f21c71ede097e98911eb4c713f46695520732dc129cf1a1ce"
+ },
+ {
+  "path": "public/inputs/mese.nii.gz",
+  "bytes": 4108910,
+  "sha256": "385989f354340ce239cc1dd8016a7aa47cc24b085f4767890a870f5eb862397e"
+ }
+]

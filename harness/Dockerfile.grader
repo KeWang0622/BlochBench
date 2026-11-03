@@ -1,0 +1,42 @@
+# BlochBench grader image.
+# Pins the environment in which the study graders ran: Python 3.12.14, Julia 1.10.12, KomaMRI 0.14.0 (KomaMRICore 0.13.0).
+# Build from the repository root:  docker build -f harness/Dockerfile.grader -t mragentbench-grader .
+#
+# Debian 13 (trixie) ships OpenSSL 3.5. The pinned Julia manifest uses OpenSSL_jll 3.5.8, which needs the
+# OPENSSL_3.3.0 symbols; on bookworm (OpenSSL 3.0) juliacall fails to load it after Python has loaded the system libssl.
+FROM python:3.12.14-slim-trixie
+ARG JULIA_VERSION=1.10.12
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates build-essential && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-${JULIA_VERSION}-linux-x86_64.tar.gz | tar -xz -C /opt \
+ && ln -s /opt/julia-${JULIA_VERSION}/bin/julia /usr/local/bin/julia
+COPY harness/grader-env/requirements.txt /env/requirements.txt
+RUN pip install --no-cache-dir -r /env/requirements.txt
+# juliacall uses the Julia project named by PYTHON_JULIAPKG_PROJECT; offline mode keeps it from re-resolving.
+# PYTHON_JULIAPKG_EXE must be the real binary: juliacall locates libjulia relative to it, not through the symlink.
+# Packages and precompiled caches live in a shared, read-only depot so graders can run as an unprivileged user,
+# who puts a private writable depot in front of it (JULIA_DEPOT_PATH=<home>/julia:/opt/julia-depot).
+COPY harness/grader-env/julia_env /usr/local/julia_env
+# Setting both PYTHON_JULIACALL_EXE and PYTHON_JULIACALL_PROJECT makes juliacall use this exact Julia and project and skip
+# juliapkg entirely (juliacall 0.9.36 __init__), so nothing writes to the read-only project at grading time.
+ENV PYTHON_JULIAPKG_EXE=/opt/julia-${JULIA_VERSION}/bin/julia PYTHON_JULIAPKG_PROJECT=/usr/local/julia_env PYTHON_JULIAPKG_OFFLINE=yes \
+    PYTHON_JULIACALL_EXE=/opt/julia-${JULIA_VERSION}/bin/julia PYTHON_JULIACALL_PROJECT=/usr/local/julia_env \
+    JULIA_DEPOT_PATH=/opt/julia-depot JULIA_PKG_OFFLINE=true \
+    JULIA_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHON_JULIACALL_HANDLE_SIGNALS=yes MPLBACKEND=Agg
+# Package images hold native code for the CPU they were compiled on. Without a multi-target JULIA_CPU_TARGET, a
+# grading host with a different x86-64 CPU (AWS Fargate) rejects them and recompiles KomaMRI from scratch (tens of
+# minutes). These targets are the ones Julia's official x86-64 binaries use; "generic" runs on any x86-64 CPU.
+ENV JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)"
+# Metal (Apple GPU) was present in the macOS study environment and is not needed for grading.
+RUN JULIA_PKG_OFFLINE=false julia --project=/usr/local/julia_env -e 'using Pkg; Pkg.rm("Metal"); Pkg.instantiate(); Pkg.precompile(); using KomaMRI' \
+ && python -c "from juliacall import Main as jl; jl.seval('using KomaMRI')" \
+ && chmod -R a+rX /opt/julia-depot /usr/local/julia_env
+# The mrab tool, the instance catalog and the hosted grading job.
+COPY pyproject.toml README.md /opt/mragentbench/
+COPY mragentbench /opt/mragentbench/mragentbench
+COPY families /opt/mragentbench/families
+RUN pip install --no-cache-dir -e /opt/mragentbench && chmod -R a+rX /opt/mragentbench
+WORKDIR /grade
+# Local grading of one workspace:
+#   docker run --rm --network none -v <workspace>:/ws:ro -v <instance>:/instance:ro -v <out>:/out mragentbench-grader \
+#          sh -c 'cd /instance/private && python <grader>.py /ws /out'
+# Hosted grading (AWS Batch) runs: python -m mragentbench.service.job

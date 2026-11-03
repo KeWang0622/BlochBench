@@ -1,0 +1,22 @@
+[
+ {
+  "path": "public/inputs/acq.json",
+  "bytes": 336,
+  "sha256": "c1c23ed52d75b7bbe8ccbddbedcf66ce9e160fd4be2774ca017d22774c7f410f"
+ },
+ {
+  "path": "public/inputs/asl.npz",
+  "bytes": 8491773,
+  "sha256": "80c7173b6153a7d6c18c585b479ac03d95080642cfeea05dc7928d4519c315b3"
+ },
+ {
+  "path": "public/inputs/m0.npz",
+  "bytes": 160474,
+  "sha256": "39f867be71623c54c8c4deaae401a0b08bc8ff3f60e81bad43f1dbcc7f621944"
+ },
+ {
+  "path": "public/inputs/t1.npz",
+  "bytes": 59333,
+  "sha256": "635a36dcf6047407bb97117496f009ef75eb8bd8bf848324b3747ab118a0301f"
+ }
+]

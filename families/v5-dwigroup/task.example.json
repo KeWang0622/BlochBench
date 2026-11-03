@@ -1,0 +1,59 @@
+{
+ "id": "heldout-v5-dwigroup-r4-01",
+ "split": "heldout_evaluation",
+ "scope": "diffusion_acquisition_metadata_to_group_statistics: gradient-table handling, signal-drift correction, diffusion tensor fitting, regional measurement and two-group statistics",
+ "time_expectation_minutes": 60,
+ "inputs": {
+  "participants": "inputs/participants.tsv (tab-separated: participant_id, group in {control, patient}); 14 subjects",
+  "per_subject": {
+   "inputs/sub-XX/dwi.nii.gz": "4D magnitude diffusion series, integer scanner units, no preprocessing applied. Volume index order equals acquisition order.",
+   "inputs/sub-XX/labels.nii.gz": "3D integer label map on the same voxel grid and affine: 0 outside the brain, 1 tract A, 2 tract B, 3 deep grey matter, 4 CSF, 5 other brain tissue. Brain mask = label > 0.",
+   "inputs/sub-XX/dwi.json": "acquisition sidecar with per-volume lists NominalBValue_s_per_mm2, DiffusionGradientDirection_LPS ([x, y, z] per volume) and VolumeAcquisitionTime_s"
+  }
+ },
+ "conventions": {
+  "image_space": "The NIfTI affine maps voxel indices (i, j, k) to world RAS+ millimetres. Slices are oblique; the affine of a subject may or may not contain a reflection (negative determinant), and hidden subjects can differ in this as well.",
+  "gradient_directions": "DiffusionGradientDirection_LPS is given in the DICOM patient coordinate system LPS+ (+x toward the patient's left, +y toward posterior, +z toward the head), independent of the image orientation. It is NOT in voxel coordinates and NOT in RAS.",
+  "b_values": "The vector norm encodes the gradient amplitude relative to the amplitude used for the nominal b-value: effective b-value = NominalBValue x |g|^2, diffusion direction = g/|g|. Volumes with nominal b = 0 or |g| = 0 are b = 0 volumes.",
+  "signal_drift": "The scanner signal drifts during the run: a spatially uniform multiplicative factor that varies smoothly with acquisition time (well described by a polynomial of degree <= 2 in VolumeAcquisitionTime_s). b = 0 volumes are interspersed (several at the start, more later) so that the drift can be estimated. All endpoints are defined for drift-free data.",
+  "noise_and_artifacts": "Rician magnitude noise only. No subject motion, eddy-current or susceptibility distortion was present. A single diffusion tensor per voxel is an adequate model everywhere.",
+  "units": "MD in micrometre^2/ms (= 1e-3 mm^2/s). FA dimensionless (standard definition from the tensor eigenvalues). V1 = unit eigenvector of the largest tensor eigenvalue expressed in world RAS+ components."
+ },
+ "endpoints": {
+  "regional": "For every subject and each label k in {1,2,3,4}: mean voxelwise FA and mean voxelwise MD over all voxels with label k. For labels 1 and 2 also the region principal direction: the eigenvector with largest eigenvalue of the mean dyadic (1/N) sum v1 v1^T over the label voxels, as a unit RAS+ vector whose largest-magnitude component is positive.",
+  "group": "For label 1 FA and label 1 MD: group means, difference patient minus control, Welch two-sample t-test (two-sided p-value) and 95% confidence interval of the difference using the Welch-Satterthwaite degrees of freedom, computed from the per-subject regional values."
+ },
+ "entrypoint": {
+  "command": "python process_subject.py --dwi <dwi.nii.gz> --sidecar <dwi.json> --labels <labels.nii.gz> --outdir <dir>",
+  "behaviour": "Processes one subject from these three files alone and writes <dir>/results.json, <dir>/fa.nii.gz, <dir>/md.nii.gz (micrometre^2/ms) and <dir>/v1_ras.nii.gz (4D, last axis = [R, A, S] components of V1). Maps use the input voxel grid and affine with no reorientation. It is run with the script's own folder as working directory and may import modules you place in that folder; it must not read the public inputs or earlier outputs. It will be rerun on hidden subjects whose affine, gradient directions, number of volumes, b-value scaling and drift differ from the public ones.",
+  "results_json_schema": {
+   "labels": {
+    "1": {
+     "fa": "float",
+     "md_um2_per_ms": "float",
+     "v1_ras": "[3 floats]"
+    },
+    "2": "same as 1",
+    "3": {
+     "fa": "float",
+     "md_um2_per_ms": "float"
+    },
+    "4": {
+     "fa": "float",
+     "md_um2_per_ms": "float"
+    }
+   }
+  }
+ },
+ "required_outputs": {
+  "process_subject.py": "the entrypoint above",
+  "subject_results.json": "object keyed by participant_id, each {\"group\": str, \"labels\": {same structure as results.json labels}} for all 14 public subjects",
+  "group_results.json": "{\"fa_label1\": {...}, \"md_label1\": {...}} each with mean_control, mean_patient, n_control, n_patient, difference_patient_minus_control, ci95 [low, high], p_value, df, test",
+  "qc.png": "figure with at least one FA or direction-encoded colour slice and the estimated drift curve for one subject",
+  "README.md": "methods, validation evidence and a section titled Limitations",
+  "environment record": "environment.txt (Python version and package versions, e.g. pip freeze)",
+  "code": "all scripts used to produce the public results"
+ },
+ "file_locations": "Put deliverables in the workspace root or in one subfolder; each requested file must exist exactly once.",
+ "grading_note": "Regional values are compared with the ground-truth tensors used to synthesise the data (expected accuracy: FA within 0.03 for labels 1-3, MD within 3% for labels 1-4, region principal direction within 5 degrees for labels 1-2). Group differences are compared with the ground-truth difference and the reported Welch statistics are recomputed from subject_results.json. process_subject.py is rerun on hidden subjects; its regional values and voxelwise maps are compared with truth."
+}

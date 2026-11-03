@@ -1,0 +1,22 @@
+[
+ {
+  "path": "public/inputs/acq.json",
+  "bytes": 332,
+  "sha256": "7e0a37d8dc2500c9674e4b05094672bf0afed603c99c68705ff7be1a2f416085"
+ },
+ {
+  "path": "public/inputs/bold.npz",
+  "bytes": 5972036,
+  "sha256": "deca423c900bc6dcba041d1df5663470827e1b7b23feb6ea288131eec093c7c6"
+ },
+ {
+  "path": "public/inputs/events.json",
+  "bytes": 741,
+  "sha256": "9fbb13bbb50e48361e5a6293c0f19aab846e61eb7b80aab9d8a8da8384e7dcb0"
+ },
+ {
+  "path": "public/inputs/motion.txt",
+  "bytes": 12695,
+  "sha256": "d56541fb41e12c2bc697e2fae3d9affaf5f256f51097e7aec97148766150f72c"
+ }
+]

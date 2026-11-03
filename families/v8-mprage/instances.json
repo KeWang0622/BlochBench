@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v8-mprage",
+  "source": "heldout-v8-mprage",
+  "manifest_sha256": "7f0f57e157d258db037fa8ad33d14621824614e2392fff456d6829bfa866da14",
+  "grader": "grade_mprage_arm.py",
+  "package": "heldout-v8-mprage.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "10d27735fd0afbfd6d0cd0b05e61ca348e3fab19726bce6328c60832bb910f72",
+  "package_bytes": 7045120
+ },
+ {
+  "instance": "heldout-v8-mprage-r3",
+  "source": "sealed-r3-v8/heldout-v8-mprage-r3",
+  "manifest_sha256": "d8defe9d65515129d8a22475a3350eab7be1487ef29e47b0281070b4af21895b",
+  "grader": "grade_mprage_arm.py",
+  "package": "heldout-v8-mprage-r3.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "ed96f5db3cfde489bd095158e440f4cb69fe18353376b978d577f3633256e99f",
+  "package_bytes": 5601280
+ },
+ {
+  "instance": "heldout-v8-mprage-r4",
+  "source": "sealed-r4/heldout-v8-mprage-r4",
+  "manifest_sha256": "243bf91f91c4d8f51da70070bc53f65be8967a4b45159547a31776472cc76d67",
+  "grader": "grade_mprage_arm.py",
+  "package": "heldout-v8-mprage-r4.tar",
+  "cap_s": 3600,
+  "domain": "seq",
+  "package_sha256": "b03d185dd44678031bf010d5938535863975aaaec1f6f64059e8422e49c26808",
+  "package_bytes": 51077120
+ }
+]

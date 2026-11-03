@@ -1,0 +1,35 @@
+[
+ {
+  "instance": "heldout-v4-qsm",
+  "source": "heldout-v4-qsm",
+  "manifest_sha256": "aa1f1a933f880e1c4dd65131467f9c654a45fbf7b259fd2fc973e88fb7965894",
+  "grader": "grade_qsm_arm.py",
+  "package": "heldout-v4-qsm.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "bd0620277fde3ecf0fb04b2ebbccfccaf3fb0fde837c9a5113d96d2a704ab0aa",
+  "package_bytes": 51937280
+ },
+ {
+  "instance": "heldout-v4-qsm-r3",
+  "source": "sealed-r3-ext/heldout-v4-qsm-r3",
+  "manifest_sha256": "404ee1ec534c18e74f5830e08182f7f13fe8d69245f75b27418f91fca3b14d26",
+  "grader": "grade_qsm_arm.py",
+  "package": "heldout-v4-qsm-r3.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "259a6a5eb46987f4f7739d5f1582c67e54a10fed32fdefc2019e6f05ffea6d9e",
+  "package_bytes": 48240640
+ },
+ {
+  "instance": "heldout-v4-qsm-r4",
+  "source": "sealed-r4/heldout-v4-qsm-r4",
+  "manifest_sha256": "7db8ab33eaaf4cd1b535abf0ac9243fba2c9cb5f6f4146541e11c9bf028c5475",
+  "grader": "grade_qsm_arm.py",
+  "package": "heldout-v4-qsm-r4.tar",
+  "cap_s": 2700,
+  "domain": "relax",
+  "package_sha256": "e2dd80510a06ee761427a20379001e0699d55fcbb315c09cdb33521f30484fdb",
+  "package_bytes": 55971840
+ }
+]

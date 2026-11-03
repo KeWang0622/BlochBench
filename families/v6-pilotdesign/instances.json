@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v6-pilotdesign",
+  "source": "heldout-v6-pilotdesign",
+  "manifest_sha256": "e8e71520959d0ddb1cfa0d497898f7d8de60962b402d61453c622c30ca5087a6",
+  "grader": "grade_pilotdesign_arm.py",
+  "package": "heldout-v6-pilotdesign.tar",
+  "cap_s": 2700,
+  "domain": "stats",
+  "package_sha256": "7d6eb011107860365ad6c9c5279b067ba4bf7d283f558958c5a6df7ad671e4c7",
+  "package_bytes": 245760
+ },
+ {
+  "instance": "heldout-v6-pilotdesign-r2",
+  "source": "sealed-r2/heldout-v6-pilotdesign-r2",
+  "manifest_sha256": "652d0d49e2752abc8344a2c4e1dd67a4b1bcc3cf501dd7f89f408ceaba887d48",
+  "grader": "grade_pilotdesign_arm.py",
+  "package": "heldout-v6-pilotdesign-r2.tar",
+  "cap_s": 2700,
+  "domain": "stats",
+  "package_sha256": "016654d77b087272d9edb0cc78c2ff4fccbaa441318ce5e04c0c4f82bb8828a9",
+  "package_bytes": 245760
+ },
+ {
+  "instance": "heldout-v6-pilotdesign-r3",
+  "source": "sealed-r3-ext/heldout-v6-pilotdesign-r3",
+  "manifest_sha256": "af88271bfc6c825161e4ad7f009be8a756deda4d3dece2828fde3fef739bdaee",
+  "grader": "grade_pilotdesign_arm.py",
+  "package": "heldout-v6-pilotdesign-r3.tar",
+  "cap_s": 2700,
+  "domain": "stats",
+  "package_sha256": "1ba42f4bf8b9bd244621cd9c4dc28b00ab65cc75ac61dfd2efbf2a23094fdcd3",
+  "package_bytes": 256000
+ },
+ {
+  "instance": "heldout-v6-pilotdesign-r4",
+  "source": "sealed-r4/heldout-v6-pilotdesign-r4",
+  "manifest_sha256": "784f1fc6351064c4fa28fcb0a5a7e2728919e8dfd8b58fae375d18f87e6d3de9",
+  "grader": "grade_pilotdesign_arm.py",
+  "package": "heldout-v6-pilotdesign-r4.tar",
+  "cap_s": 2700,
+  "domain": "stats",
+  "package_sha256": "43033c6c6a3be98b859745ef9fc54d877db1254948dafffa38fd7dd048db43a3",
+  "package_bytes": 256000
+ }
+]

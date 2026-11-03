@@ -1,0 +1,127 @@
+{
+ "id": "heldout-v5-irt1-r4-chain-01",
+ "split": "heldout_evaluation",
+ "scope": "inversion_recovery_radial_sequence_design_under_hardware_limits_bloch_simulation_noncartesian_reconstruction_t1_mapping",
+ "time_expectation": "about 60 minutes of agent work on a CPU-only machine; the full public simulation is small (one plane of about 740 isochromats, 200 readouts)",
+ "fov_m": 0.2,
+ "matrix": [
+  40,
+  40
+ ],
+ "image_grid": "voxel (row i, column j) is centred at x = (j-20)*fov_m/40, y = (i-20)*fov_m/40 (metres); arrays are indexed [y, x]",
+ "gamma_Hz_per_T": 42576000,
+ "hardware_limits": {
+  "max_gradient_mT_per_m": 36,
+  "max_slew_T_per_m_per_s": 150,
+  "max_b1_peak_uT": 8.0,
+  "note": "limits apply per gradient axis to the exported waveforms and to the peak RF amplitude of every pulse; the grader reads them back from sequence.seq"
+ },
+ "system_timing": {
+  "gradient_raster_s": 1e-05,
+  "rf_raster_s": 1e-06,
+  "adc_raster_s": 1e-07,
+  "block_raster_s": 1e-05,
+  "rf_dead_time_s": 0.0001,
+  "rf_ringdown_time_s": 2e-05,
+  "adc_dead_time_s": 1e-05
+ },
+ "acquisition": {
+  "type": "2D inversion-recovery with one radial spoke per inversion (single-plane object; slice selection is not required, non-selective pulses are acceptable)",
+  "inversion": "one 180 deg inversion pulse per acquired repetition: amplitude-modulated (no frequency or phase modulation, e.g. block, sinc or Gaussian; not adiabatic) because the flip angle is evaluated as 360 deg x |integral of the RF waveform in Hz over time|; flip 180 +/- 3 deg; peak within the B1 limit",
+  "excitation": "one amplitude-modulated 90 deg excitation pulse per acquired repetition (flip evaluated as above, 90 +/- 2 deg), followed by the radial readout; no other RF pulses except optional 90 deg preparation pulses before the first acquired inversion",
+  "inversion_times_s": [
+   0.045,
+   0.13,
+   0.33,
+   0.8,
+   1.6
+  ],
+  "inversion_time_definition": "from the centre of the inversion pulse to the centre of the following excitation pulse; tolerance 0.5 ms",
+  "recovery_delay_s": 2.4,
+  "recovery_delay_definition": "from the centre of each excitation pulse to the centre of the next inversion pulse; constant (tolerance 1 ms) for every repetition that is followed by another inversion",
+  "echo_time": "from the centre of the excitation pulse to the k = 0 readout sample; at most 3.2 ms",
+  "periodic_state": "before every acquired inversion the longitudinal magnetisation must be within 0.5% of its periodic value M0*(1-exp(-recovery_delay/T1)) for every T1 between 0.35 and 2.0 s (ideal pulses); add non-acquired preparation as needed",
+  "ordering": "acquired repetitions are ordered inversion-time-major: all 40 spokes of inversion_times_s[0], then all 40 spokes of inversion_times_s[1], and so on; within one inversion time the spokes are acquired in the order s = 0..39"
+ },
+ "sampling_contract": {
+  "readout": "exactly one ADC per acquired repetition (200 ADC events in total), each with 40 samples",
+  "trajectory": "sample i (0..39) of spoke s lies at k = ((i-20)/fov_m) * (cos(pi*s/40), sin(pi*s/40)) cycles/m, measured from the excitation pulse centre (sample 20 at k = 0)",
+  "tolerance_cycles_per_m": 0.05,
+  "undersampling_note": "40 spokes per inversion time is fewer than the ~63 spokes needed for full angular Nyquist sampling of a 40x40 grid; streak artefacts are expected and the reconstruction must still meet the accuracy targets"
+ },
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m, y_m, z_m, density, T1_s, T2_s, B0_Hz and an integer label map on the 40x40 [y,x] grid; one isochromat per voxel centre (z = 0); voxels with density 0 contain no spins",
+  "labels": "0 outside, 1 background body, 2..7 vials",
+  "note": "T2 is the only transverse relaxation (no intravoxel dephasing). B0 is zero. Magnetisation starts at thermal equilibrium. The hidden object follows the same conventions with different geometry, T1 between 0.35 and 2.0 s and a different number of vials"
+ },
+ "simulation_requirement": "simulate the exported sequence.seq with an established Bloch simulator (for example KomaMRI) on the public phantom; do not substitute a homemade Bloch or signal-equation simulation for the measurement data",
+ "endpoint": {
+  "t1_map": "voxelwise T1 (seconds) of the true tissue, estimated from the reconstructed images",
+  "vial_t1": "median of the T1 map over each label after removing every voxel whose 8-neighbourhood touches a different label (one-voxel erosion)",
+  "accuracy_targets": "on the public and on a hidden object: every vial median within 6% of the true T1 and the median absolute relative voxel error over all eroded labelled voxels (labels 1..max) at most 4%; fit_t1.py alone on ideal phase-carrying images: vial medians within 3% and median voxel error at most 1.5%"
+ },
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "images.npz",
+  "t1map.npz",
+  "t1map.png",
+  "reconstruct.py",
+  "fit_t1.py",
+  "sequence-building and simulation scripts (.py)",
+  "report.json",
+  "README.md",
+  "environment record (environment.txt or requirements/pip-freeze file)"
+ ],
+ "file_locations": "put deliverables in the workspace root or in one subfolder; each requested file must exist exactly once",
+ "simulation_output_schema": {
+  "raw_signal": "complex [5, 40, 40] = [inversion time, spoke, sample]: Bloch Mx+iMy at the ADC samples of the exported sequence, chronological within the contract ordering, after receiver demodulation; an arbitrary single global phase is accepted",
+  "kxy_cycles_per_m": "float [5, 40, 40, 2] actual ADC trajectory of the exported sequence (last axis [kx, ky]) measured from the excitation pulse centre",
+  "adc_times_s": "float [5, 40, 40] absolute ADC sample times",
+  "inversion_times_s": "float [5] realised inversion times measured from the exported sequence",
+  "recovery_delay_s": "float realised recovery delay",
+  "echo_time_s": "float realised echo time",
+  "excitation_flip_deg": "float realised excitation flip angle",
+  "inversion_flip_deg": "float realised inversion flip angle",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --output images.npz. Standalone: helper code inside this one file, installed third-party imports allowed; must run in a clean directory containing only this file and the archive. It is rerun on an archive with exactly the simulation_output_schema keys, simulated by the grader from your sequence.seq on a hidden object.",
+ "images_output_schema": {
+  "images": "complex [5, 40, 40] reconstructed image for each inversion time on the [y,x] image grid (no flips or shifts)",
+  "inversion_times_s": "float [5] copied from the input archive",
+  "input_sha256": "SHA256 of the input archive"
+ },
+ "fit_cli": "python fit_t1.py --input images.npz --output t1map.npz. Standalone, as above. It is also rerun on grader-made images.npz files (same schema) whose images carry a spatially varying phase that is identical for all inversion times, plus small noise.",
+ "t1map_output_schema": {
+  "t1_s": "float [40, 40] T1 in seconds on the [y,x] grid; finite in at least 98% of the eroded labelled voxels; values outside the object may be NaN",
+  "input_sha256": "SHA256 of the input images.npz",
+  "other keys": "optional (for example amplitude maps)"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "scanner_ready": "boolean false",
+  "realized_inversion_times_ms": "list of 5 floats measured from the exported sequence",
+  "realized_recovery_delay_ms": "float",
+  "realized_echo_time_ms": "float",
+  "realized_excitation_flip_deg": "float",
+  "realized_inversion_flip_deg": "float",
+  "max_gradient_mT_per_m": "float measured from the exported sequence",
+  "max_slew_T_per_m_per_s": "float measured from the exported sequence",
+  "max_b1_uT": "float measured from the exported sequence",
+  "preparation": "string",
+  "t1_by_label_ms": "object mapping \"2\"..\"7\" to the vial endpoint from your t1map.npz",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads back sequence.seq (hardware limits, timing, trajectory, periodic state), replays it with KomaMRI on the public phantom and compares with simulation.npz, scores t1map.npz, and reruns reconstruct.py followed by fit_t1.py on a hidden object simulated from your sequence, and fit_t1.py alone on ideal images.",
+ "replay_conventions": {
+  "adc_sample_times": "sample i of an ADC event occurs at block start + adc delay + (i + 0.5) * dwell (Pulseq convention)",
+  "rf_centre": "the RF centre is the Pulseq RF centre (rf delay + calc_rf_center)",
+  "grader_simulator": "KomaMRI 0.14 (Julia) reading sequence.seq, one isochromat per voxel centre with density, T1, T2 and off-resonance from the phantom; the submitted raw_signal must agree with this replay to within 5% relative RMS error after one global complex phase (amplitude scale within 5%)"
+ }
+}

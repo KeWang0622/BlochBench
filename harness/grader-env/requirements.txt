@@ -1,0 +1,11 @@
+dipy==1.12.1
+h5py==3.16.0
+juliacall==0.9.36
+juliapkg==0.1.27
+matplotlib==3.11.2
+nibabel==5.4.2
+numpy==2.5.3
+pypulseq==1.5.0.post1
+PyWavelets==1.10.0
+scipy==1.18.1
+sigpy==0.1.27

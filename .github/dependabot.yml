@@ -1,0 +1,22 @@
+# Weekly update pull requests for the GitHub Actions in .github/workflows and the test and lint tools pinned in
+# requirements-dev.txt. pyproject.toml has no pinned dependencies, so these updates never change it (on main, a change
+# to pyproject.toml rebuilds and pushes the grader image). The grader environment (harness/grader-env/requirements.txt
+# and the Julia environment) is pinned on purpose and not listed: changing it can change scores, so it is updated by
+# hand under the versioning rule in CHANGELOG.md. Updates to the workflows themselves still trigger
+# build-grader.yml when they touch that file.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: ["*"]
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      python-tools:
+        patterns: ["*"]

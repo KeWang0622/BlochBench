@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/addon.schema.json",
+  "name": "minimal-example",
+  "version": "1.0.0",
+  "description": "A one-skill add-on that shows the BlochBench add-on package format.",
+  "homepage": "https://github.com/KeWang0622/BlochBench/tree/main/examples/addons/minimal",
+  "license": "Apache-2.0",
+  "authors": ["BlochBench maintainers"],
+  "hosts": ["codex", "claude"],
+  "exposure": {
+    "public_instances_seen": false,
+    "details": "Generic advice on checking deliverables; written without opening any BlochBench instance."
+  }
+}

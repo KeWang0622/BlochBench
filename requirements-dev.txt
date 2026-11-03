@@ -1,0 +1,6 @@
+# Test and lint tools for development and CI (pip install -e . -r requirements-dev.txt, or make setup).
+# Pinned here, not in pyproject.toml, so that Dependabot updates do not touch pyproject.toml, whose changes on main
+# rebuild and push the grader image (.github/workflows/build-grader.yml). The ruff version is also pinned in
+# .pre-commit-config.yaml; keep the two equal.
+jsonschema==4.26.0
+ruff==0.11.8

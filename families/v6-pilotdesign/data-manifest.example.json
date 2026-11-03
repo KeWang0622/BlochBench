@@ -1,0 +1,12 @@
+[
+ {
+  "path": "public/inputs/pilot_groups.csv",
+  "bytes": 1867,
+  "sha256": "2cda16308c438f026434170398eea158f1e74d292c1994639c5580b2cd228408"
+ },
+ {
+  "path": "public/inputs/pilot_test_retest.csv",
+  "bytes": 1811,
+  "sha256": "41991e9a2686f3d425b9bf990a650cde2ff3a3a1f208c4f4a292be8434ff3198"
+ }
+]

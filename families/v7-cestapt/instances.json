@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v7-cestapt",
+  "source": "heldout-v7-cestapt",
+  "manifest_sha256": "1c6d23220f35b2142867251b190c8c0002c6c136583dbc8a759a52fcea299e08",
+  "grader": "grade_cestapt_arm.py",
+  "package": "heldout-v7-cestapt.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "bca6196395c96b6263150c50101936939bd9654d9822434300178e654083587b",
+  "package_bytes": 4904960
+ },
+ {
+  "instance": "heldout-v7-cestapt-r2",
+  "source": "sealed-r2-v7/heldout-v7-cestapt-r2",
+  "manifest_sha256": "426d939f2f355cbd8126ad45ad1f310c293956ba4ee126d291d06a5461e2e22e",
+  "grader": "grade_cestapt_arm.py",
+  "package": "heldout-v7-cestapt-r2.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "8d817b7d65ab432c854fc531be3c731183165cfaa420514c954c7c24ad8b9738",
+  "package_bytes": 4587520
+ },
+ {
+  "instance": "heldout-v7-cestapt-r3",
+  "source": "sealed-r3-v7/heldout-v7-cestapt-r3",
+  "manifest_sha256": "926d229192e9c6f73f26de899eb8a495039e052490b28c9a88c2f42fae4259ce",
+  "grader": "grade_cestapt_arm.py",
+  "package": "heldout-v7-cestapt-r3.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "6f6555dfe5e0db767de9cb65143388e76bb771aa12e4de1ce85b47c82b008366",
+  "package_bytes": 5355520
+ },
+ {
+  "instance": "heldout-v7-cestapt-r4",
+  "source": "sealed-r4/heldout-v7-cestapt-r4",
+  "manifest_sha256": "2758a9b026cd84cc791e52198d493945ae1c4dbbe1255df5994c2b7158f9029e",
+  "grader": "grade_cestapt_arm.py",
+  "package": "heldout-v7-cestapt-r4.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "d5464ac7848d35d2794cc0f916feffeca18f709afbef062e7d1c8265ed280bb9",
+  "package_bytes": 53862400
+ }
+]

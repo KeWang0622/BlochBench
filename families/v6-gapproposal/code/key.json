@@ -1,0 +1,620 @@
+{
+ "id_regex": "\\bM\\d{2,3}\\b",
+ "record_ids": [
+  "M01",
+  "M02",
+  "M03",
+  "M04",
+  "M05",
+  "M06",
+  "M07",
+  "M08",
+  "M09",
+  "M10",
+  "M11",
+  "M12",
+  "M13",
+  "M14",
+  "M15",
+  "M16",
+  "M17",
+  "M18",
+  "M19",
+  "M20",
+  "M21",
+  "M22",
+  "M23",
+  "M24",
+  "M25",
+  "M26",
+  "M27",
+  "M28",
+  "M29",
+  "M30",
+  "M31",
+  "M32",
+  "M33",
+  "M34",
+  "M35"
+ ],
+ "tests": {
+  "M01": [
+   [
+    "T2",
+    "HV",
+    "REPEAT",
+    "feas",
+    1
+   ],
+   [
+    "T1",
+    "HV",
+    "REPEAT",
+    "feas",
+    1
+   ],
+   [
+    "ECV",
+    "HV",
+    "REPEAT",
+    "feas",
+    1
+   ]
+  ],
+  "M02": [
+   [
+    "T2",
+    "HV",
+    "CONF",
+    "pos",
+    1
+   ]
+  ],
+  "M03": [
+   [
+    "T2",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M04": [
+   [
+    "T2",
+    "HV",
+    "CONF",
+    "pos",
+    1
+   ]
+  ],
+  "M05": [
+   [
+    "LGE",
+    "MYO",
+    "EVENT",
+    "pos",
+    1
+   ]
+  ],
+  "M06": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M07": [
+   [
+    "T1",
+    "DCM",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M08": [
+   [
+    "T2",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M09": [
+   [
+    "ECV",
+    "MYO",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M10": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M11": [
+   [
+    "T2",
+    "DCM",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M12": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M13": [
+   [
+    "T2",
+    "ICI",
+    "REPEAT",
+    "feas",
+    1
+   ]
+  ],
+  "M14": [
+   [
+    "T2",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M15": [
+   [
+    "EDR",
+    "DCM",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M16": [
+   [
+    "T1",
+    "ICI",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M17": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M18": [
+   [
+    "STRAIN",
+    "MYO",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M19": [
+   [
+    "STRAIN",
+    "SARC",
+    "EVENT",
+    "pos",
+    0
+   ]
+  ],
+  "M20": [
+   [
+    "LGE",
+    "SARC",
+    "EVENT",
+    "pos",
+    1
+   ]
+  ],
+  "M21": [
+   [
+    "T2",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M22": [
+   [
+    "T2",
+    "ICI",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M23": [
+   [
+    "T2",
+    "ICI",
+    "TREAT",
+    "pos",
+    1
+   ]
+  ],
+  "M24": [
+   [
+    "EDR",
+    "ICI",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M25": [
+   [
+    "STRAIN",
+    "SARC",
+    "HVDIFF",
+    "null",
+    1
+   ]
+  ],
+  "M26": [
+   [
+    "ECV",
+    "ICI",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M27": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "pos",
+    1
+   ]
+  ],
+  "M28": [
+   [
+    "STRAIN",
+    "SARC",
+    "NONE",
+    "none",
+    1
+   ]
+  ],
+  "M29": [
+   [
+    "EDR",
+    "ICI",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M30": [
+   [
+    "T1",
+    "MYO",
+    "BX",
+    "null",
+    1
+   ]
+  ],
+  "M31": [
+   [
+    "LGE",
+    "DCM",
+    "HVDIFF",
+    "pos",
+    1
+   ]
+  ],
+  "M32": [
+   [
+    "STRAIN",
+    "SARC",
+    "NONE",
+    "none",
+    1
+   ]
+  ],
+  "M33": [
+   [
+    "ECV",
+    "ICI",
+    "BX",
+    "pos",
+    0
+   ]
+  ],
+  "M34": [
+   [
+    "T1",
+    "MYO",
+    "REPEAT",
+    "feas",
+    1
+   ],
+   [
+    "T2",
+    "MYO",
+    "REPEAT",
+    "feas",
+    1
+   ]
+  ],
+  "M35": [
+   [
+    "T1",
+    "MYO",
+    "CONF",
+    "pos",
+    1
+   ],
+   [
+    "T2",
+    "MYO",
+    "CONF",
+    "pos",
+    1
+   ]
+  ]
+ },
+ "replicated": {
+  "technique": "T2",
+  "population": "MYO",
+  "reference": "BX",
+  "ids": [
+   "M03",
+   "M08",
+   "M14",
+   "M21"
+  ]
+ },
+ "contradiction": {
+  "technique": "T1",
+  "population": "MYO",
+  "reference": "BX",
+  "sig_ids": [
+   "M06",
+   "M12",
+   "M27"
+  ],
+  "null_ids": [
+   "M10",
+   "M17",
+   "M30"
+  ],
+  "tolerated_extra_ids": [
+   "M16",
+   "M35"
+  ],
+  "factor": "mri_to_biopsy_interval"
+ },
+ "underpowered": {
+  "ids": [
+   "M19",
+   "M33"
+  ],
+  "dependents": {
+   "M19": [
+    "M28",
+    "M32"
+   ],
+   "M33": [
+    "M26"
+   ]
+  }
+ },
+ "gap": {
+  "technique": "T2",
+  "population": "ICI",
+  "reference": "BX",
+  "G3_ids": [
+   "M03",
+   "M08",
+   "M14",
+   "M21",
+   "M11"
+  ],
+  "G4_ids": [
+   "M13",
+   "M22"
+  ],
+  "G5_ids": [
+   "M16",
+   "M24"
+  ],
+  "allowed_support": [
+   "M01",
+   "M02",
+   "M03",
+   "M04",
+   "M08",
+   "M11",
+   "M13",
+   "M14",
+   "M16",
+   "M21",
+   "M22",
+   "M23",
+   "M24",
+   "M34",
+   "M35"
+  ],
+  "forbidden_support": [
+   "M19",
+   "M33"
+  ],
+  "direction": "higher",
+  "units": [
+   "ms"
+  ],
+  "threshold_token": "14"
+ },
+ "design": {
+  "type": [
+   "prospective_cross_sectional"
+  ],
+  "unit_of_analysis": [
+   "participant"
+  ],
+  "recruitment": [
+   "consecutive"
+  ]
+ },
+ "sample_size": {
+  "alpha": 0.05,
+  "power": 0.9,
+  "sided": 2,
+  "range_tol": 0.1,
+  "delta_range": [
+   3.4,
+   5.4
+  ],
+  "delta_sources": [
+   "M03",
+   "M08",
+   "M14",
+   "M21",
+   "M11"
+  ],
+  "sd_range": [
+   3.0,
+   4.1
+  ],
+  "sd_sources": [
+   "M03",
+   "M08",
+   "M14",
+   "M21",
+   "M11",
+   "M13",
+   "M22"
+  ],
+  "frac_range": [
+   0.325,
+   0.366
+  ],
+  "frac_sources": [
+   "M16",
+   "M24"
+  ],
+  "nonev_range": [
+   0.1,
+   0.154
+  ],
+  "nonev_sources_mri": [
+   "M13",
+   "M22"
+  ],
+  "nonev_sources_ref": [
+   "M16",
+   "M24"
+  ]
+ },
+ "controls": {
+  "required": {
+   "blinded_image_analysis": [],
+   "exercise_abstinence_before_mri": [
+    "M04"
+   ],
+   "corticosteroid_timing_control": [
+    "M23"
+   ],
+   "fixed_field_strength_and_sequence": [
+    "M02"
+   ]
+  },
+  "support_map": {
+   "exercise_abstinence_before_mri": [
+    "M04",
+    "M01",
+    "M03",
+    "M08",
+    "M11",
+    "M13",
+    "M14",
+    "M21",
+    "M22"
+   ],
+   "corticosteroid_timing_control": [
+    "M23",
+    "M16",
+    "M24"
+   ],
+   "fixed_field_strength_and_sequence": [
+    "M02",
+    "M01",
+    "M13",
+    "M22"
+   ],
+   "mri_close_in_time_to_reference": [
+    "M03",
+    "M06",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M14",
+    "M16",
+    "M17",
+    "M18",
+    "M21",
+    "M24",
+    "M27",
+    "M30",
+    "M35"
+   ],
+   "blood_pool_excluded_roi_placement": [
+    "M01",
+    "M03",
+    "M06",
+    "M08",
+    "M10",
+    "M11",
+    "M12",
+    "M13",
+    "M14",
+    "M16",
+    "M17",
+    "M21",
+    "M22",
+    "M27",
+    "M30",
+    "M35"
+   ],
+   "free_breathing_or_motion_corrected_acquisition": [
+    "M34"
+   ],
+   "repeat_mri_subset": [
+    "M01",
+    "M13"
+   ]
+  }
+ },
+ "md_max_words": 1500
+}

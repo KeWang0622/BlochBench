@@ -1,0 +1,48 @@
+{
+ "id": "heldout-v7-cestapt-r4-01",
+ "split": "heldout_evaluation",
+ "family": "CEST / magnetization transfer",
+ "scope": "amide proton transfer (APT) weighted asymmetry map from a single-slice CEST Z-spectrum dataset with a separate WASSR acquisition",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "cest.npz": "key 'images': float32 [n_images, ny, nx] magnitude images in ACQUISITION order (the offsets were not acquired monotonically); key 'offsets_ppm': float [n_images] nominal saturation offset of each image. The image whose offset is -300 ppm was acquired with the saturation pulse switched off and is the unsaturated reference S0 (the -300 value is a placeholder label, not a frequency at which saturation was applied).",
+  "wassr.npz": "key 'images': float32 [n_wassr, ny, nx] water saturation shift referencing (WASSR) magnitude images acquired in the same session and slice with a weak, long saturation pulse; key 'offsets_hz': float [n_wassr] nominal saturation offsets in Hz.",
+  "params.json": "field_strength_T, gamma_MHz_per_T, and the saturation parameters (B1 amplitude, duration, shape) of the CEST and WASSR acquisitions."
+ },
+ "frequency_conventions": "All offsets (ppm or Hz) are relative to the scanner's nominal water frequency set at the start of the session; positive offset = higher frequency than nominal. ppm and Hz are related by f_Hz = offset_ppm * gamma_MHz_per_T * field_strength_T. The local water resonance in each voxel differs from the nominal frequency because of B0 inhomogeneity; a voxel whose water resonance is above the nominal frequency has a positive B0 offset. Amide protons resonate +3.5 ppm from the local water resonance. Images are noise-corrupted magnitude images with high SNR; there is no motion, no B1 inhomogeneity and no drift.",
+ "endpoint": {
+  "mtr_asym_3p5_percent": "MTRasym(3.5 ppm) = 100 * [S(-3.5 ppm) - S(+3.5 ppm)] / S0 per voxel, where the offsets +/-3.5 ppm are measured from the LOCAL water resonance of that voxel and S0 is the unsaturated reference signal of the same voxel",
+  "b0_ppm": "local water frequency offset relative to the nominal water frequency, in ppm (positive = local water above nominal)"
+ },
+ "accuracy_targets": "On hidden datasets (different B0 maps, saturation powers, offset lists and acquisition orders, and one dataset at 7 T) and on the public dataset: the median MTRasym inside each tissue region (grey matter, white matter and two lesion types, eroded by one voxel) must be within 0.30 percentage points of truth; the median absolute voxel-wise MTRasym error over the eroded brain must be <= 0.45 percentage points; the median absolute B0 error over the eroded brain must be <= 0.03 ppm. Truth is the noise-free Z-spectrum value at exactly +/-3.5 ppm from the local water resonance.",
+ "entrypoint": {
+  "file": "cest_apt.py",
+  "cli": "python cest_apt.py --input-dir <directory containing cest.npz, wassr.npz, params.json> --output <path ending in .npz>",
+  "standalone": "all custom code inside this one file; installed third-party packages may be imported; must run in a clean directory containing only this file and the input directory, reading every parameter from the inputs (hidden datasets differ in field strength, offsets, ordering and matrix content).",
+  "output_schema": {
+   "mtr_asym_3p5_percent": "float [ny, nx]",
+   "b0_ppm": "float [ny, nx]"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "cest_apt.py",
+  "apt.npz (entrypoint run on the public inputs)",
+  "apt_maps.png (MTRasym and B0 maps)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "b0_method": "string",
+  "normalisation": "string",
+  "roi_mtrasym_percent": "object with your summary values (any regions you define)",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads apt.npz, reruns cest_apt.py with the workspace .venv interpreter on the public inputs and on hidden datasets, and compares region medians, voxel-wise errors and the B0 map with ground truth."
+}

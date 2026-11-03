@@ -1,0 +1,52 @@
+{
+ "id": "heldout-v7-dixonraw-r4-01",
+ "split": "heldout_evaluation",
+ "family": "fat-water imaging + raw-data reconstruction (multi-area pipeline)",
+ "scope": "proton-density fat fraction (PDFF) and R2* maps reconstructed from raw multi-coil, multi-echo spoiled gradient-echo k-space",
+ "time_expectation": "designed to be completed within a 60-minute working session on a CPU-only laptop",
+ "inputs_directory": "inputs/",
+ "input_files": {
+  "kspace.npz": "key 'kspace': complex64 [n_echoes, n_coils, ny, nx_oversampled] raw 2D Cartesian k-space, fully sampled, one array per echo of a single-shot multi-echo readout train. nx_oversampled = readout_oversampling * matrix[1].",
+  "noise.npz": "key 'noise': complex64 [n_coils, n_samples] noise-only samples acquired with the same receiver chain and the RF switched off (its overall scale differs from the imaging data because of a different dwell time).",
+  "b1.npz": "key 'b1_rel': float32 [ny, nx] relative transmit field (actual/nominal flip angle) on the final image grid, 0 outside the object.",
+  "params.json": "field_strength_T, gamma_MHz_per_T, echo_times_ms, tr_ms, flip_angle_deg, t1_water_ms, t1_fat_ms, fat_spectrum (ppm positions and relative amplitudes, amplitudes sum to 1), water_ppm, matrix [ny, nx] of the final image, readout_oversampling."
+ },
+ "kspace_conventions": "Index order [echo, coil, ky, kx]. Along each axis of length L, k = 0 is at index L/2 and the image is obtained with a centred inverse DFT (ifftshift -> ifft -> fftshift); image row index increases with y and column index with x. The readout (kx) direction is oversampled by readout_oversampling: the reconstructed field of view along x is that factor larger than the requested image, and the object lies in the central matrix[1] columns. Readouts are bipolar: odd echoes (echo index 0, 2, 4, ...) were acquired with positive readout polarity and stored in order of increasing kx; even echoes (index 1, 3, 5, ...) were acquired with negative polarity and are stored in acquisition order, i.e. sample j of an even echo holds the kx value of sample (nx_oversampled - 1 - j) of an odd echo. Apart from this ordering there are no odd/even phase or delay errors. Coil noise is correlated between channels.",
+ "signal_conventions": "Each voxel contains water and fat with one common R2* and one common off-resonance frequency (B0 field map). The fat signal follows the supplied multi-peak spectrum, with frequency offsets relative to water given by the chemical-shift difference in ppm times gamma*B0; a component that precesses at offset f (Hz) contributes exp(+i 2 pi f TE) to the complex image at echo time TE. Chemical-shift displacement during the readout is negligible. The sequence is an RF-spoiled steady-state gradient echo with the stated TR and nominal flip angle; the actual flip angle is nominal * b1_rel; water and fat have the stated T1 values (one T1 for all fat peaks).",
+ "endpoint": {
+  "pdff_percent": "proton-density fat fraction = 100 * fat proton density / (water + fat proton density), per voxel",
+  "r2s_per_s": "common R2* in 1/s, per voxel"
+ },
+ "accuracy_targets": "On hidden datasets (different echo times, TR, flip angle, T1 values, B0 field maps, B1 maps, coil arrangements and one dataset at 1.5 T) and on the public dataset: for each of the nine vials, the median PDFF in the vial must be within 1.5 percentage points of truth, and the median R2* within max(6 1/s, 10%) of truth. Vial fat fractions span 0-100%.",
+ "entrypoint": {
+  "file": "dixon_pdff.py",
+  "cli": "python dixon_pdff.py --input-dir <directory containing kspace.npz, noise.npz, b1.npz, params.json> --output <path ending in .npz>",
+  "standalone": "all custom code inside this one file; installed third-party packages may be imported; must run in a clean directory containing only this file and the input directory, reading every parameter from params.json.",
+  "output_schema": {
+   "pdff_percent": "float [ny, nx] on the final image grid (matrix)",
+   "r2s_per_s": "float [ny, nx]",
+   "fieldmap_hz": "optional float [ny, nx]"
+  },
+  "runtime_limit": "each run of the entrypoint (public or hidden inputs) must finish within 15 minutes on one CPU core with single-threaded numerical libraries"
+ },
+ "required_outputs": [
+  "dixon_pdff.py",
+  "pdff.npz (entrypoint run on the public inputs)",
+  "maps.png (PDFF, R2* and field map)",
+  "report.json",
+  "README.md",
+  "environment.txt (Python and package versions; environment.json or requirements.txt also accepted)"
+ ],
+ "report_output_schema": {
+  "scope": "string",
+  "reconstruction": "string describing how images were formed from the raw data",
+  "coil_combination": "string",
+  "signal_model": "string",
+  "t1_correction": "string",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list of strings"
+ },
+ "deliverable_location": "place the deliverables at the workspace root or in one subfolder",
+ "grading_note": "The grader reads pdff.npz, reruns dixon_pdff.py with the workspace .venv interpreter on the public inputs and on hidden datasets, and compares per-vial median PDFF and R2* with ground truth."
+}

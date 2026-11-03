@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v7-pcasl",
+  "source": "heldout-v7-pcasl",
+  "manifest_sha256": "1cf20ec0168ece196c106c5d25b327140f0dec85a76b50ca94ddcd6e39d8a772",
+  "grader": "grade_pcasl_arm.py",
+  "package": "heldout-v7-pcasl.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "8e52bcba078fe1d59144db80229c72a8635ba2aeb4a60d8cdf557f55eb06a2f8",
+  "package_bytes": 36874240
+ },
+ {
+  "instance": "heldout-v7-pcasl-r2",
+  "source": "sealed-r2-v7/heldout-v7-pcasl-r2",
+  "manifest_sha256": "adb971b8ee3e53a3d13e8d4f8446e56678a7ac3fe90e235ed2db0e8a1c847f4a",
+  "grader": "grade_pcasl_arm.py",
+  "package": "heldout-v7-pcasl-r2.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "a9c96239c3bfeed40a3f6b3493025f6083022a36c1692e1e1691e4f064842b5a",
+  "package_bytes": 41400320
+ },
+ {
+  "instance": "heldout-v7-pcasl-r3",
+  "source": "sealed-r3-v7/heldout-v7-pcasl-r3",
+  "manifest_sha256": "eb31597fd0bba9d43c958f204a4fd3dc0c2f67d9aa11391a22169be416436b64",
+  "grader": "grade_pcasl_arm.py",
+  "package": "heldout-v7-pcasl-r3.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "4c287dae4fe3f898eed321a9e4b61e1f35dc5e0c9d2029f534a1f458ff799ad7",
+  "package_bytes": 40273920
+ },
+ {
+  "instance": "heldout-v7-pcasl-r4",
+  "source": "sealed-r4/heldout-v7-pcasl-r4",
+  "manifest_sha256": "4df102303e6a2ed577fee948698bc029727490e9ca89cb3ea8250ef357dcd2e5",
+  "grader": "grade_pcasl_arm.py",
+  "package": "heldout-v7-pcasl-r4.tar",
+  "cap_s": 3600,
+  "domain": "perf",
+  "package_sha256": "e02674fd7a958c92cbe5efa83c02a2083a01792d38efa20a1d4b41fcaed7c9ab",
+  "package_bytes": 369745920
+ }
+]

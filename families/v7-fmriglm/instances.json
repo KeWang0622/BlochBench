@@ -1,0 +1,46 @@
+[
+ {
+  "instance": "heldout-v7-fmriglm",
+  "source": "heldout-v7-fmriglm",
+  "manifest_sha256": "b45095a02f755cbc97bd3affd620c558a6012f4ec48a90713058ced9cea5ef9e",
+  "grader": "grade_fmriglm_arm.py",
+  "package": "heldout-v7-fmriglm.tar",
+  "cap_s": 3600,
+  "domain": "fmri",
+  "package_sha256": "d3c17eca43e890b3d9f36d69899c14277bd000ee9f3158af97f10a4188ace7c3",
+  "package_bytes": 18298880
+ },
+ {
+  "instance": "heldout-v7-fmriglm-r2",
+  "source": "sealed-r2-v7/heldout-v7-fmriglm-r2",
+  "manifest_sha256": "9e8f539223408ff5e0eae6fbdd757c1390da24b8b78681b63f3559ccbe167e79",
+  "grader": "grade_fmriglm_arm.py",
+  "package": "heldout-v7-fmriglm-r2.tar",
+  "cap_s": 3600,
+  "domain": "fmri",
+  "package_sha256": "4bec7329a3dbe8793183d241e66608e003ae7304c57581e6ec08672b217ef723",
+  "package_bytes": 21125120
+ },
+ {
+  "instance": "heldout-v7-fmriglm-r3",
+  "source": "sealed-r3-v7/heldout-v7-fmriglm-r3",
+  "manifest_sha256": "af32e32592c5ac69e632571f80ee15ff3d84cacc0aca65c7552d33efed7c0489",
+  "grader": "grade_fmriglm_arm.py",
+  "package": "heldout-v7-fmriglm-r3.tar",
+  "cap_s": 3600,
+  "domain": "fmri",
+  "package_sha256": "0c8314ddb3a9beff790732a355a730176492df01b7e776593b2757171b66aa2c",
+  "package_bytes": 18708480
+ },
+ {
+  "instance": "heldout-v7-fmriglm-r4",
+  "source": "sealed-r4/heldout-v7-fmriglm-r4",
+  "manifest_sha256": "d5efcb6d346cab5fa974326828d0f4a67c8ef27dc17d39fe64b1399b04a8792f",
+  "grader": "grade_fmriglm_arm.py",
+  "package": "heldout-v7-fmriglm-r4.tar",
+  "cap_s": 3600,
+  "domain": "fmri",
+  "package_sha256": "48136f1babc5b4102a67f8ad15b7f548ba792c50394182c688f1037ac33daf55",
+  "package_bytes": 193454080
+ }
+]

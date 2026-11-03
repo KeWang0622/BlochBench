@@ -1,0 +1,98 @@
+{
+ "id": "heldout-v8-ute-r4",
+ "round": "sealed-r4",
+ "split": "heldout_evaluation",
+ "scope": "2d_ute_half_pulse_excitation_centre_out_radial_sequence_design_bloch_simulation_reconstruction",
+ "time_expectation": "Designed so that a correct solution (sequence export, Bloch simulation of about 2.3e4 isochromats over about 400 repetitions, non-Cartesian reconstruction and checks) fits within the 60-minute session on a shared CPU without GPU.",
+ "fov_m": 0.208,
+ "matrix": [
+  26,
+  26
+ ],
+ "slice_thickness_m": 0.0055,
+ "acquisition": "2D ultrashort-echo-time (UTE) imaging of the slice at z = 0 with half-pulse excitation: every excitation is a slice-selective RF pulse truncated so that it ends at (or very near) the centre of its excitation k-space; each radial spoke is acquired twice, by two consecutive excitations followed by identical centre-out readouts in the x-y plane; the complex sum of the two acquisitions forms the slice-selective signal of that spoke; the number of spokes and all other design choices are yours",
+ "flip_angle_deg": 11,
+ "flip_angle_definition": "realized on-resonance flip angle of every RF pulse, 360 deg x |integral of the RF waveform (Hz)|, within 2%; every RF pulse is played with a z gradient on (at its centre) and no x or y gradient, RF frequency offset 0",
+ "repetition_time_s": 0.0065,
+ "repetition_time_definition": "interval between consecutive RF centres, identical throughout the sequence including non-acquired excitations (tolerance 1 us)",
+ "max_ute_echo_time_s": 0.00024,
+ "ute_echo_time_definition": "from the end of the RF waveform (its last RF raster sample) to the first ADC sample of the acquisition, for every acquisition",
+ "max_gradient_mT_per_m": 34,
+ "max_slew_T_per_m_per_s": 135,
+ "gamma_Hz_per_T": 42576000,
+ "gradient_raster_s": 1e-05,
+ "rf_raster_s": 1e-06,
+ "adc_raster_s": 1e-07,
+ "block_raster_s": 1e-05,
+ "rf_dead_time_s": 0.0001,
+ "rf_ringdown_time_s": 2e-05,
+ "adc_dead_time_s": 1e-05,
+ "sampling_contract": {
+  "adc_events": "an even number of ADC events, all with the same number of samples; ADC events 2p and 2p+1 (p = 0, 1, ...) are the two acquisitions of spoke p and have identical in-plane k-space trajectories (within 0.05 cycles/m); sample times delay + (i+0.5) x dwell",
+  "k_space_rule": "nominal k-space positions are the time integrals of the exported gradients from the centre of the most recent RF pulse",
+  "centre_out": "the first sample of every acquisition has |k| <= 1 cycle/m, and kz = 0 within 0.05 cycles/m at every sample",
+  "coverage": "the union of the sample positions of all spokes covers the disc |k| <= 13/fov_m: every point of the disc lies within 0.6/fov_m of a sample"
+ },
+ "slice_profile_requirement": "for a single isochromat at x = y = 0 and position z with T1 = 100 s and T2 = 2 ms, starting from equilibrium and run through the first acquired spoke pair only (from the RF pulse of its first acquisition to the ADC of its second), the magnitude of the complex sum of the two first ADC samples, as a function of z from -16.5 mm to 16.5 mm (0.55 mm grid), must have a full width at half maximum between 4.4 and 7.7 mm and at most 10% of its integral at |z| > 8.25 mm",
+ "slice_profile_requirement_fwhm_range_m": [
+  0.0044,
+  0.0077
+ ],
+ "slice_profile_requirement_max_out_of_slice_fraction": 0.1,
+ "slice_profile_requirement_out_of_slice_abs_z_m": 0.00825,
+ "short_t2_requirement": "on the hidden object, for each vial with T2 <= 2 ms, the reference least-squares reconstruction of your pair-summed measurement must give an endpoint ratio multiplied by (body density / vial density) of at least 0.5, and your reconstruct.py must reproduce that vial's endpoint within 15%",
+ "phantom": {
+  "file": "inputs/phantom.npz",
+  "content": "x_m [26], y_m [26] (x_m[13] = y_m[13] = 0), z_offsets_m [61], and 26x26 [y,x] maps density, T1_s, T2_s, B0_Hz, labels",
+  "isochromat_model": "every in-plane voxel with density > 0 is a column of 61 isochromats at (x_m[ix], y_m[iy], z_offsets_m[n]) spaced 0.55 mm over -16.5 mm <= z <= 16.5 mm (out-of-slice signal is part of the object), each with density/61 and the voxel's T1 (0.3 to 1.05 s), T2 (0.65 ms to 0.09 s, the only transverse decay), B0 = 0; no sub-voxel spread in x or y; magnetization starts at thermal equilibrium; noise-free",
+  "labels": "0 outside, 1 reference body (long T2), 2.. vials, some with T2 between 0.65 and 2.6 ms"
+ },
+ "endpoint": "complex image on the 26x26 [y,x] grid of the slice-selective (pair-summed) signal; per vial, the median magnitude over the vial voxels not touching another label divided by the same quantity for label 1",
+ "image_requirement": "your reconstruction of the hidden measurement must agree with a reference least-squares reconstruction of the same pair-summed data within a normalized RMS difference of 0.25 (after a least-squares scale)",
+ "bloch_simulation": "simulate the exported sequence.seq file itself with an established Bloch simulator (KomaMRI is the reference implementation; MRzero is acceptable); do not replace it with your own Bloch or EPG code",
+ "required_outputs": [
+  "sequence.seq",
+  "waveforms.png",
+  "simulation.npz",
+  "image.npz",
+  "reconstruct.py",
+  "sequence build script(s)",
+  "simulation script(s)",
+  "report.json",
+  "environment.txt",
+  "README.md"
+ ],
+ "simulation_output_schema": {
+  "raw_signal": "complex [n_adc, n_samples], every acquisition in chronological order (two per spoke), after ADC phase demodulation, not yet summed; encoding exp(-2 pi i (kx x + ky y)); an arbitrary single global receiver phase is accepted",
+  "kxy_cycles_per_m": "float [n_adc, n_samples, 2] nominal k-space positions from the exported sequence",
+  "adc_times_s": "float [n_adc, n_samples]",
+  "pair_index": "int [n_adc] spoke index p of each acquisition (0,0,1,1,...)",
+  "fov_m": "float",
+  "matrix": "int [2]",
+  "ute_echo_time_s": "float realized (largest) UTE echo time",
+  "sequence_sha256": "SHA256 of sequence.seq",
+  "phantom_sha256": "SHA256 of the phantom file used",
+  "other_keys": "allowed; passed through unchanged to the hidden archive"
+ },
+ "reconstruct_cli": "python reconstruct.py --input simulation.npz --output image.npz. Standalone: helper code inside this one file, installed third-party imports allowed; it must work in a clean directory with only this file and the archive, using only the archive contents. It is rerun on an archive with the same keys whose raw_signal comes from another object acquired with your sequence.",
+ "image_output_schema": {
+  "image": "complex [26,26] on the [y,x] grid of the phantom (row index increases with y, column with x), no flips or shifts",
+  "input_sha256": "SHA256 of the input archive"
+ },
+ "report_output_schema": {
+  "scope": "string",
+  "bloch_simulation_performed": "boolean",
+  "simulator": "string with name and version",
+  "scanner_ready": "boolean false",
+  "n_spokes": "int",
+  "realized_ute_echo_time_ms": "float (largest over acquisitions) measured from the exported sequence",
+  "excitation_design": "string: how the half pulses and slice gradients give the required summed slice profile",
+  "readout_design": "string",
+  "steady_state_preparation": "string",
+  "signal_ratio_by_label": "object mapping each vial label to the endpoint ratio measured on your image",
+  "software": "object",
+  "validation_summary": "string or object",
+  "limitations": "nonempty list"
+ },
+ "grading_note": "The grader reads the exported sequence back, checks limits, rasters, RF, TR, the UTE echo time, pairing, centre-out sampling and coverage, measures the pair slice profile with single-isochromat replays, replays the full file in KomaMRI on the public and a hidden object, compares your simulated signal, and reruns reconstruct.py on the hidden measurement."
+}
