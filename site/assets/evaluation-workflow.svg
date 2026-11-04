@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 280" role="img" aria-labelledby="title desc">
+<title id="title">From an MRI research request to independently checked files</title>
+<desc id="desc">A task and its input data go to a coding agent. The agent produces task-specific files, which are evaluated by automated checks. This is a schematic, not a measured result.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#81908d" stroke-width="1.3"/></marker></defs>
+<g font-family="Arial,Helvetica,sans-serif" fill="#172b40">
+<g font-size="12" fill="#64716f" font-weight="700" letter-spacing="1.5"><text x="36" y="29">01 / TASK</text><text x="315" y="29">02 / AGENT</text><text x="568" y="29">03 / ARTIFACTS</text><text x="856" y="29">04 / CHECKS</text></g>
+<g fill="#fff" stroke="#c9d1ce" stroke-width="1.2"><rect x="24" y="48" width="222" height="194" rx="12"/><rect x="557" y="48" width="240" height="194" rx="12"/><rect x="845" y="48" width="231" height="194" rx="12"/></g>
+<g fill="none" stroke="#81908d" stroke-width="1.6" marker-end="url(#arrow)"><path d="M257 144H293"/><path d="M505 144H545"/><path d="M807 144H834"/></g>
+<text x="46" y="82" font-size="19" font-weight="700">Research request</text><text x="46" y="109" font-size="13" fill="#5f6c7b">Goal · constraints · input data</text>
+<g fill="#f3f6f5" stroke="#d9dfdc"><rect x="46" y="129" width="178" height="30" rx="4"/><rect x="46" y="168" width="178" height="30" rx="4"/></g>
+<g font-size="12" fill="#526460" font-family="monospace"><text x="58" y="148">task specification</text><text x="58" y="187">public input files</text></g><text x="46" y="222" font-size="12" fill="#64716f">Fresh, isolated workspace</text>
+<rect x="306" y="72" width="187" height="145" rx="16" fill="#f2f5fa" stroke="#93a9c3"/>
+<g stroke="#2467b0" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M382 111l-12 12 12 12m35-24l12 12-12 12m-11-28l-10 32"/></g>
+<text x="399" y="165" font-size="21" text-anchor="middle" font-weight="700">Coding agent</text><text x="399" y="190" font-size="13" fill="#5f6c7b" text-anchor="middle">Code + scientific tools</text>
+<text x="578" y="82" font-size="19" font-weight="700">Working files</text><text x="578" y="108" font-size="13" fill="#5f6c7b">As required by the task</text>
+<g font-family="monospace" font-size="13" fill="#34463e"><text x="603" y="144">sequence.seq</text><text x="603" y="177">maps.npz</text><text x="603" y="210">report.md</text></g>
+<g stroke="#227c78" fill="none" stroke-width="1.5"><path d="M580 132h12v16h-12zm0 33h12v16h-12zm0 33h12v16h-12z"/></g>
+<text x="866" y="82" font-size="19" font-weight="700">Verify the result</text><text x="866" y="108" font-size="13" fill="#5f6c7b">Checks chosen for each task</text>
+<g font-size="13" fill="#34463e"><text x="892" y="144">Replay / rerun</text><text x="892" y="177">Compare with truth</text><text x="892" y="210">Audit numerical claims</text></g>
+<g fill="none" stroke="#227c78" stroke-width="1.8"><path d="M867 139l5 5 9-11m-14 44l5 5 9-11m-14 44l5 5 9-11"/></g>
+</g></svg>

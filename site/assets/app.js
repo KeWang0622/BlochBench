@@ -88,42 +88,6 @@
     });
   };
 
-  /* k-space art: radial spokes, rings and a three-interleave variable-density spiral (same motif as the banner). */
-  MRAB.kspace = function (svg) {
-    var R = 172, turns = 2.35, nil = 3, pts = 360, colors = ['#22d3ee', '#38bdf8', '#2dd4bf'];
-    svg.setAttribute('viewBox', '-200 -200 400 400');
-    var g = s('g', { stroke: '#5b7ea6', 'stroke-opacity': '0.24', 'stroke-width': '1', fill: 'none' });
-    for (var i = 0; i < 16; i++) {
-      var a = Math.PI * i / 16;
-      g.appendChild(s('line', { x1: 196 * Math.cos(a), y1: 196 * Math.sin(a), x2: -196 * Math.cos(a), y2: -196 * Math.sin(a) }));
-    }
-    [58, 116, 174].forEach(function (r) { g.appendChild(s('circle', { r: r, 'stroke-opacity': '0.3' })); });
-    svg.appendChild(g);
-    function point(k, t) {
-      var r = R * t, th = 2 * Math.PI * turns * Math.pow(t, 0.72) + 2 * Math.PI * k / nil;
-      return [r * Math.cos(th), r * Math.sin(th)];
-    }
-    for (var k = 0; k < nil; k++) {
-      var d = '';
-      for (var j = 0; j <= pts; j++) {
-        var p = point(k, j / pts);
-        d += (j ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-      }
-      var path = s('path', { d: d, class: 'traj draw' + (k ? ' d' + (k + 1) : ''), stroke: colors[k], 'stroke-opacity': k ? '0.75' : '0.95' });
-      svg.appendChild(path);
-      var len = Math.ceil(path.getTotalLength ? path.getTotalLength() : 2000);
-      path.style.setProperty('--len', len);
-      path.style.strokeDasharray = len;
-    }
-    var dots = s('g', { class: 'adc', fill: '#e0fbff' });
-    for (var m = 6; m <= 72; m += 3) {
-      var q = point(0, m / 72);
-      dots.appendChild(s('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: '2.1' }));
-    }
-    svg.appendChild(dots);
-    svg.appendChild(s('circle', { r: '4', fill: '#ffffff' }));
-  };
-
   /* Copy buttons for code blocks marked data-copy. */
   function initCopy() {
     document.querySelectorAll('.code[data-copy]').forEach(function (block) {
@@ -150,9 +114,38 @@
 
   /* ---------------------------------------------------------------- overview page */
   function initHome(D) {
-    var art = document.getElementById('kspace');
-    if (art) MRAB.kspace(art);
+    var target = document.getElementById('home-study');
+    if (!target) return;
+    var evaluation = D.leaderboard.offline_evaluation;
+    target.textContent = '';
+    ['core', 'hard'].forEach(function (tier) {
+      var group = evaluation[tier], v = group.all;
+      target.appendChild(h('article', { class: 'study-result' },
+        h('p', { class: 'eyebrow', text: tier === 'core' ? 'Core / public' : 'Hard / nonpublic' }),
+        h('div', { class: 'study-counts' },
+          h('span', { class: 'baseline-value', text: v.A }), h('span', { class: 'count-arrow', text: '→' }),
+          h('span', { class: 'skills-value', text: v.S }), h('span', { class: 'count-denominator', text: '/ ' + v.n })),
+        h('p', { class: 'small', text: 'Verified trials · no skills → with MRFoundry skills' }),
+        h('p', { class: 'study-difference' }, h('strong', { text: MRAB.pp(v.diff) }),
+          ' · 95% paired CI ' + MRAB.pairedCI(v.ci)),
+        h('p', { class: 'small muted', text: tier === 'core' ? '10 models × 24 paired trials' :
+          '3 models × 30 pairs + 4 models × 11 pairs' })));
+    });
+  }
 
+  /* A deep link into a collapsed results section should reveal its contents. */
+  function revealFragment() {
+    var id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (err) { return; }
+    var target = document.getElementById(id);
+    if (!target) return;
+    var detail = target.closest('details');
+    if (!detail) return;
+    while (detail) {
+      detail.open = true;
+      detail = detail.parentElement && detail.parentElement.closest('details');
+    }
+    target.scrollIntoView({ block: 'start' });
   }
 
   function showError(err) {
@@ -167,12 +160,14 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initCopy();
+    window.addEventListener('hashchange', revealFragment);
     var page = document.body.getAttribute('data-page');
     MRAB.load().then(function (D) {
       MRAB.data = D;
       if (page === 'home') initHome(D);
       if (page === 'leaderboard' && MRAB.initLeaderboard) MRAB.initLeaderboard(D);
       if (page === 'tasks' && MRAB.initTasks) MRAB.initTasks(D);
+      revealFragment();
     }).catch(showError);
   });
 })();
