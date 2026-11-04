@@ -6,6 +6,10 @@ needs agents to be rerun is a major version.
 
 ## Unreleased
 
+- Redesign the project website around concrete public tasks, artifact verification and a dated paired study.
+  Add responsive editorial layouts, a personal-homepage link and direct access to the full domain breakdown.
+  Preserve all frozen benchmark data, result calculations and submission workflows.
+
 - Rename the public project to **MRI Agent Bench** and the canonical repository to `KeWang0622/MRIAgentBench`.
   Update documentation, citations, website branding and download links. Preserve task IDs, packages, results,
   `mragentbench` / `mrab`, submission format identifiers and historical provenance.
