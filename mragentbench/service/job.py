@@ -263,7 +263,7 @@ def run_shard(spec: dict, shard: int, scratch: Path) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="BlochBench hosted grading job")
+    ap = argparse.ArgumentParser(description="MRI Agent Bench hosted grading job")
     ap.add_argument("--spec", help="local job specification (default: MRAB_JOB_SPEC_URL)")
     ap.add_argument("--shard", type=int, default=int(os.environ.get("AWS_BATCH_JOB_ARRAY_INDEX", "0")))
     ap.add_argument("--scratch", default=os.environ.get("MRAB_SCRATCH", "/tmp/mrab-job"))

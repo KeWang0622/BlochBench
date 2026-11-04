@@ -1,4 +1,4 @@
-# BlochBench grader image.
+# MRI Agent Bench grader image.
 # Pins the environment in which the study graders ran: Python 3.12.14, Julia 1.10.12, KomaMRI 0.14.0 (KomaMRICore 0.13.0).
 # Build from the repository root:  docker build -f harness/Dockerfile.grader -t mragentbench-grader .
 #

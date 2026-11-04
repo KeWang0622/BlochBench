@@ -22,7 +22,7 @@ except ImportError:  # Direct execution: python tools/make_croissant.py.
     from make_family_metadata import build, family_dirs
 
 REPO = Path(__file__).resolve().parents[1]
-DEFAULT_BASE = "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0/"
+DEFAULT_BASE = "https://github.com/KeWang0622/MRIAgentBench/releases/download/core-v0.1.0/"
 CONTEXT = {
     "@language": "en",
     "@vocab": "https://schema.org/",
@@ -138,7 +138,7 @@ def public_instances() -> dict[str, dict]:
             lookup[legacy] = {
                 "alias": alias,
                 "task_id": family["public_id"],
-                "url": f"https://github.com/KeWang0622/BlochBench/tree/main/families/{folder.name}",
+                "url": f"https://github.com/KeWang0622/MRIAgentBench/tree/main/families/{folder.name}",
             }
     return lookup
 
@@ -208,19 +208,19 @@ def main() -> None:
         "@context": CONTEXT,
         "@type": "sc:Dataset",
         "conformsTo": "http://mlcommons.org/croissant/1.1",
-        "name": "BlochBench",
+        "name": "MRI Agent Bench",
         "version": "0.1.0",
         "description": "Benchmark for AI agents on end-to-end MRI research tasks: 24 task families in ten domains, "
         f"{len(rows)} public instances and 311 automated checks. Graders replay exported sequences in a "
         "Bloch simulator, rerun submitted code on hidden data, compare maps with ground truth and "
         "recompute statistics. Pre-release.",
-        "url": "https://github.com/KeWang0622/BlochBench",
+        "url": "https://github.com/KeWang0622/MRIAgentBench",
         "license": "https://creativecommons.org/licenses/by/4.0/",
         "creator": {"@type": "sc:Person", "name": "Ke Wang"},
         "keywords": ["MRI", "benchmark", "AI agents", "evaluation", "Bloch simulation", "medical imaging"],
-        "citeAs": "@misc{wang2026blochbench, "
-        "title={BlochBench: a benchmark for AI agents on end-to-end MRI research}, "
-        "author={Wang, Ke}, year={2026}, note={Pre-release}, url={https://github.com/KeWang0622/BlochBench}}",
+        "citeAs": "@misc{wang2026mriagentbench, "
+        "title={MRI Agent Bench: a benchmark for AI agents on end-to-end MRI research}, "
+        "author={Wang, Ke}, year={2026}, note={Pre-release}, url={https://github.com/KeWang0622/MRIAgentBench}}",
         "isLiveDataset": False,
         **({"datePublished": a.date_published} if a.date_published else {}),
         **RAI,
@@ -230,7 +230,7 @@ def main() -> None:
                 "@type": "cr:RecordSet",
                 "@id": "instances",
                 "name": "instances",
-                "description": "Public instances of BlochBench.",
+                "description": "Public instances of MRI Agent Bench.",
                 "key": {"@id": "instances/instance"},
                 "field": fields,
             }

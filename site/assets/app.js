@@ -1,4 +1,4 @@
-/* BlochBench site: shared helpers and the overview page. Plain JavaScript, no dependencies. */
+/* MRI Agent Bench site: shared helpers and the overview page. Plain JavaScript, no dependencies. */
 (function () {
   'use strict';
   var MRAB = (window.MRAB = window.MRAB || {});

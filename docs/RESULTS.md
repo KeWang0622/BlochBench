@@ -63,6 +63,6 @@ One instance per task type, 24 trials per arm. Models are listed alphabetically.
   documented in [OFFLINE-RESULTS.md](OFFLINE-RESULTS.md). The permissive check was not silently changed or regraded.
 
 [Full protocol and provenance](OFFLINE-RESULTS.md) · [Machine-readable results](../leaderboard/leaderboard.json) ·
-[Interactive tables](https://KeWang0622.github.io/BlochBench/leaderboard.html)
+[Interactive tables](https://kewang0622.github.io/MRIAgentBench/leaderboard.html)
 
 Community results follow [SUBMITTING.md](SUBMITTING.md) and do not overwrite this frozen snapshot.

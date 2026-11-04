@@ -1,5 +1,5 @@
 {
- "benchmark": "BlochBench",
+ "benchmark": "MRI Agent Bench",
  "board": "preview",
  "protocol": "offline",
  "version": "0.1.0.dev0",

@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping improve BlochBench.
+Thank you for helping improve MRI Agent Bench.
 
 - **Report a task problem** (unclear instructions, a grader that rejects a correct answer or accepts a wrong one): open
   an issue with the Task problem template. Include the instance name and, if possible, the workspace that was graded

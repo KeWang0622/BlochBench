@@ -1,4 +1,4 @@
-"""mrab: command-line tool for BlochBench (standard library only).
+"""mrab: command-line tool for MRI Agent Bench (standard library only).
 
   mrab list                                   families, domains, caps, instances
   mrab fetch INSTANCE [--url BASE | --from-dir DIR]   get an instance package into the data directory
@@ -231,7 +231,7 @@ def cmd_compare(args: argparse.Namespace) -> None:
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="mrab",
-        description="BlochBench command-line tool",
+        description="MRI Agent Bench command-line tool",
         epilog="Environment: MRAB_DATA, MRAB_RUNS, MRAB_WORK, MRAB_DATA_URL, MRAB_API_URL, MRAB_TOKEN.",
     )
     sp = ap.add_subparsers(dest="cmd", required=True)

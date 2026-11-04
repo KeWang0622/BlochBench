@@ -5,7 +5,7 @@ The supported image is built by [`Dockerfile.grader`](Dockerfile.grader), with P
 [`grader-env/julia_env/`](grader-env/julia_env/).
 
 ```bash
-docker build --platform linux/amd64 -f harness/Dockerfile.grader -t blochbench-grader:0.1.0 .
+docker build --platform linux/amd64 -f harness/Dockerfile.grader -t mriagentbench-grader:0.1.0 .
 ```
 
 The runner supports Codex CLI, Claude Code and a generic command adapter. See [Getting started](../docs/GETTING-STARTED.md)

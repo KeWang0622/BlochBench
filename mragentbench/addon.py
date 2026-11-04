@@ -1,4 +1,4 @@
-"""Add-on packages: a skill library that BlochBench measures by pairing runs with and without it.
+"""Add-on packages: a skill library that MRI Agent Bench measures by pairing runs with and without it.
 
 Layout of an add-on package (docs/EVALUATE-YOUR-SKILLS.md):
 
@@ -42,9 +42,9 @@ SKILL_FIELDS = ("name", "description", "license", "compatibility", "metadata", "
 
 ADDON_SCHEMA: dict[str, Any] = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/KeWang0622/BlochBench/blob/main/schemas/addon.schema.json",
-    "title": "BlochBench add-on manifest (addon.json)",
-    "description": "Describes a skill library evaluated on BlochBench by paired runs with and without it. "
+    "$id": "https://github.com/KeWang0622/MRIAgentBench/blob/main/schemas/addon.schema.json",
+    "title": "MRI Agent Bench add-on manifest (addon.json)",
+    "description": "Describes a skill library evaluated on MRI Agent Bench by paired runs with and without it. "
     "Generated from mragentbench/addon.py (mrab addon schema).",
     "type": "object",
     "required": ["name", "version", "description", "homepage", "license", "authors", "hosts", "exposure"],
@@ -84,7 +84,7 @@ ADDON_SCHEMA: dict[str, Any] = {
             "items": {"enum": list(HOSTS)},
         },
         "exposure": {
-            "description": "Whether the add-on's authors saw public BlochBench instances while building it.",
+            "description": "Whether the add-on's authors saw public MRI Agent Bench instances while building it.",
             "type": "object",
             "required": ["public_instances_seen", "details"],
             "additionalProperties": False,

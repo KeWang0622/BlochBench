@@ -11,7 +11,7 @@ from pathlib import Path
 
 from .common import MrabError, sha256_file
 
-DEFAULT_DATA_URL = "https://github.com/KeWang0622/BlochBench/releases/download/core-v0.1.0"
+DEFAULT_DATA_URL = "https://github.com/KeWang0622/MRIAgentBench/releases/download/core-v0.1.0"
 
 
 def data_dir() -> Path:

@@ -1,6 +1,6 @@
 # Minimal add-on
 
-The smallest valid BlochBench add-on: a manifest (addon.json), one skill in the Agent Skills format and an optional
+The smallest valid MRI Agent Bench add-on: a manifest (addon.json), one skill in the Agent Skills format and an optional
 AGENTS.md pointer. This README is not part of the installed add-on.
 
     mrab addon validate examples/addons/minimal

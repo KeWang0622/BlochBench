@@ -1,4 +1,4 @@
-"""AWS Lambda handler for the BlochBench hosted grading API (HTTP API v2 payloads and AWS Batch events).
+"""AWS Lambda handler for the MRI Agent Bench hosted grading API (HTTP API v2 payloads and AWS Batch events).
 
 Routes
   GET  /v1/health                        service status (no authentication)

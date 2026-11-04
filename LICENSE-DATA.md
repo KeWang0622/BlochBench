@@ -1,6 +1,6 @@
 # Data and documentation licence
 
-Task data, task descriptions, documentation and figures in this repository and in the BlochBench instance packages
+Task data, task descriptions, documentation and figures in this repository and in the MRI Agent Bench instance packages
 are licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0):
 https://creativecommons.org/licenses/by/4.0/legalcode
 

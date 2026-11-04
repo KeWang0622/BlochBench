@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    if: github.repository == 'KeWang0622/BlochBench'
+    if: github.repository == 'KeWang0622/MRIAgentBench'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
