@@ -1,4 +1,4 @@
-# BlochBench expert review protocol (v1.0 Core families)
+# MRI Agent Bench expert review protocol (v1.0 Core families)
 
 ## Assignment
 

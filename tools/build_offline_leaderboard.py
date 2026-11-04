@@ -342,7 +342,7 @@ def build(snapshot: dict) -> dict:
             )
     entries.sort(key=lambda entry: (-entry["rate"], entry["model"], entry["id"]))
     return {
-        "benchmark": "BlochBench",
+        "benchmark": "MRI Agent Bench",
         "board": "preview",
         "protocol": "offline",
         "version": "0.1.0.dev0",

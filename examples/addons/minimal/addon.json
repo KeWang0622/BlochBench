@@ -2,13 +2,13 @@
   "$schema": "../../../schemas/addon.schema.json",
   "name": "minimal-example",
   "version": "1.0.0",
-  "description": "A one-skill add-on that shows the BlochBench add-on package format.",
-  "homepage": "https://github.com/KeWang0622/BlochBench/tree/main/examples/addons/minimal",
+  "description": "A one-skill add-on that shows the MRI Agent Bench add-on package format.",
+  "homepage": "https://github.com/KeWang0622/MRIAgentBench/tree/main/examples/addons/minimal",
   "license": "Apache-2.0",
-  "authors": ["BlochBench maintainers"],
+  "authors": ["MRI Agent Bench maintainers"],
   "hosts": ["codex", "claude"],
   "exposure": {
     "public_instances_seen": false,
-    "details": "Generic advice on checking deliverables; written without opening any BlochBench instance."
+    "details": "Generic advice on checking deliverables; written without opening any MRI Agent Bench instance."
   }
 }

@@ -28,7 +28,7 @@ REPO = Path(__file__).resolve().parents[1]
 SITE = REPO / "site"
 DATA = SITE / "data"
 README = REPO / "README.md"
-GITHUB = "https://github.com/KeWang0622/BlochBench"
+GITHUB = "https://github.com/KeWang0622/MRIAgentBench"
 BRANCH = "main"
 MRFOUNDRY = "https://github.com/KeWang0622/MRFoundry"
 

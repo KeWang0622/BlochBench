@@ -5,7 +5,7 @@ description: >-
   final report claims. Use before finishing any task that names output files.
 license: Apache-2.0
 metadata:
-  author: BlochBench maintainers
+  author: MRI Agent Bench maintainers
   version: "1.0.0"
 ---
 

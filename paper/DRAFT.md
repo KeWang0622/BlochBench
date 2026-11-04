@@ -1,11 +1,11 @@
-# BlochBench: Executable MRI Research Tasks for AI Agents
+# MRI Agent Bench: Executable MRI Research Tasks for AI Agents
 
 Research preview summary · 3 November 2026. This repository does not yet contain a finalized standalone benchmark paper.
 The completed comparison and its limitations are available in [the results guide](../docs/RESULTS.md).
 
 ## Benchmark
 
-BlochBench asks agents to turn MRI research requests and supplied data into executable deliverables. Its public Core
+MRI Agent Bench asks agents to turn MRI research requests and supplied data into executable deliverables. Its public Core
 suite contains 24 task types and 88 instances across ten domains: sequence design, spectroscopy, functional MRI,
 relaxometry and susceptibility mapping, perfusion and CEST, diffusion, reconstruction, hardware and safety, study
 statistics, and scientific writing. Each type specifies inputs, required outputs, automated checks, a generator,

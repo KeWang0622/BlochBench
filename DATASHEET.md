@@ -1,15 +1,15 @@
-# BlochBench datasheet
+# MRI Agent Bench datasheet
 
 Version 0.1.0 · research preview · 3 November 2026
 
 ## Purpose and authorship
 
-BlochBench evaluates executable MRI research work: an agent receives a task and input files, then produces artifacts
+MRI Agent Bench evaluates executable MRI research work: an agent receives a task and input files, then produces artifacts
 checked by numerical tests, simulation, code reruns and structured claim checks. It also supports paired evaluations
 of agent add-ons. Maintainer: [Ke Wang](https://github.com/KeWang0622).
 
 Task construction used AI author agents, with maintainer integration and automated reference/control validation.
-Independent MRI expert review is **pending for all 24 Core families**. BlochBench and MRFoundry share an author;
+Independent MRI expert review is **pending for all 24 Core families**. MRI Agent Bench and MRFoundry share an author;
 current results are maintainer-run. Funding and institutional sponsorship are not specified in this release.
 
 ## Contents
@@ -50,7 +50,7 @@ No outcomes were changed for this release.
 ## Distribution and use
 
 Code and Core task specifications are in the public GitHub repository. Frozen packages are in the
-[Core data release](https://github.com/KeWang0622/BlochBench/releases/tag/core-v0.1.0), with SHA-256 hashes in the catalog.
+[Core data release](https://github.com/KeWang0622/MRIAgentBench/releases/tag/core-v0.1.0), with SHA-256 hashes in the catalog.
 The original private development history and Hard material are not part of the public snapshot.
 A DOI and long-term institutional archive have not been assigned.
 
@@ -61,7 +61,7 @@ integrity. Intended use is research evaluation, not clinical decision-making.
 
 ## Maintenance
 
-Report task errors through [GitHub issues](https://github.com/KeWang0622/BlochBench/issues/new/choose).
+Report task errors through [GitHub issues](https://github.com/KeWang0622/MRIAgentBench/issues/new/choose).
 Report exploitable grader or software vulnerabilities through [private vulnerability reporting](SECURITY.md).
 Changes follow [CHANGELOG.md](CHANGELOG.md): presentation fixes preserve scores; scoring changes declare whether
 stored artifacts need regrading or agents need rerunning. Frozen release assets and hashes identify older versions.

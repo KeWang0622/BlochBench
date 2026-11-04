@@ -73,7 +73,7 @@ and content hash; see [paired evaluation](EVALUATE-YOUR-SKILLS.md).
 
 ## 3. Share the report
 
-Open a [Results submission issue](https://github.com/KeWang0622/BlochBench/issues/new?template=results.yml). Include
+Open a [Results submission issue](https://github.com/KeWang0622/MRIAgentBench/issues/new?template=results.yml). Include
 `metadata.json`, the validation output, a public download link to the archive, and its SHA-256. A GitHub Release asset
 or other stable public file host works. Avoid committing large traces to this repository.
 
@@ -81,3 +81,6 @@ A pull request may instead add a small `leaderboard/submissions/<date>-<name>/RE
 hash, metadata and validation output. Maintainers review provenance and consistency before listing a community result.
 Submission artifacts are never executed in pull-request CI. Independent regrading, if arranged separately, must use
 an isolated environment. An accepted public report remains labelled self-reported.
+
+The current submission format remains `blochbench-results/1` after the rename to MRI Agent Bench;
+`blochbench-validation/1` remains the validator report format. Existing bundles require no conversion.

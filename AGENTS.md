@@ -4,7 +4,7 @@ Instructions for coding agents, and for people, who work on this repository: the
 hosted grading service, the website and the docs.
 
 > [!IMPORTANT]
-> This file is for developing BlochBench, not for solving its tasks. An agent under evaluation must never work inside
+> This file is for developing MRI Agent Bench, not for solving its tasks. An agent under evaluation must never work inside
 > a clone of this repository, where it would read this file and could reach families/. mrab enforces that: run,
 > prepare and pair refuse a data folder, runs folder, staging folder or workspace inside any Git repository, and the
 > defaults (~/mragentbench/data, ~/mragentbench/runs, the system temporary folder) lie outside the clone. Other

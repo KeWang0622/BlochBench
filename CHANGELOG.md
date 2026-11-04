@@ -1,10 +1,14 @@
 # Changelog
 
-All notable changes to BlochBench. Task changes follow this versioning rule: a change that cannot
+All notable changes to MRI Agent Bench. Task changes follow this versioning rule: a change that cannot
 alter any score is a patch, a change that needs stored artifacts to be regraded is a minor version, and a change that
 needs agents to be rerun is a major version.
 
 ## Unreleased
+
+- Rename the public project to **MRI Agent Bench** and the canonical repository to `KeWang0622/MRIAgentBench`.
+  Update documentation, citations, website branding and download links. Preserve task IDs, packages, results,
+  `mragentbench` / `mrab`, submission format identifiers and historical provenance.
 
 - Give every Core task a stable domain code (for example `PERF-01`) and an explicit variant ID (`PERF-01-04`).
   Rename family folders to descriptive paths; show the codes in the task guide, website and CLI.

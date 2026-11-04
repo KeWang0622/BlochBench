@@ -5,8 +5,8 @@
 Use Python 3.12 for the grader. The `mrab` CLI supports Python 3.10–3.13 and has no runtime dependencies.
 
 ```bash
-git clone https://github.com/KeWang0622/BlochBench.git
-cd BlochBench
+git clone https://github.com/KeWang0622/MRIAgentBench.git
+cd MRIAgentBench
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e .
@@ -20,7 +20,7 @@ environment targets Linux x86-64 and is defined by [`harness/Dockerfile.grader`]
 not need sequence simulation. Build the full environment with:
 
 ```bash
-docker build --platform linux/amd64 -f harness/Dockerfile.grader -t blochbench-grader:0.1.0 .
+docker build --platform linux/amd64 -f harness/Dockerfile.grader -t mriagentbench-grader:0.1.0 .
 ```
 
 ## 2. Fetch and inspect one task
@@ -35,7 +35,7 @@ cat ~/mragentbench/work/first-task/TASK.txt
 `PERF-01` is pCASL blood-flow mapping; `-04` selects its fourth data variant. `mrab list` shows public codes.
 The runner resolves them to frozen IDs in downloaded directories and run records. [Numbering guide](TASK-IDS.md).
 
-Downloads use the [Core data release](https://github.com/KeWang0622/BlochBench/releases/tag/core-v0.1.0).
+Downloads use the [Core data release](https://github.com/KeWang0622/MRIAgentBench/releases/tag/core-v0.1.0).
 The manifest and every packaged file are checked by `mrab verify`. See [DATA.md](DATA.md) for overrides and formats.
 `prepare` creates a workspace for inspection or a custom runner; `run` creates its own fresh workspace.
 

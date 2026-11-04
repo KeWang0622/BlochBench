@@ -168,7 +168,7 @@
    ],
    "negative_controls": 7,
    "summary": "I would like a simulated T1-mapping experiment on a numerical test object: an inversion-recovery acquisition with a radial-spoke readout.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-01-inversion-recovery"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-01-inversion-recovery"
   },
   {
    "id": "v8-epinav",
@@ -210,7 +210,7 @@
    ],
    "negative_controls": 7,
    "summary": "Design a single-shot gradient-echo echo-planar imaging acquisition, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator, and reconstruct the image from the simulated measurements.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-02-gradient-echo-epi"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-02-gradient-echo-epi"
   },
   {
    "id": "v8-mprage",
@@ -254,7 +254,7 @@
    ],
    "negative_controls": 6,
    "summary": "Design a three-dimensional MP-RAGE acquisition whose inversion time nulls tissue with a T1 of 0.78 s, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator, and reconstruct the 3D image from the simulated measurements.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-03-mprage"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-03-mprage"
   },
   {
    "id": "v8-sedwi",
@@ -298,7 +298,7 @@
    ],
    "negative_controls": 6,
    "summary": "Design a single-shot spin-echo echo-planar diffusion acquisition with one b = 0 volume and three diffusion-weighted volumes, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator using the diffusion model stated in task.json, and fit an apparent-diffusion-coefficient map.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-04-diffusion-spin-echo"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-04-diffusion-spin-echo"
   },
   {
    "id": "v8-spiral",
@@ -339,7 +339,7 @@
    ],
    "negative_controls": 6,
    "summary": "Design an interleaved spiral-out gradient-echo acquisition under the stated gradient and slew limits, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator, and reconstruct the image from the simulated non-Cartesian measurements.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-05-spiral"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-05-spiral"
   },
   {
    "id": "v8-tse",
@@ -384,7 +384,7 @@
    ],
    "negative_controls": 10,
    "summary": "Design a two-dimensional multi-shot turbo spin-echo acquisition, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator, and reconstruct the image from the simulated measurements.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-06-turbo-spin-echo"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-06-turbo-spin-echo"
   },
   {
    "id": "v8-ute",
@@ -426,7 +426,7 @@
    ],
    "negative_controls": 6,
    "summary": "Design a two-dimensional ultrashort-echo-time acquisition with half-pulse slice excitation and centre-out radial readouts, export it as a Pulseq file, simulate that exported file on the supplied numerical object with an established Bloch simulator, and reconstruct the image of the selected slice, including tissue with sub-millisecond T2.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/seq-07-ultrashort-echo"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/seq-07-ultrashort-echo"
   },
   {
    "id": "v7-mrsquant",
@@ -466,7 +466,7 @@
    ],
    "negative_controls": 6,
    "summary": "Quantify brain metabolites from the single-voxel MR spectroscopy dataset described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/mrs-01-metabolite-quantification"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/mrs-01-metabolite-quantification"
   },
   {
    "id": "v7-fmriglm",
@@ -512,7 +512,7 @@
    ],
    "negative_controls": 6,
    "summary": "Analyse the rapid event-related functional MRI run described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/fmri-01-event-related-glm"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/fmri-01-event-related-glm"
   },
   {
    "id": "v4-t2epg",
@@ -560,7 +560,7 @@
    ],
    "negative_controls": 6,
    "summary": "Please produce T2 maps from a CPMG multi-echo spin-echo scan whose refocusing pulses are imperfect, and treat the problem the way a quantitative-MRI researcher would.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/relax-01-t2-b1-mapping"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/relax-01-t2-b1-mapping"
   },
   {
    "id": "v4-qsm",
@@ -601,7 +601,7 @@
    ],
    "negative_controls": 6,
    "summary": "We have a 3D multi-echo gradient-echo head scan and need quantitative susceptibility maps, with the susceptibility of the deep grey-matter nuclei expressed relative to ventricular CSF.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/relax-02-susceptibility-mapping"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/relax-02-susceptibility-mapping"
   },
   {
    "id": "v7-pcasl",
@@ -644,7 +644,7 @@
    ],
    "negative_controls": 7,
    "summary": "Quantify cerebral blood flow from the pseudo-continuous arterial spin labelling (pCASL) dataset described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/perf-01-pcasl"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/perf-01-pcasl"
   },
   {
    "id": "v7-cestapt",
@@ -690,7 +690,7 @@
    ],
    "negative_controls": 6,
    "summary": "Produce an amide proton transfer (APT) weighted CEST map from the single-slice dataset described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/perf-02-cest-apt"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/perf-02-cest-apt"
   },
   {
    "id": "v5-dwigroup",
@@ -735,7 +735,7 @@
    ],
    "negative_controls": 9,
    "summary": "Please build a processing pipeline for a small two-group diffusion MRI study that goes from the scanner export to regional tensor metrics and a group comparison.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/diff-01-group-comparison"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/diff-01-group-comparison"
   },
   {
    "id": "v7-epidti",
@@ -787,7 +787,7 @@
    ],
    "negative_controls": 7,
    "summary": "Produce diffusion tensor maps from the raw echo-planar diffusion dataset described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/diff-02-epi-tensor-mapping"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/diff-02-epi-tensor-mapping"
   },
   {
    "id": "v7-dixonraw",
@@ -830,7 +830,7 @@
    ],
    "negative_controls": 7,
    "summary": "Reconstruct quantitative fat-fraction and R2* maps from the raw multi-echo gradient-echo dataset described in task.json.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/recon-01-fat-fraction"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/recon-01-fat-fraction"
   },
   {
    "id": "v5-learnrecon",
@@ -875,7 +875,7 @@
    ],
    "negative_controls": 7,
    "summary": "We need to decide whether a small learned reconstruction is worth adopting for accelerated multi-echo gradient-echo scans, and what matters to us is the quantitative output, R2* and the field offset (B0) in tissue regions, rather than how the images look. task.json describes the training and test data, the k-space and sampling conventions, the signal model, the exact downstream R2*/B0 region analysis, the comparison protocol and the file schemas.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/recon-02-learned-reconstruction"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/recon-02-learned-reconstruction"
   },
   {
    "id": "v5-safecpmg",
@@ -922,7 +922,7 @@
    ],
    "negative_controls": 10,
    "summary": "We need T2 values from a multi-echo spin-echo (CPMG) train that stays within our scanner's RF and gradient safety limits, and because the refocusing pulses will be imperfect we also need each sample's transmit-field (B1) scale.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/hw-01-cpmg-limits"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/hw-01-cpmg-limits"
   },
   {
    "id": "v5-spiralb0",
@@ -964,7 +964,7 @@
    ],
    "negative_controls": 9,
    "summary": "I would like an off-resonance-corrected spiral imaging experiment on a numerical test object, run entirely in simulation.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/hw-02-spiral-off-resonance"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/hw-02-spiral-off-resonance"
   },
   {
    "id": "v5-t2study",
@@ -1005,7 +1005,7 @@
    ],
    "negative_controls": 10,
    "summary": "Attached are the raw data of a small scan-rescan study comparing T2 in a target region between patients and controls.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/stats-01-scan-rescan-t2"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/stats-01-scan-rescan-t2"
   },
   {
    "id": "v6-pilotdesign",
@@ -1051,7 +1051,7 @@
    ],
    "negative_controls": 11,
    "summary": "We plan two studies with knee cartilage T2 as the outcome and have collected pilot data on our own scanner (the pilot data are synthetic; task.json and the CSV files in public/inputs describe them).",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/stats-02-pilot-study-design"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/stats-02-pilot-study-design"
   },
   {
    "id": "v6-gapproposal",
@@ -1100,7 +1100,7 @@
    ],
    "negative_controls": 17,
    "summary": "Our cardiac MRI group needs to choose its next study. I would like a well-founded research gap and a study proposal built strictly on the supplied corpus of 35 study records on myocardial inflammation (synthetic; see task.json and public/inputs).",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/write-01-research-proposal"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/write-01-research-proposal"
   },
   {
    "id": "v6-honestresults",
@@ -1148,7 +1148,7 @@
    ],
    "negative_controls": 15,
    "summary": "Please write up the results of our trial of an oral remyelinating study drug in relapsing multiple sclerosis (REMYEL-52, synthetic data) accurately and without overstating anything. task.json and public/inputs (results.json, results_tables.md and refs.bib) contain the study description, the individual result entries and the reporting rules.",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/write-02-trial-reporting"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/write-02-trial-reporting"
   },
   {
    "id": "v6-methodreview",
@@ -1188,7 +1188,7 @@
    ],
    "negative_controls": 9,
    "summary": "A neurology imaging journal has asked for a methods-and-statistics review of the attached manuscript on deep-learning reconstruction of undersampled FLAIR* for assessing the central vein sign in suspected multiple sclerosis (the manuscript is synthetic; see public/inputs and task.json).",
-   "url": "https://github.com/KeWang0622/BlochBench/tree/main/families/write-03-manuscript-review"
+   "url": "https://github.com/KeWang0622/MRIAgentBench/tree/main/families/write-03-manuscript-review"
   }
  ]
 }

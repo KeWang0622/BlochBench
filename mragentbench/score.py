@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""BlochBench scoring (standard library only); kept for compatibility, the code lives in mragentbench.scoring.
+"""MRI Agent Bench scoring (standard library only); kept for compatibility, the code lives in mragentbench.scoring.
 
 python3 score.py runs.csv            -> completion, pass^k, cost per verified result, by domain and config
 python3 score.py --paired pairs.csv  -> completion with and without the add-on, discordant pairs, exact McNemar P

@@ -1,6 +1,6 @@
 # infra
 
-CloudFormation templates and the deployment script for the hosted parts of BlochBench.
+CloudFormation templates and the deployment script for the hosted parts of MRI Agent Bench.
 
 | File | Contents |
 |---|---|
@@ -9,3 +9,6 @@ CloudFormation templates and the deployment script for the hosted parts of Bloch
 | deploy.py | deploy either stack, create submitter tokens, print outputs (AWS CLI only) |
 
 Architecture, security model and cost: docs/INFRASTRUCTURE.md. API: docs/API.md.
+
+The repository rename to MRI Agent Bench does not rename deployed infrastructure. Existing `BlochBench`
+project tags and stack defaults are retained for compatibility; this branding change performs no cloud deployment.

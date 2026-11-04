@@ -1,4 +1,4 @@
-/* BlochBench results: paired counts, alphabetical models, explicit coverage. */
+/* MRI Agent Bench results: paired counts, alphabetical models, explicit coverage. */
 (function () {
   'use strict';
   var MRAB = window.MRAB, h = MRAB.h;

@@ -1,4 +1,4 @@
-# BlochBench review form
+# MRI Agent Bench review form
 
 Family: ____________________   Reviewer: ____________________   Date: __________   Time spent: ______ min
 

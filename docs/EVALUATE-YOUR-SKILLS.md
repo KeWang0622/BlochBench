@@ -1,6 +1,6 @@
-# Evaluate your skills with BlochBench
+# Evaluate your skills with MRI Agent Bench
 
-BlochBench can measure what a skill library adds to a coding agent. The same model runs the same instance twice,
+MRI Agent Bench can measure what a skill library adds to a coding agent. The same model runs the same instance twice,
 started at the same moment: once in a workspace that holds your skills, once in a workspace that does not, each arm
 sealed off from the other. Repeated over instances and runs, the paired outcomes show whether the skills help, with an
 exact test at the instance level.
@@ -24,7 +24,7 @@ rules, the package format, the commands and what to report.
    seeing its result. Stopping `mrab pair` (Ctrl-C, SIGTERM, a terminal hangup) kills both agents and records both runs
    as interrupted failures; `mrab compare` refuses a runs folder with started runs that have no run record unless you
    pass `--allow-incomplete`, which counts them as failures.
-4. **Declare exposure.** addon.json states whether the add-on's authors saw BlochBench tasks while building it (see
+4. **Declare exposure.** addon.json states whether the add-on's authors saw MRI Agent Bench tasks while building it (see
    [Exposure](#exposure)). The statement is required, travels with every run record and is printed by `mrab compare`.
 5. **Results on the public split are self-reported.** Public instances, their generators, graders and reference
    solutions are distributed with the benchmark, so nothing prevents an add-on from being fitted to them. Report such
@@ -76,7 +76,7 @@ is limited to 25 MB and 2,000 files.
 ### Exposure
 
 `public_instances_seen` is `false` only if no author, and no agent an author used while building the add-on, opened any
-BlochBench instance (prompt, public inputs, private files), any family folder in this repository (README.md,
+MRI Agent Bench instance (prompt, public inputs, private files), any family folder in this repository (README.md,
 task.example.json, code/), or any trace or result of a run on them. Use `"partial"` when some were seen and `true` when
 the add-on was developed on the benchmark; in both cases `details` must name the families or instances seen.
 

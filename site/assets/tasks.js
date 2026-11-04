@@ -1,4 +1,4 @@
-/* BlochBench tasks page: family cards grouped by domain, with domain filter and search. */
+/* MRI Agent Bench tasks page: family cards grouped by domain, with domain filter and search. */
 (function () {
   'use strict';
   var MRAB = window.MRAB;

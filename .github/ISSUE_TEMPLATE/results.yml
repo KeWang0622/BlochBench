@@ -4,7 +4,7 @@ title: "Results: "
 body:
   - type: markdown
     attributes:
-      value: "Follow [the submission guide](https://github.com/KeWang0622/BlochBench/blob/main/docs/SUBMITTING.md). Submit public Core material only. Results are self-reported; do not paste credentials or private traces."
+      value: "Follow [the submission guide](https://github.com/KeWang0622/MRIAgentBench/blob/main/docs/SUBMITTING.md). Submit public Core material only. Results are self-reported; do not paste credentials or private traces."
   - type: dropdown
     id: track
     attributes:
