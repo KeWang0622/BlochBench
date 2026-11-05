@@ -6,6 +6,11 @@ needs agents to be rerun is a major version.
 
 ## Unreleased
 
+- Strengthen the prospective evaluation and expert-review protocols: blinded pass/fail audits, reviewer independence,
+  grader error definitions, task coverage and holdout requirements, precision-based repetition planning, and versioned
+  corrections. Keep completed human validation and new experiments explicitly outstanding; preserve frozen task files
+  and study results.
+
 - Use the approved MRFoundry MRI mascot in the site navigation, favicons, social preview and README banner.
   Keep benchmark content, task packages and frozen results unchanged.
 
