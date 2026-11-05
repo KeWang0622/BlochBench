@@ -2,6 +2,10 @@
 
 Family: ____________________   Reviewer: ____________________   Date: __________   Time spent: ______ min
 
+Reviewed commit / grader hash: ____________________
+Domain expertise and involvement in task, grader or evaluated-system development: ____________________
+Independent of these contributions? [ ] yes [ ] no   Unblinding or conflicts: ____________________
+
 1. Scientific correctness of the task, specification and reference solution
    [ ] correct   [ ] minor issues   [ ] major issues
    Issues:
@@ -22,9 +26,20 @@ Family: ____________________   Reviewer: ____________________   Date: __________
 
 5. Time a competent MRI researcher would need with the same tools: ______ h   Is the cap reasonable? [ ] yes [ ] no
 
-6. Are the observed agent failures (packet section 6) genuine errors?   [ ] yes   [ ] some are grader artifacts (list)
+6. Blinded audit of both passing and failing submissions (complete judgments before revealing automated decisions)
 
-7. If the family is marked saturated: one realistic change that would make it harder
+   | Submission code | Scientific validity: valid / invalid / uncertain | Reproducible: yes / no / untested | Evidence adequate? | Reason |
+   |---|---|---|---|---|
+   | | | | | |
+
+   After unblinding: automated verdict, agreement/disagreement, suspected false accept/reject, second review and
+   adjudicated outcome for each submission. Retain unresolved cases. Record sample selection, counts and exclusions;
+   separate sampled agent submissions from designed controls.
+
+   Independent reference/alternative reproduction performed: ______   Environment / evidence: ______
+
+7. Future coverage: missing capability, research motivation, synthetic/acquired-data scope, and any useful extension.
+   These suggestions apply to future releases, not retrospective changes to the evaluated task set.
 
 8. Verdict   [ ] accept   [ ] accept with changes (list)   [ ] reject (reason)
 
