@@ -51,9 +51,12 @@ Report tokens and elapsed time with missing resource observations disclosed; pro
 
 For add-ons, pair the same model, settings, task instance, run number, tools and time cap, with the add-on in one arm only.
 Each arm needs independent isolation. Freeze the add-on contents and report its hash and exposure declaration.
-`mrab compare` checks recorded pairing and configuration consistency; its primary test is an instance-level sign-flip
-comparison with a cluster-bootstrap interval. Its run-level McNemar statistic is secondary. These community comparison
-statistics differ from the two-way study bootstrap above. See [EVALUATE-YOUR-SKILLS.md](EVALUATE-YOUR-SKILLS.md).
+`mrab compare` checks recorded pairing and configuration consistency. Declare the independent unit before evaluation:
+the default uses instances; `--cluster family` keeps related variants together for both the bootstrap interval and
+exact tests. Both modes estimate the equal-instance mean difference after averaging repeats within instances.
+Analyze each model separately. Run-level McNemar tests and per-arm Wilson intervals assume independent runs and are
+secondary; they do not account for dependence among repeats or variants. These community comparison statistics differ
+from the two-way study bootstrap above. See [EVALUATE-YOUR-SKILLS.md](EVALUATE-YOUR-SKILLS.md).
 
 ## Future hidden evaluation
 

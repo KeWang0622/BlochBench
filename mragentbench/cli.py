@@ -119,9 +119,11 @@ def cmd_collect(args: argparse.Namespace) -> None:
 def cmd_score(args: argparse.Namespace) -> None:
     if not (args.csv or args.paired):
         raise MrabError("give a runs CSV (mrab collect) or --paired PAIRS.csv")
+    if args.cluster == "family" and not args.paired:
+        raise MrabError("--cluster family requires --paired PAIRS.csv")
     if args.paired:
         with open(args.paired) as f:
-            scoring.paired(list(csv.DictReader(f)))
+            scoring.paired(list(csv.DictReader(f)), cluster=args.cluster)
     else:
         with open(args.csv) as f:
             scoring.single(list(csv.DictReader(f)))
@@ -290,6 +292,12 @@ def build_parser() -> argparse.ArgumentParser:
     p = sp.add_parser("score", help="verified completion, pass^k and cost; --paired for add-on pairs")
     p.add_argument("csv", nargs="?")
     p.add_argument("--paired")
+    p.add_argument(
+        "--cluster",
+        choices=["instance", "family"],
+        default="instance",
+        help="independent unit for paired bootstrap and exact tests (default: instance)",
+    )
     p.set_defaults(f=cmd_score)
 
     p = sp.add_parser("addon", help="validate an add-on package and print its content hash")
@@ -348,7 +356,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--cluster",
         choices=["instance", "family"],
         default="instance",
-        help="clusters resampled by the bootstrap interval (default: instance)",
+        help="independent unit for bootstrap and exact tests (default: instance)",
     )
     p.add_argument("--allow-incomplete", action="store_true", help="count started runs without run.json as failures")
     p.add_argument(
