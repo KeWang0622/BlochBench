@@ -6,6 +6,12 @@ needs agents to be rerun is a major version.
 
 ## Unreleased
 
+- Make `mrab compare --cluster family` keep variants together for exact sign-flip and sign tests as well as the
+  bootstrap interval, preserving the equal-instance estimate. Add matching `mrab score --paired --cluster family`
+  support and explicit cluster counts. Reject mixed-model analyses and contradictory family assignments.
+  Family-mode P values can change; default instance statistics, completion scores, frozen tasks and the published
+  offline study are unchanged. Document inference assumptions and the limits of run-level intervals.
+
 - Use the approved MRFoundry MRI mascot in the site navigation, favicons, social preview and README banner.
   Keep benchmark content, task packages and frozen results unchanged.
 

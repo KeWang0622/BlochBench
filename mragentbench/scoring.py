@@ -6,9 +6,10 @@ Paired add-on results (one row per pair, as written by mrab compare --csv):
     family, instance, run, domain, model, base_passed, addon_passed, base_tokens, addon_tokens
 
 Repeated runs of one instance are not independent, so the primary paired analysis is at the instance level: each
-instance contributes the difference between its add-on and base verified rates over its runs, tested with an exact
-sign-flip permutation test (the exact sign test is reported too), with a 95% cluster-bootstrap interval that resamples
-instances (or families). The run-level exact McNemar test, which treats every run as an independent pair, is kept as a
+instance contributes the difference between its add-on and base verified rates over its runs. The selected independent
+unit (instance or family) is used for both the exact sign-flip and sign tests and the 95% cluster-bootstrap interval.
+Family sign flips keep all variants together while preserving equal-instance weighting. The run-level exact McNemar
+test, which treats every run as an independent pair, is kept as a
 labelled secondary statistic and is the only one available for older CSV files without an instance column.
 """
 
@@ -18,7 +19,10 @@ import collections
 import math
 import random
 from collections.abc import Iterable, Mapping
+from fractions import Fraction
 from functools import reduce
+
+from .common import MrabError
 
 BOOTSTRAP_RESAMPLES = 10_000
 BOOTSTRAP_SEED = 0
@@ -105,11 +109,11 @@ def paired_stats(rows: list[Mapping[str, object]]) -> dict:
 
 
 def sign_flip_p(differences: list[tuple[int, int, int]]) -> float:
-    """Exact two-sided sign-flip permutation P for per-instance differences given as (addon_passed, base_passed, runs).
+    """Exact two-sided sign-flip P for rational contributions given as (positive, negative, denominator).
 
-    The statistic is the sum over instances of the difference in verified rate. Under the null hypothesis each
-    instance's difference is as likely to have either sign; the exact distribution over all 2^m sign flips of the m
-    non-zero differences is computed by convolution on a common integer scale, so P is exact for any m.
+    Contributions are per-instance rate differences or their sums within families. Assuming independent units and
+    sign symmetry under the null, each contribution is as likely to have either sign. The exact distribution over
+    all 2^m flips of the m non-zero contributions is computed by convolution on a common integer scale.
     """
     scale = reduce(math.lcm, (n for _, _, n in differences), 1)
     values = [(a - b) * (scale // n) for a, b, n in differences]
@@ -146,10 +150,17 @@ def instance_stats(
     resamples: int = BOOTSTRAP_RESAMPLES,
     seed: int = BOOTSTRAP_SEED,
 ) -> dict:
-    """Instance-level paired analysis: per-instance differences, exact sign-flip and sign tests, cluster bootstrap."""
+    """Equal-instance paired estimate; bootstrap and exact tests use the selected independent unit."""
+    if cluster not in {"instance", "family"}:
+        raise MrabError("cluster must be instance or family")
+    models = {str(r["model"]) for r in rows if r.get("model")}
+    if len(models) > 1:
+        raise MrabError("paired inference requires one model; analyze each model separately")
     by_instance: dict[str, dict] = {}
     for r in rows:
         inst = by_instance.setdefault(str(r["instance"]), dict(family=str(r["family"]), base=0, addon=0, runs=0))
+        if inst["family"] != str(r["family"]):
+            raise MrabError(f"instance {r['instance']} has conflicting family assignments")
         inst["base"] += int(r["base_passed"])  # type: ignore[call-overload]
         inst["addon"] += int(r["addon_passed"])  # type: ignore[call-overload]
         inst["runs"] += 1
@@ -157,8 +168,14 @@ def instance_stats(
     better = sum(d > 0 for d in diffs.values())
     worse = sum(d < 0 for d in diffs.values())
     groups: dict[str, list[float]] = collections.defaultdict(list)
+    contributions: dict[str, Fraction] = collections.defaultdict(Fraction)
     for name, d in diffs.items():
-        groups[name if cluster == "instance" else by_instance[name]["family"]].append(d)
+        key = name if cluster == "instance" else by_instance[name]["family"]
+        groups[key].append(d)
+        i = by_instance[name]
+        contributions[key] += Fraction(i["addon"] - i["base"], i["runs"])
+    cluster_better = sum(d > 0 for d in contributions.values())
+    cluster_worse = sum(d < 0 for d in contributions.values())
     lo, hi = cluster_bootstrap(groups, resamples, seed)
     return dict(
         n_instances=len(by_instance),
@@ -170,24 +187,33 @@ def instance_stats(
         mean_difference=sum(diffs.values()) / len(diffs),
         ci95=(lo, hi),
         cluster=cluster,
+        n_clusters=len(groups),
+        cluster_better=cluster_better,
+        cluster_worse=cluster_worse,
+        cluster_tied=len(groups) - cluster_better - cluster_worse,
         resamples=resamples,
         seed=seed,
-        permutation_p=sign_flip_p([(i["addon"], i["base"], i["runs"]) for i in by_instance.values()]),
-        sign_test_p=mcnemar(better, worse),
+        permutation_p=sign_flip_p([(d.numerator, 0, d.denominator) for d in contributions.values()]),
+        sign_test_p=mcnemar(cluster_better, cluster_worse),
     )
 
 
 def instance_lines(stats: Mapping) -> list[str]:
-    """The primary, instance-level part of the paired report."""
+    """Equal-instance estimate and tests labelled with their independent unit."""
     lo, hi = stats["ci95"]
+    directions = ""
+    if stats["cluster"] == "family":
+        directions = (
+            f"; families better {stats['cluster_better']}, worse {stats['cluster_worse']}, tied {stats['cluster_tied']}"
+        )
     return [
         f"instances {stats['n_instances']} (families {stats['n_families']}): add-on better on {stats['better']}, "
         f"worse on {stats['worse']}, tied on {stats['tied']}; "
         f"mean difference {100 * stats['mean_difference']:+.1f} pp, "
         f"95% CI {100 * lo:+.1f} to {100 * hi:+.1f} pp (cluster bootstrap over {stats['cluster']} clusters, "
         f"{stats['resamples']} resamples, seed {stats['seed']})",
-        f"primary test, instance level: exact sign-flip permutation P {stats['permutation_p']:.3g}; "
-        f"exact sign test P {stats['sign_test_p']:.3g}",
+        f"primary test, {stats['cluster']} level: exact sign-flip permutation P {stats['permutation_p']:.3g}; "
+        f"exact sign test P {stats['sign_test_p']:.3g}{directions}",
     ]
 
 
@@ -209,15 +235,20 @@ def paired_lines(stats: Mapping, instance_level: Mapping | None = None) -> list[
     return lines
 
 
-def paired(rows: list[Mapping[str, object]]) -> None:
+def paired(rows: list[Mapping[str, object]], cluster: str = "instance") -> None:
     """Print the paired add-on summary (instance level when the rows have an instance column)."""
     import sys
 
+    models = {str(r["model"]) for r in rows if r.get("model")}
+    if len(models) > 1:
+        raise MrabError("paired inference requires one model; analyze each model separately")
     has_instance = bool(rows) and all(r.get("instance") for r in rows)
+    if cluster == "family" and (not has_instance or not all(r.get("family") for r in rows)):
+        raise MrabError("--cluster family requires instance and family columns on every paired row")
     if not has_instance:
         print(
             "note: no instance column; only the run-level McNemar test, which treats runs as independent",
             file=sys.stderr,
         )
-    for line in paired_lines(paired_stats(rows), instance_stats(rows) if has_instance else None):
+    for line in paired_lines(paired_stats(rows), instance_stats(rows, cluster=cluster) if has_instance else None):
         print(line)

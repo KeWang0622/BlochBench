@@ -3,7 +3,7 @@
 MRI Agent Bench can measure what a skill library adds to a coding agent. The same model runs the same instance twice,
 started at the same moment: once in a workspace that holds your skills, once in a workspace that does not, each arm
 sealed off from the other. Repeated over instances and runs, the paired outcomes show whether the skills help, with an
-exact test at the instance level.
+exact paired test over independent instances or task families.
 
 This page is for authors of skill libraries (here called add-ons) who run that measurement themselves. It covers the
 rules, the package format, the commands and what to report.
@@ -35,9 +35,10 @@ rules, the package format, the commands and what to report.
    the add-on's content hash was recorded.
 7. **Report with `mrab compare` statistics.** Repeated runs of one instance are not independent, so the primary
    result is at the instance level: the number of instances, the mean per-instance difference with its 95%
-   cluster-bootstrap interval, and the exact sign-flip permutation P. Quote the verified rate of each arm with its 95%
-   Wilson interval too, label the run-level McNemar P as secondary, and publish the JSON that
-   `mrab compare --json` writes.
+   cluster-bootstrap interval, and the exact sign-flip permutation P. Declare the independent unit before evaluation;
+   use `--cluster family` when evaluating related variants from the same task family. Report per-arm rates and Wilson
+   intervals as descriptive summaries with their independence assumption, label the run-level McNemar P as secondary,
+   and publish the JSON that `mrab compare --json` writes.
 
 ## The add-on package
 
@@ -226,11 +227,12 @@ anything, `mrab compare` refuses:
 Interrupted runs count as failures. Pairs with an ungraded run (`--no-grade`) are left out and listed. The report gives,
 in this order:
 
-- each arm's verified runs with the 95% Wilson interval;
+- each arm's verified runs with the 95% Wilson interval (assumes independent runs; descriptive only when runs share
+  instances or families, not a cluster-adjusted uncertainty estimate);
 - the instance level (primary): instances and families, instances where the add-on arm did better, worse or the same,
   the mean per-instance difference in verified rate with its 95% cluster-bootstrap interval (10,000 resamples of
-  instances, seed 0; `--cluster family` resamples families), the exact sign-flip permutation P and the exact sign test
-  P;
+  instances, seed 0), the exact sign-flip permutation P and the exact sign test P. `--cluster family` uses families
+  for both the bootstrap and tests, keeping all variants together; its report also gives family direction counts;
 - the run level (secondary, it treats repeated runs as independent): pairs, pairs only one arm passed, exact McNemar P,
   then the counts per domain;
 - tokens (input plus output): add-on over base overall, and the median ratio over pairs;
@@ -240,7 +242,20 @@ in this order:
 
 `compare.json` holds all of this plus one row per pair. `pairs.csv` (family, instance, run, domain, model,
 base_passed, addon_passed, base_tokens, addon_tokens) is the input format of `mrab score --paired`, which reports the
-instance level when the instance column is present.
+instance level when the instance column is present. Use `mrab score --paired pairs.csv --cluster family` to reproduce
+family-level inference; CSV files do not store the cluster choice. Family mode requires both instance and family IDs.
+
+The point estimate always weights instances equally after averaging repeats within each instance. In family mode,
+the sign-flip statistic uses each family's **sum** of instance differences, preserving that weighting; larger
+families contribute more to the estimate. The bootstrap samples whole families and recomputes the instance-weighted
+mean. Declare this weighting and the cluster choice before seeing results. Exact sign-flip inference assumes
+independent clusters and sign symmetry under the null. The sign test instead tests positive versus negative cluster
+directions, omitting ties; it is not a separate test of mean effect. With few independent families, inference is weak
+even if there are many variants or repeats.
+
+Analyze one model at a time with these commands. Mixed-model inputs are refused rather than treating models as repeats;
+an across-model study needs its own analysis accounting for model dependence. The frozen offline study uses its
+separately documented two-way bootstrap and is not recomputed by these commands.
 
 ## Report
 
@@ -252,8 +267,8 @@ instance level when the instance column is present.
 | Model, agent host and version, effort, settings | `agent_version`, `effort`, `argv_template` in run.json |
 | Isolation | `isolation` and `baseline_clean` in pair.json (sandbox, or one container per arm) |
 | Runs per instance and time cap | `--run` values; `cap_s` in run.json |
-| Instances, mean per-instance difference with 95% cluster-bootstrap CI, sign-flip permutation P | `mrab compare` (primary) |
-| Verified per arm with 95% CI; run-level McNemar P, labelled secondary | `mrab compare` |
+| Instances, declared cluster unit and weighting, mean difference with cluster-bootstrap CI, sign-flip P | `mrab compare` (primary) |
+| Verified per arm with independence-based Wilson CI; run-level McNemar P, labelled secondary | `mrab compare` |
 | Token ratio | `mrab compare` |
 | Interrupted, incomplete, excluded and allowed runs | `mrab compare` warnings |
 

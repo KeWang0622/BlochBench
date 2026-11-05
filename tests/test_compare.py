@@ -12,6 +12,7 @@ import random
 import shutil
 import tempfile
 import unittest
+from fractions import Fraction
 from pathlib import Path
 
 from toy import run_cli
@@ -171,6 +172,29 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(paired[2], lines[4])
         code, out, _ = self.compare("--cluster", "family")
         self.assertIn("(cluster bootstrap over family clusters", out)
+
+    def test_family_comparison_csv_roundtrip(self) -> None:
+        for config in (BASE, ADDON):
+            for instance in ("a-r1", "b-r1", "c-r1"):
+                for path in (self.root / config / instance).glob("run*/run.json"):
+                    edit(path.parent, family="shared-family")
+        out_json, out_csv = self.root / "family.json", self.root / "family.csv"
+        code, out, err = self.compare("--cluster", "family", "--json", str(out_json), "--csv", str(out_csv))
+        self.assertEqual(code, 0, err)
+        level = json.loads(out_json.read_text())["instance_level"]
+        self.assertEqual((level["n_clusters"], level["permutation_p"], level["sign_test_p"]), (2, 1.0, 1.0))
+        code, scored, err = run_cli(["score", "--paired", str(out_csv), "--cluster", "family"])
+        self.assertEqual(code, 0, err)
+        self.assertEqual(scored.splitlines()[:2], out.splitlines()[2:4])
+        self.assertIn("primary test, family level", scored)
+        self.assertIn("families better 1, worse 0, tied 1", scored)
+
+    def test_refuses_multiple_models_across_matching_pairs(self) -> None:
+        for config in (BASE, ADDON):
+            edit(self.root / config / "b-r1" / "run1", model="another-model")
+        code, _, err = self.compare()
+        self.assertEqual(code, 1)
+        self.assertIn("paired inference requires one model", err)
 
     def test_refuses_pairs_with_different_settings(self) -> None:
         changes = {
@@ -354,6 +378,68 @@ class InstanceLevelTest(unittest.TestCase):
             )
             self.assertAlmostEqual(scoring.sign_flip_p(diffs), extreme / len(flips))
 
+    def test_related_variants_are_flipped_together(self) -> None:
+        rows = self.rows([(0, 1)] * 10 + [(1, 0)], runs=1)
+        for i, row in enumerate(rows):
+            row["family"] = "improved" if i < 10 else "regressed"
+        individual = scoring.instance_stats(rows, resamples=100)
+        family = scoring.instance_stats(rows, cluster="family", resamples=100)
+        self.assertEqual(individual["permutation_p"], 0.01171875)
+        self.assertEqual((family["permutation_p"], family["sign_test_p"]), (1.0, 1.0))
+        self.assertAlmostEqual(family["mean_difference"], 9 / 11)
+        self.assertEqual(family["mean_difference"], individual["mean_difference"])
+        self.assertEqual((family["better"], family["worse"]), (10, 1))
+        self.assertEqual((family["n_clusters"], family["cluster_better"], family["cluster_worse"]), (2, 1, 1))
+
+    def test_one_instance_per_family_preserves_statistics(self) -> None:
+        rows = self.rows([(0, 1), (1, 0), (0, 1), (0, 0)], runs=3)
+        individual = scoring.instance_stats(rows, resamples=100)
+        family = scoring.instance_stats(rows, cluster="family", resamples=100)
+        for key in ("mean_difference", "ci95", "permutation_p", "sign_test_p"):
+            self.assertEqual(individual[key], family[key])
+
+    def test_family_cancellation_and_single_family(self) -> None:
+        for spec in ([(0, 1), (1, 0)], [(0, 0), (1, 1)], [(0, 1)] * 8):
+            with self.subTest(spec=spec):
+                rows = self.rows(spec, runs=2)
+                for row in rows:
+                    row["family"] = "shared"
+                result = scoring.instance_stats(rows, cluster="family", resamples=10)
+                self.assertEqual((result["permutation_p"], result["sign_test_p"]), (1.0, 1.0))
+                self.assertEqual(result["cluster_tied"], int(spec != [(0, 1)] * 8))
+
+    def test_family_sign_flips_match_exact_enumeration_with_unequal_repeats(self) -> None:
+        rng = random.Random(2)
+        for _ in range(30):
+            rows, contributions = [], []
+            for f in range(rng.randint(1, 6)):
+                total = Fraction(0)
+                for i in range(rng.randint(1, 4)):
+                    n = rng.randint(1, 5)
+                    base, addon = rng.randint(0, n), rng.randint(0, n)
+                    total += Fraction(addon - base, n)
+                    rows.extend(
+                        dict(instance=f"i{f}-{i}", family=f"f{f}", domain="d",
+                             base_passed=int(r < base), addon_passed=int(r < addon))
+                        for r in range(n)
+                    )  # fmt: skip
+                contributions.append(total)
+            observed = abs(sum(contributions))
+            flips = list(itertools.product((1, -1), repeat=len(contributions)))
+            extreme = sum(
+                abs(sum(s * v for s, v in zip(signs, contributions, strict=True))) >= observed for signs in flips
+            )
+            result = scoring.instance_stats(rows, cluster="family", resamples=10)
+            self.assertEqual(result["permutation_p"], extreme / len(flips))
+
+    def test_refuses_ambiguous_grouping(self) -> None:
+        rows = self.rows([(0, 1)], runs=2)
+        rows[0]["family"] = "different"
+        with self.assertRaisesRegex(MrabError, "conflicting family"):
+            scoring.instance_stats(rows)
+        with self.assertRaisesRegex(MrabError, "cluster must be"):
+            scoring.instance_stats(self.rows([(0, 1)], runs=1), cluster="domain")
+
     def test_false_positive_rate_with_heterogeneous_instances(self) -> None:
         # 30 instances x 5 runs, the add-on helps some instances and hurts others by the same amount: no mean effect.
         rng = random.Random(0)
@@ -381,6 +467,21 @@ class InstanceLevelTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertTrue(out.startswith("pairs 1: "))
         self.assertIn("no instance column", err)
+        code, _, err = run_cli(["score", "--paired", str(root / "pairs.csv"), "--cluster", "family"])
+        self.assertEqual(code, 1)
+        self.assertIn("requires instance and family columns", err)
+        (root / "pairs.csv").write_text("instance,family,domain,model,base_passed,addon_passed\ni,,d,m,0,1\n")
+        self.assertIn(
+            "requires instance and family columns",
+            run_cli(["score", "--paired", str(root / "pairs.csv"), "--cluster", "family"])[2],
+        )
+        code, _, err = run_cli(["score", str(root / "pairs.csv"), "--cluster", "family"])
+        self.assertEqual(code, 1)
+        self.assertIn("requires --paired", err)
+        (root / "pairs.csv").write_text("family,domain,model,base_passed,addon_passed\nf,d,m1,0,1\nf,d,m2,1,0\n")
+        code, _, err = run_cli(["score", "--paired", str(root / "pairs.csv")])
+        self.assertEqual(code, 1)
+        self.assertIn("paired inference requires one model", err)
 
     def test_compare_error_type(self) -> None:
         with self.assertRaises(MrabError):
